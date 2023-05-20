@@ -1,14 +1,15 @@
-# Sistema-Gestion-Adopciones
-Trabajo Practico Obligatorio de la materia Analisis y Diseño Orientado a Objetos (ADOO)
+
+# Sistema de Gestion de Adopciones
 Gud Boy es una cadena de refugio animal muy reconocida en todo el país. En esta ocasión nos han contratado para desarrollar un sistema para el seguimiento y control de los animales que ingresan al refugio; como así también el manejo de las adopciones y las visitas programadas con los nuevos dueños de las mascotas.
 Cuando un animalito nuevo ingresa al refugio, se toman una serie de datos para conformar su ficha técnica:
-- Tipo de animal: hay ciertos tipos de animales que son salvados por el refugio, pero que, por su naturaleza, no pueden ser adoptados. El refugio no solo salva mascotas, sino que también ayuda a la recuperación de animales salvajes
-o Doméstico: perro, gato, canario, loro, tortuga, etc.
-o Salvaje: zorro, pingüino, halcón, etc.
-- Altura
-- Peso
-- Edad aproximada
-- Condición médica: si el animal necesita atención médica o se encuentra en buen estado de salud.
+* Tipo de animal: hay ciertos tipos de animales que son salvados por el refugio, pero que, por su naturaleza, no pueden ser adoptados. El refugio no solo salva mascotas, sino que también ayuda a la recuperación de animales salvajes
+
+    - Doméstico: perro, gato, canario, loro, tortuga, etc.
+    - Salvaje: zorro, pingüino, halcón, etc.
+* Altura
+* Peso
+* Edad aproximada
+* Condición médica: si el animal necesita atención médica o se encuentra en buen estado de salud.
 En todo momento, la ficha médica podrá ser exportada a distintos formatos. Nuestro diseño deberá permitir la escalabilidad en la exportación de una manera sencilla y ágil. En principio, se permitirá exportar la ficha médica a PDF y Excel.
 El sistema dispondrá de dos tipos de usuarios: veterinarios y visitadores. El manejo de los usuarios y sus datos estará a cargo del equipo de seguridad; con lo cual nosotros no tendremos que ocuparnos del login y registro de usuarios, pero si deberemos guardar una referencia a los mismos; razón por la cual deberemos interactuar con el módulo de autenticación.
 Una vez ingresado al sistema; se establecerán alarmas programadas por los veterinarios para el control periódico del animal como para el seguimiento de su tratamiento médico en caso de corresponder. El sistema deberá permitir la creación y actualización de alarmas configurables para cada animal en particular. Para cada alarma se debe configurar su periodicidad y el grupo de acciones que se deben ejecutar, las cuales pueden ser:
@@ -33,19 +34,14 @@ Cada cliente podrá adoptar un máximo de 2 animales domésticos. Luego de que s
 - Cadencia de las visitas: a convenir con el cliente, día y rango horario de visita.
 - Preferencia de recordatorio: SMS, WhatsApp o email.
 El sistema enviará recordatorios a las partes interesadas de acuerdo a las preferencias elegidas ‘N’ días antes de la misma; siendo ‘N’ un valor configurable y ajustable por parámetro.
+
 Luego de finalizada la visita, el visitador procederá a responder una breve encuesta sobre el animal en nuestra app; y además deberá indicar si se debe continuar con las visitas o ya no es necesario.
+
 A considerar:
-• Debemos mantener un historial linkeado a la historia clínica del animal. Esto aplica para la evolución médica, chequeos de rutina o visitas a domicilio.
-• La breve encuenta que deben contestar los visitadores incluye responder las siguientes preguntas:
-o Estado general del animal: malo, regular, bueno
-o Limpieza del lugar: malo, regular, bueno
-o Ambiente: malo, regular, bueno
-• Las alarmas envían una push notification a los veterinarios
-Consignas
-• Primera entrega
-o Realizar una iteración inicial del diagrama de clases del sistema, incluye la capa de dominio y controladores asociados.
-• Entrega final
-Página 3 de 3
-o Diagrama de clases del sistema completo (capa de dominio), aplicando patrones de diseño que crea pertinentes.
-o Justificar utilización de patrones de diseño en el caso que se hayan utilizado.
-o Implementar el diagrama de clases propuesto en Java, mostrando el correcto funcionamiento de los requerimientos principales a través de Tests Unitarios.
+* Debemos mantener un historial linkeado a la historia clínica del animal. Esto aplica para la evolución médica, chequeos de rutina o visitas a domicilio.
+* La breve encuenta que deben contestar los visitadores incluye responder las siguientes preguntas:
+    * Estado general del animal: malo, regular, bueno
+    * Limpieza del lugar: malo, regular, bueno
+    * Ambiente: malo, regular, bueno
+* Las alarmas envían una push notification a los veterinarios
+
