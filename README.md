@@ -10,6 +10,7 @@ Cuando un animalito nuevo ingresa al refugio, se toman una serie de datos para c
 * Peso
 * Edad aproximada
 * Condición médica: si el animal necesita atención médica o se encuentra en buen estado de salud.
+
 En todo momento, la ficha médica podrá ser exportada a distintos formatos. Nuestro diseño deberá permitir la escalabilidad en la exportación de una manera sencilla y ágil. En principio, se permitirá exportar la ficha médica a PDF y Excel.
 El sistema dispondrá de dos tipos de usuarios: veterinarios y visitadores. El manejo de los usuarios y sus datos estará a cargo del equipo de seguridad; con lo cual nosotros no tendremos que ocuparnos del login y registro de usuarios, pero si deberemos guardar una referencia a los mismos; razón por la cual deberemos interactuar con el módulo de autenticación.
 Una vez ingresado al sistema; se establecerán alarmas programadas por los veterinarios para el control periódico del animal como para el seguimiento de su tratamiento médico en caso de corresponder. El sistema deberá permitir la creación y actualización de alarmas configurables para cada animal en particular. Para cada alarma se debe configurar su periodicidad y el grupo de acciones que se deben ejecutar, las cuales pueden ser:
@@ -18,6 +19,8 @@ Una vez ingresado al sistema; se establecerán alarmas programadas por los veter
 - Comprobar peso y tamaño.
 - Chequear nutrición
 - Colocar vacuna.
+
+
 Las alarmas disparadas generarán una alerta para todos los veterinarios, siendo que cualquiera de ellos puede atender la misma. Cuando se atiende una alarma, se deberá marcar las acciones como completadas, indicando un registro de lo que se realizó a modo de comentario. En caso de tratarse de un tratamiento médico, deberá indicar si el mismo finalizó o no. Debemos llevar un historial del tratamiento médico y controles realizados para cada animal, como así también el registro del veterinario que lo atendió. Todo esto debe quedar organizado dentro de la ficha médica del animal atendido.
 Asimismo, nuestro sistema permitirá hacer el seguimiento de las adopciones de los animales domésticos. Cuando un cliente interesado en adoptar un animal llega al refugio, se le toman sus datos, como así también los motivos de la adopción. Se pedirá:
 - Nombre y apellido
@@ -28,6 +31,7 @@ Asimismo, nuestro sistema permitirá hacer el seguimiento de las adopciones de l
 - ¿Otras mascotas? Esto es necesario para saber si el animal a adoptar se llevará bien con otras mascotas.
 - Motivo de adopción
 - Tipo de animales interesados
+
 Se debe tener presente que los animales que se encuentran bajo un tratamiento médico no pueden ser adoptados hasta que no finalice el mismo. Lo mismo ocurre con los animales salvajes, los cuales no pueden ser adoptados.
 Cada cliente podrá adoptar un máximo de 2 animales domésticos. Luego de que se completen los papeles de la adopción, se procederá a cargar los datos del seguimiento del animal. Aquí se deberá indicar:
 - Responsable del seguimiento: visitador asociado.
