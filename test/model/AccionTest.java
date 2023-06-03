@@ -8,7 +8,7 @@ class AccionTest {
 
 	@Test
 	void constructor() {
-		var x = new Accion("Dar medicamentos", 808);
+		var x = new Accion("Dar medicamentos", new Veterinario());
 		assertNotNull(x);
 	}
 	

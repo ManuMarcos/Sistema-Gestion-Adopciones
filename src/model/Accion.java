@@ -4,9 +4,9 @@ public class Accion {
 	private String nombre;
 	private EstadoAccion estado;
 	private String comentario;
-	private int veterinario; // TODO: cambiar cuando esté la clase Veterinario
+	private Veterinario veterinario;
 	
-	public Accion(String nombre, int veterinario) {
+	public Accion(String nombre, Veterinario veterinario) {
 		this.nombre = nombre;
 		this.estado = EstadoAccion.PENDIENTE;
 		this.comentario = "";
@@ -37,11 +37,11 @@ public class Accion {
 		this.comentario = comentario;
 	}
 
-	public int getVeterinario() {
+	public Veterinario getVeterinario() {
 		return veterinario;
 	}
 
-	public void setVeterinario(int veterinario) {
+	public void setVeterinario(Veterinario veterinario) {
 		this.veterinario = veterinario;
 	}
 
