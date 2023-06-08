@@ -1,6 +1,6 @@
 package model;
 
-public class Veterinario {
+public class Veterinario extends Usuario {
 	private String matricula;
 
 	public String getMatricula() {
