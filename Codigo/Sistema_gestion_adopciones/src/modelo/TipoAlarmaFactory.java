@@ -1,5 +1,7 @@
 package modelo;
 
+import modelo.enumeraciones.TipoDeAlarma;
+
 public class TipoAlarmaFactory {
 
 	public static ITipoAlarma crearTipoAlarma(TipoDeAlarma tipo) throws Exception {

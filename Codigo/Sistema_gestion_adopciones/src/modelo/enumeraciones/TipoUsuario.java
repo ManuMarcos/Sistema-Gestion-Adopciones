@@ -1,4 +1,4 @@
-package modelo;
+package modelo.enumeraciones;
 
 public enum TipoUsuario {
 

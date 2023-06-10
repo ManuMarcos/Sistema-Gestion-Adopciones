@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.dto.AnimalDto;
+import modelo.dto.ClienteDto;
 
 public class Refugio {
 
+	//Singleton
 	private List<Animal> animales;
+	private List<Cliente> clientes;
 	private static Refugio instance;
 	
-	
+
 	private Refugio() {
 		this.animales = new ArrayList<Animal>();
 	}
@@ -29,9 +32,17 @@ public class Refugio {
 		this.animales.add(animal);
 	}
 	
-	//El listado deberia ser de AnimalDto
-	public List<Animal> obtenerListadoAnimales(){
-		return this.animales;
+	public List<AnimalDto> obtenerListadoAnimales(){
+		List<AnimalDto> animalesDto = new ArrayList<AnimalDto>();
+		for (Animal animal : this.animales) {
+			animalesDto.add(animal.toDto());
+		}
+		return animalesDto;
+	}
+	
+	public void guardarCliente(ClienteDto clienteDto) {
+		Cliente cliente = new Cliente();
+		this.clientes.add(cliente);
 	}
 	
 }

@@ -2,10 +2,17 @@ package modelo;
 
 import java.util.Date;
 import java.util.List;
+
+import modelo.dto.AnimalDto;
+import modelo.enumeraciones.EstadoAnimal;
+import modelo.enumeraciones.TipoAnimal;
+
 import java.util.ArrayList;
 
 public class Animal {
 
+	private int id;
+	private static int generador = 1;
 	private int altura;
 	private int peso;
 	private Date fecha_nac;
@@ -25,10 +32,27 @@ public class Animal {
 		this.tipo = tipo;
 		this.alarmas = new ArrayList<Alarma>();
 		this.fichaMedica = new FichaMedica(this);
+		this.id = generador;
+		generador += 1;
 	}
 	
 	
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public FichaMedica getFichaMedica() {
+		return fichaMedica;
+	}
+
+	public void setFichaMedica(FichaMedica fichaMedica) {
+		this.fichaMedica = fichaMedica;
+	}
+
 	public int getAltura() {
 		return altura;
 	}
@@ -72,5 +96,10 @@ public class Animal {
 		this.alarmas = alarmas;
 	}
 	
+	public AnimalDto toDto() {
+		AnimalDto animalDto = new AnimalDto(this.getId(), this.getAltura(),this.getPeso(), this.getFecha_nac(),
+				this.getEspecie(), this.getEstado(), this.getTipo());
+		return animalDto;
+	}
 	
 }

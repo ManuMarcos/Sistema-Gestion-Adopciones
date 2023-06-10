@@ -1,8 +1,9 @@
 package modelo.dto;
 
 import java.util.Date;
-import modelo.EstadoAnimal;
-import modelo.TipoAnimal;
+
+import modelo.enumeraciones.EstadoAnimal;
+import modelo.enumeraciones.TipoAnimal;
 
 public class AnimalDto {
 
@@ -14,6 +15,8 @@ public class AnimalDto {
 	private EstadoAnimal estado;
 	private TipoAnimal tipo;
 	
+	
+	//Constructor sin Id
 	public AnimalDto(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
 		this.altura = altura;
 		this.peso = peso;
@@ -23,9 +26,23 @@ public class AnimalDto {
 		this.tipo = tipo;
 	}
 	
+	//Constructor con Id
+	public AnimalDto(int id, int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado,
+			TipoAnimal tipo) {
+		this.id = id;
+		this.altura = altura;
+		this.peso = peso;
+		this.fecha_nac = fecha_nac;
+		this.especie = especie;
+		this.estado = estado;
+		this.tipo = tipo;
+	}
+	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

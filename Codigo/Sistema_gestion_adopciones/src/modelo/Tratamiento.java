@@ -16,9 +16,5 @@ public class Tratamiento implements ITipoAlarma{
 		this.finalizado = true;
 	}
 
-	@Override
-	public void crearAlarma() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

@@ -1,5 +1,7 @@
 package modelo;
 
+import modelo.enumeraciones.Estado;
+
 public class Encuesta {
 
 	private Estado estadoAnimal;

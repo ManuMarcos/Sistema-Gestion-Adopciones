@@ -10,10 +10,7 @@ public class SeguimientoTratamiento implements ITipoAlarma{
 	private String comentario;
 	
 	
-	@Override
-	public void crearAlarma() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 	
 }

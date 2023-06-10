@@ -1,16 +1,18 @@
 package controladores;
 
-import vistas.CliAnimal;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	
+		AnimalController animalController;
 		
-		CliAnimal cliAnimal = new CliAnimal();
+		animalController = new AnimalController();
 		
-		cliAnimal.mostarMenu();
+		
 		
 		
 		

@@ -1,5 +1,7 @@
 package modelo;
 
+import modelo.enumeraciones.TipoUsuario;
+
 public class Usuario {
 
 	private String usuario;
