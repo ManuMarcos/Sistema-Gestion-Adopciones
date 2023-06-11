@@ -41,7 +41,7 @@ public class Refugio {
 	}
 	
 	public void guardarCliente(ClienteDto clienteDto) {
-		Cliente cliente = new Cliente();
+		Cliente cliente = new Cliente(clienteDto);
 		this.clientes.add(cliente);
 	}
 	
