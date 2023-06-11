@@ -1,5 +1,6 @@
 package controladores;
 
+import modelo.Usuario;
 import modelo.dto.UsuarioDto;
 import vistas.LoginView;
 
@@ -14,8 +15,13 @@ public class LoginController {
 		vista.mostrarMenuLogin();
 	}
 
-	public boolean registrarUsuario(UsuarioDto usuario) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean registrarUsuario(UsuarioDto usuarioData) {
+		Usuario usuario = new Usuario(usuarioData);
+		return usuario.registrar();
+	}
+
+	public boolean ingresarUsuario(UsuarioDto usuarioData) {
+		Usuario usuario = new Usuario(usuarioData);
+		return usuario.ingresar();
 	}
 }

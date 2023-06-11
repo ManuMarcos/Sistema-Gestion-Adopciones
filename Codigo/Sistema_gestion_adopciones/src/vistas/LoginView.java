@@ -50,9 +50,36 @@ public class LoginView {
 	}
 
 	private void mostrarIngresarUsuario() {
-		// TODO Auto-generated method stub	
+		UsuarioDto usuario = new UsuarioDto();	
+		System.out.println("----------------------------------");
+		System.out.println("          Ingreso Usuario         ");
+		System.out.println("----------------------------------");
+		
+		do {
+			System.out.print("Ingrese su nombre de usuario: ");
+			usuario.usuario = sc.next();
+		} while(usuario.usuario.isEmpty());
+			
+		do {
+			System.out.print("Ingrese su contraseña: ");
+			usuario.contrasena = sc.next();
+		} while(usuario.contrasena.isEmpty());
+		
+		boolean res = controlador.ingresarUsuario(usuario);
+		if(res) {
+			System.out.println("Ingreso exitoso");
+			irAHome();
+		} else {			
+			System.out.println("Error al ingresar."); //TODO: manejo de errores..
+			mostrarMenuLogin();
+		}
 	}
 	
+	private void irAHome() {
+		//  TODO: ir a la siguiente pantalla en el flujo...
+		System.out.print("TODO: ir a la siguiente pantalla en el flujo...");
+	}
+
 	private int solicitarOpcionMenu() {
 		System.out.print("Ingrese una opción: ");
 		int opcion = sc.nextInt();
