@@ -7,16 +7,42 @@ import vistas.utils.FormatoCli;
 import vistas.utils.IngresoCli;
 
 public class LoginView {
+	
+	//TODO: refactor con patrones. capaz el padre observer. no se.
+	public enum CodigosRetorno { 
+		LOGIN_OK,
+		LOGIN_ERROR,
+		REGISTRO_OK,
+		REGISTRO_ERROR,
+		SALIR
+	}
+	
 	private LoginController controlador;
+	private static final String[] opciones = {"Registrarse", "Ingresar", "Salir"};
+	private static final int opcion_Registrarse = 1;
+	private static final int opcion_Ingresar = 2;
+	private static final int opcion_Salir = 3;
+
 	
 	public void mostrarMenuLogin() {
 		FormatoCli.printCabecera("Menú Login");
-		String[] opciones = {"Registrarse", "Ingresar", "Atrás"};
 		FormatoCli.printOpciones(opciones);
-		deMenuA(IngresoCli.solicitarOpcion(opciones.length));
 	}
 	
-	public void mostrarRegistroUsuario() {
+	public CodigosRetorno pedirOpciones() {
+		int opcion = IngresoCli.solicitarOpcion(opciones.length);
+		switch (opcion) {
+		case opcion_Registrarse:
+			return mostrarRegistroUsuario();
+		case opcion_Ingresar:
+			return mostrarIngresarUsuario();
+		case opcion_Salir:
+		default:
+			return CodigosRetorno.SALIR;
+		}
+	}
+	
+	public CodigosRetorno mostrarRegistroUsuario() {
 		FormatoCli.printCabecera("Nuevo Usuario");
 
 		UsuarioDto usuario = new UsuarioDto();
@@ -27,10 +53,11 @@ public class LoginView {
 		boolean res = controlador.registrarUsuario(usuario);
 		if(res) {
 			System.out.println("Usuario registrado exitosamente");
+			return CodigosRetorno.REGISTRO_OK;
 		} else {			
 			System.out.println("Error al registrarse.");
+			return CodigosRetorno.REGISTRO_ERROR;
 		}
-		mostrarMenuLogin();
 	}
 	
 	private TipoUsuario solicitarOpcionTipoUsuario() {
@@ -39,7 +66,7 @@ public class LoginView {
 	}
 	
 
-	private void mostrarIngresarUsuario() {
+	private CodigosRetorno mostrarIngresarUsuario() {
 		FormatoCli.printCabecera("Ingreso Usuario");
 		UsuarioDto usuario = new UsuarioDto();
 		usuario.usuario = IngresoCli.solicitarStringNoNulo("Ingrese su usuario: ");
@@ -48,32 +75,13 @@ public class LoginView {
 		boolean res = controlador.ingresarUsuario(usuario);
 		if(res) {
 			System.out.println("Ingreso exitoso");
-			irAHome();
+			return CodigosRetorno.LOGIN_OK;
 		} else {			
 			System.out.println("Error al ingresar.");
-			mostrarMenuLogin();
+			return CodigosRetorno.LOGIN_ERROR;
 		}
 	}
 	
-	private void irAHome() {
-		//  TODO: ir a la siguiente pantalla en el flujo...
-		System.out.print("TODO: ir a la siguiente pantalla en el flujo...");
-	}
-
-	
-	private void deMenuA(int opcion) {
-		switch (opcion) {
-		case 1:
-			mostrarRegistroUsuario();
-			break;
-		case 2:
-			mostrarIngresarUsuario();
-			break;
-		case 3: // TODO: flujo de navegacion hacia atras.
-			System.out.print("chau");
-		}
-	}
-
 	public void setControlador(LoginController controlador) {
 		this.controlador = controlador;
 	}

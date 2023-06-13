@@ -1,30 +1,26 @@
 package vistas;
 
-import java.util.Scanner;
+import vistas.utils.FormatoCli;
+import vistas.utils.IngresoCli;
 
-import controladores.MenuPrincipalController;
-
-public class MenuPrincipalCli {
-
-	private MenuPrincipalController controlador;
-	private static Scanner sc;
+public class MenuPrincipalCli {	
 	
-	public MenuPrincipalCli() {
-		this.controlador = new MenuPrincipalController();
-		sc = new Scanner(System.in);
+	public void mostrarCabecera() {
+		FormatoCli.printCabecera("Refugio - Gud Boy");
+		FormatoCli.esperaTruchanga();
 	}
-	
+
+	private static final String[] opciones = {"Animales", "Alarmas", "Clientes", "Adopciones", "Visitas", "Log out"};
 	
 	public void mostrarMenu() {
-		System.out.printf("----------------------------------%n");
-		System.out.printf("        Refugio - Gud Boy         %n");
-		System.out.printf("----------------------------------%n");
-		
-		
-		
-		
-		
+		FormatoCli.printCabecera("Refugio - Gud Boy");
+		FormatoCli.printOpciones(opciones);
 	}
-	
-	
+
+	public void pedirOpciones() {
+		// TODO redireccion a otros modulos.
+		IngresoCli.solicitarOpcion(opciones.length);
+
+	}
+
 }
