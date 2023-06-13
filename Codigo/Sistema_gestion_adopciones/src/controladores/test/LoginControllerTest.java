@@ -15,10 +15,10 @@ public class LoginControllerTest {
 			vista.mostrarMenuLogin();
 			LoginView.CodigosRetorno login_ret_code = vista.pedirOpciones();
 			if(login_ret_code == LoginView.CodigosRetorno.SALIR) {
-				System.out.println("LoginControllerTest END");
 				break;
 			}
 		}
+		System.out.println("LoginControllerTest END");
 	}
 
 }
