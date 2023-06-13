@@ -8,6 +8,7 @@ public class LoginControllerTest {
 	public static void main(String[] args) {
 		System.out.println("LoginControllerTest BEGIN");		
 		// TEST APP MAIN LOOP
+		/*
 		while(true) {
 			LoginView vista = new LoginView();
 			LoginController controlador = new LoginController(vista);
@@ -18,6 +19,7 @@ public class LoginControllerTest {
 				break;
 			}
 		}
+		*/
 		System.out.println("LoginControllerTest END");
 	}
 

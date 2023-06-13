@@ -1,17 +1,17 @@
 package vistas;
 
+import vistas.enumeraciones.CliViewNames;
 import vistas.utils.FormatoCli;
+import vistas.utils.ICliView;
 import vistas.utils.IngresoCli;
 
-public class MenuPrincipalCli {	
-	
-	//TODO: pensar mejor esto...
-	public final static int MENU_ANIMALES   = 0;
-	public final static int MENU_ALARMAS    = 1;
-	public final static int MENU_CLIENTES   = 2;
-	public final static int MENU_ADOPCIONES = 3;
-	public final static int MENU_VISITAS    = 4;
-	public final static int MENU_LOG_OUT    = 5;
+public class MenuPrincipalCli implements ICliView {
+	private final static int MENU_ANIMALES   = 1;
+	private final static int MENU_ALARMAS    = 2;
+	private final static int MENU_CLIENTES   = 3;
+	private final static int MENU_ADOPCIONES = 4;
+	private final static int MENU_VISITAS    = 5;
+	private final static int MENU_LOG_OUT    = 6;
 	
 	public void mostrarCabecera() {
 		FormatoCli.printCabecera("Refugio - Gud Boy");
@@ -26,9 +26,28 @@ public class MenuPrincipalCli {
 	}
 
 	public int pedirOpciones() {
-		// TODO redireccion a otros modulos.
 		return IngresoCli.solicitarOpcion(opciones.length);
 
+	}
+
+	@Override
+	public CliViewNames procesar() {
+		mostrarMenu();
+		switch(pedirOpciones()) {
+		case MENU_ANIMALES:
+			return CliViewNames.MENU_ANIMALES;
+		case MENU_ALARMAS:
+			return CliViewNames.MENU_ALARMAS;
+		case MENU_CLIENTES:
+			return CliViewNames.MENU_CLIENTE;
+		case MENU_ADOPCIONES:
+			return CliViewNames.MENU_ADOPCIONES;
+		case MENU_VISITAS:
+			return CliViewNames.MENU_VISITAS;
+		case MENU_LOG_OUT:
+		default:
+			return CliViewNames.BACK;
+		}
 	}
 
 }

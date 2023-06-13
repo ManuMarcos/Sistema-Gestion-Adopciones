@@ -3,13 +3,14 @@ package vistas;
 import controladores.LoginController;
 import modelo.dto.UsuarioDto;
 import modelo.enumeraciones.TipoUsuario;
+import vistas.enumeraciones.CliViewNames;
 import vistas.utils.FormatoCli;
+import vistas.utils.ICliView;
 import vistas.utils.IngresoCli;
 
-public class LoginView {
+public class LoginView implements ICliView {
 	
-	//TODO: refactor con patrones. capaz el padre observer. no se.
-	public enum CodigosRetorno { 
+	private enum CodigosRetorno { 
 		LOGIN_OK,
 		LOGIN_ERROR,
 		REGISTRO_OK,
@@ -29,7 +30,7 @@ public class LoginView {
 		FormatoCli.printOpciones(opciones);
 	}
 	
-	public CodigosRetorno pedirOpciones() {
+	public CodigosRetorno pedirOpcionesYProcesar() {
 		int opcion = IngresoCli.solicitarOpcion(opciones.length);
 		switch (opcion) {
 		case opcion_Registrarse:
@@ -84,5 +85,17 @@ public class LoginView {
 	
 	public void setControlador(LoginController controlador) {
 		this.controlador = controlador;
+	}
+
+	@Override
+	public CliViewNames procesar() {
+		mostrarMenuLogin();
+		LoginView.CodigosRetorno retCode = pedirOpcionesYProcesar();
+		if(retCode == LoginView.CodigosRetorno.SALIR)
+			return CliViewNames.BACK;
+		if(retCode != LoginView.CodigosRetorno.LOGIN_OK) {
+			return CliViewNames.STAY;
+		}
+		return CliViewNames.MENU_PRINCIPAL;
 	}
 }

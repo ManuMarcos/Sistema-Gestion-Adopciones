@@ -5,12 +5,13 @@ import java.util.List;
 import controladores.ClienteController;
 import modelo.dto.ClienteDto;
 import modelo.enumeraciones.Ocupacion;
-import vistas.LoginView.CodigosRetorno;
+import vistas.enumeraciones.CliViewNames;
 import vistas.utils.FormatoCli;
+import vistas.utils.ICliView;
 import vistas.utils.IngresoCli;
 import java.util.ArrayList;
 
-public class ClienteView {
+public class ClienteView implements ICliView {
 	private ClienteController controlador;
 	private static final String[] opciones = { "Alta", "Búsqueda", "Atrás" };
 
@@ -80,6 +81,17 @@ public class ClienteView {
 
 	public void setControlador(ClienteController controlador) {
 		this.controlador = controlador;
+	}
+
+	@Override
+	public CliViewNames procesar() {
+		mostrarMenuCliente();
+		boolean ret_code = pedirOpciones();
+		if(ret_code) {
+			return CliViewNames.STAY;
+		} else {
+			return CliViewNames.BACK;
+		}
 	}
 
 }

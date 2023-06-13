@@ -1,0 +1,13 @@
+package vistas.enumeraciones;
+
+public enum CliViewNames {
+	MENU_PRINCIPAL,
+	MENU_LOGIN,
+	MENU_CLIENTE,
+	MENU_ANIMALES,
+	MENU_ALARMAS,
+	MENU_ADOPCIONES,
+	MENU_VISITAS,
+	BACK,
+	STAY,
+}

@@ -1,84 +1,87 @@
  package app.main;
 
+import java.util.Stack;
+
 import controladores.ClienteController;
 import controladores.LoginController;
 import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalCli;
+import vistas.enumeraciones.CliViewNames;
+import vistas.utils.FormatoCli;
+import vistas.utils.ICliView;
 
 public class MainCli {
+	private MenuPrincipalCli vistaMenuPrincipal;
+	
+	private LoginView vistaLogin;
+	private LoginController controladorLogin; 
+	
+	private ClienteView vistaCliente;
+	private ClienteController controladorCliente;
+	
+	public Stack<ICliView> stackCliView;
+	
+	MainCli(){
+		stackCliView = new Stack<>();
+		vistaMenuPrincipal = new MenuPrincipalCli();
+
+		//Login
+		vistaLogin = new LoginView();
+		controladorLogin = new LoginController(vistaLogin);
+		vistaLogin.setControlador(controladorLogin);
+		
+		//Cliente
+		vistaCliente = new ClienteView();
+		controladorCliente = new ClienteController(vistaCliente);
+		vistaCliente.setControlador(controladorCliente);
+
+		stackCliView.push(vistaLogin);
+	}
+	
+	public void mostrarCabeceraApp() {
+		FormatoCli.printCabecera("Refugio - Gud Boy");
+		FormatoCli.esperaTruchanga();
+	}
+	
 	public static void main(String[] args) {
-		MenuPrincipalCli menuPrincipal = new MenuPrincipalCli();
-		menuPrincipal.mostrarCabecera();
-
-		loopLogin(menuPrincipal);
-		System.out.println("Cerrando el sistema...");
+		var app = new MainCli();
+		app.mostrarCabeceraApp();
+		app.run();
+		System.out.println("Ha salido del sistema.");
 	}
 
-
-	private static void loopLogin(MenuPrincipalCli menuPrincipal) {
-		// APP MAIN LOOP 
-		while(true){
-			// TODO(Ivo): Pensar como hacer refactor. Lo armé al viejo estilo C con un loop principal y ret codes para coordinar entre pantallas... pero ha
-			LoginView.CodigosRetorno login_ret_code = pedirLogin();
-			if(login_ret_code == LoginView.CodigosRetorno.SALIR)
-				break; // romper loop => fin
-			if(login_ret_code != LoginView.CodigosRetorno.LOGIN_OK) {
-				continue; // queda loopeando en menu login.
-			}
-			
-			//TODO(Ivo): ver como guardar en la aplicación el usuario que tiene la sesión actual.
-			
-			loopMenuPpal(menuPrincipal);
-		}
-	}
-	
-	
-	private static void loopMenuPpal(MenuPrincipalCli menuPrincipal) {
-		//TODO(Ivo): sí, esto quedó muy feo. Hay que mover los while adentro de cada view, o cambiar por algun patron de diseño supongo.
-		boolean salirMenuPpal = false;
-		while(!salirMenuPpal) { 
-			menuPrincipal.mostrarMenu();
-			switch(menuPrincipal.pedirOpciones()) {
-			case MenuPrincipalCli.MENU_ANIMALES:
-				System.out.println("View no conectada aún");
-				break;
-			case MenuPrincipalCli.MENU_ALARMAS:
-				System.out.println("View no conectada aún");
-				break;
-			case MenuPrincipalCli.MENU_CLIENTES:
-				boolean quedarse_en_menu_cliente = true;
-				while(quedarse_en_menu_cliente) {
-					ClienteView vista = new ClienteView();
-					ClienteController controlador = new ClienteController(vista);
-					vista.setControlador(controlador);
-					vista.mostrarMenuCliente();
-					boolean ret_code = vista.pedirOpciones();
-					quedarse_en_menu_cliente = ret_code;
-				}
-				break;
-			case MenuPrincipalCli.MENU_ADOPCIONES:
-				System.out.println("View no conectada aún");
-				break;
-			case MenuPrincipalCli.MENU_VISITAS:
-				System.out.println("View no conectada aún");
-				break;
-			case MenuPrincipalCli.MENU_LOG_OUT:
-			default:
-				salirMenuPpal = true;
-				break;
+	private void run() {
+		while(!stackCliView.isEmpty()) {
+			CliViewNames nextName = stackCliView.peek().procesar();
+			ICliView next =  mapCliViewName(nextName);
+			if(next != null) {
+				stackCliView.push(next);
+			} else if(nextName == CliViewNames.BACK) {
+				stackCliView.pop();
 			}
 		}
 	}
-
-
-	private static LoginView.CodigosRetorno pedirLogin() {
-		//TODO. hacer esto statico, o variables de instancia para no crearlos en cada vuelta.
-		LoginView vistaLogin = new LoginView();
-		LoginController controlador = new LoginController(vistaLogin);
-		vistaLogin.setControlador(controlador);
-		vistaLogin.mostrarMenuLogin();
-		return vistaLogin.pedirOpciones();
+	
+	private ICliView mapCliViewName(CliViewNames next) {
+		switch(next) {
+		case MENU_PRINCIPAL:
+			return vistaMenuPrincipal;
+		case MENU_LOGIN:
+			return vistaLogin;
+		case MENU_CLIENTE:
+			return vistaCliente;
+		case MENU_ANIMALES:
+		case MENU_ALARMAS:
+		case MENU_ADOPCIONES:
+		case MENU_VISITAS:
+			System.err.printf("View no conectada: %s%n", next.name());
+			return null;
+		case STAY:
+		case BACK:
+		default:
+			return null;
+		}
 	}
 
 }
