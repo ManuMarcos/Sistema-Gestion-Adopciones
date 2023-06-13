@@ -30,8 +30,9 @@ public class ClienteView implements ICliView {
 			mostrarBusquedaCliente();
 			return true;
 		case 3:
-		default:
 			return false;
+		default:
+			throw new RuntimeException("pedirOpciones > opcion invalida :[" + opcion + "]");
 		}
 	}
 

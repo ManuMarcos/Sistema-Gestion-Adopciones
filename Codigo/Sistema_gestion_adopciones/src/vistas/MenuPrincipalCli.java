@@ -33,7 +33,8 @@ public class MenuPrincipalCli implements ICliView {
 	@Override
 	public CliViewNames procesar() {
 		mostrarMenu();
-		switch(pedirOpciones()) {
+		int opcion = pedirOpciones();
+		switch(opcion) {
 		case MENU_ANIMALES:
 			return CliViewNames.MENU_ANIMALES;
 		case MENU_ALARMAS:
@@ -45,8 +46,9 @@ public class MenuPrincipalCli implements ICliView {
 		case MENU_VISITAS:
 			return CliViewNames.MENU_VISITAS;
 		case MENU_LOG_OUT:
-		default:
 			return CliViewNames.BACK;
+		default:
+			throw new RuntimeException("procesar > opcion invalida :[" + opcion + "]");
 		}
 	}
 

@@ -79,8 +79,9 @@ public class MainCli {
 			return null;
 		case STAY:
 		case BACK:
-		default:
 			return null;
+		default:
+			throw new RuntimeException("mapCliViewName > Invalid CliViewName:[" + next.name() + "]");
 		}
 	}
 

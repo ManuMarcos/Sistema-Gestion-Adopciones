@@ -38,8 +38,9 @@ public class LoginView implements ICliView {
 		case opcion_Ingresar:
 			return mostrarIngresarUsuario();
 		case opcion_Salir:
-		default:
 			return CodigosRetorno.SALIR;
+		default:
+			throw new RuntimeException("pedirOpcionesYProcesar > opcion invalida :[" + opcion + "]");
 		}
 	}
 	
