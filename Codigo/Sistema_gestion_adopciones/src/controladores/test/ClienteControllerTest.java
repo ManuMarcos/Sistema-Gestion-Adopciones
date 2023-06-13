@@ -2,21 +2,27 @@ package controladores.test;
 
 import controladores.ClienteController;
 import vistas.ClienteView;
+import vistas.enumeraciones.CliViewNames;
 
 public class ClienteControllerTest {
 
 	public static void main(String[] args) {
-		System.out.println("ClienteControllerTest BEGIN");		
-		// TEST APP MAIN LOOP
-		while(true) {
-			ClienteView vista = new ClienteView();
-			ClienteController controlador = new ClienteController(vista);
-			vista.setControlador(controlador);
-			vista.mostrarMenuCliente();
-			boolean ret_code = vista.pedirOpciones();
-			if(ret_code == false)
-				break;
+		System.err.println("ClienteControllerTest BEGIN");		
+		ClienteView vista = new ClienteView();
+		ClienteController controlador = new ClienteController(vista);
+		vista.setControlador(controlador);
+
+		CliViewNames next = CliViewNames.STAY;
+
+		while(next == CliViewNames.STAY) {
+			next = vista.procesar();
 		}
-		System.out.println("ClienteControllerTest END");
+		
+		if(next == CliViewNames.BACK) {
+			System.err.println("Se fue por back");
+		} else {
+			System.err.println("Error inesperado");
+		}
+		System.err.println("ClienteControllerTest END");
 	}
 }
