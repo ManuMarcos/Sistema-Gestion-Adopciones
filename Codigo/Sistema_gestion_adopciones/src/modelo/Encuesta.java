@@ -1,16 +1,12 @@
 package modelo;
 
-import modelo.enumeraciones.Estado;
+import modelo.dto.EncuestaDto;
 
 public class Encuesta {
 
-	private Estado estadoAnimal;
-	private Estado limpiezaLugar;
-	private Estado ambiente;
+	private EncuestaDto encuestaData;
 	
-	/*
 	public void completar(EncuestaDto encuestaDto) {
-		//completar
+		this.encuestaData = encuestaDto;
 	}
-	*/
 }

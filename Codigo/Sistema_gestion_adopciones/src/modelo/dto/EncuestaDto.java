@@ -1,4 +1,6 @@
-package model;
+package modelo.dto;
+
+import modelo.enumeraciones.Calificacion;
 
 public class EncuestaDto {
 	private Calificacion estadoAnimal;

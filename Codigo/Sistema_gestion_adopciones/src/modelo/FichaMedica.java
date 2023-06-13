@@ -19,4 +19,12 @@ public class FichaMedica {
 		//Por default pongo que se pueda exportar solo en PDF
 		this.formato = new FormatoPdf();
 	}
+	
+	public void exportar() {
+		formato.exportar(this);
+	}
+	
+	public void cambiarFormatoExportacion(IFormatoStrategy formato) {
+		this.formato = formato;
+	}
 }

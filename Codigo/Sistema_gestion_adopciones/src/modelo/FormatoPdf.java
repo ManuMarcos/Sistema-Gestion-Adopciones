@@ -2,12 +2,15 @@ package modelo;
 
 public class FormatoPdf implements IFormatoStrategy{
 
-	private AdapterFormatoPdf adapter;
+	private AdapterFormatoPDF adapter;
 
+	FormatoPdf() {
+		adapter = new AdapterFormatoPDF();
+	}
+	
 	@Override
-	public void exportar(FichaMedica fichaMedica) {
-		// TODO Auto-generated method stub
-		
+	public void exportar(FichaMedica fm) {
+		adapter.exportar(fm);
 	}
 	
 	

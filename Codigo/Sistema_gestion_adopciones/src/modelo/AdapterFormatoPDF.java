@@ -1,4 +1,4 @@
-package model;
+package modelo;
 
 public class AdapterFormatoPDF {
 	public void exportar(FichaMedica fm) {
