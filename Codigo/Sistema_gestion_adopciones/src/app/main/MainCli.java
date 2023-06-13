@@ -6,13 +6,13 @@ import controladores.ClienteController;
 import controladores.LoginController;
 import vistas.ClienteView;
 import vistas.LoginView;
-import vistas.MenuPrincipalCli;
+import vistas.MenuPrincipalView;
 import vistas.enumeraciones.CliViewNames;
 import vistas.utils.FormatoCli;
 import vistas.utils.ICliView;
 
 public class MainCli {
-	private MenuPrincipalCli vistaMenuPrincipal;
+	private MenuPrincipalView vistaMenuPrincipal;
 	
 	private LoginView vistaLogin;
 	private LoginController controladorLogin; 
@@ -24,7 +24,7 @@ public class MainCli {
 	
 	MainCli(){
 		stackCliView = new Stack<>();
-		vistaMenuPrincipal = new MenuPrincipalCli();
+		vistaMenuPrincipal = new MenuPrincipalView();
 
 		//Login
 		vistaLogin = new LoginView();

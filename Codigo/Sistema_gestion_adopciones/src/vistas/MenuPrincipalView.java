@@ -5,7 +5,7 @@ import vistas.utils.FormatoCli;
 import vistas.utils.ICliView;
 import vistas.utils.IngresoCli;
 
-public class MenuPrincipalCli implements ICliView {
+public class MenuPrincipalView implements ICliView {
 	private final static int MENU_ANIMALES   = 1;
 	private final static int MENU_ALARMAS    = 2;
 	private final static int MENU_CLIENTES   = 3;
