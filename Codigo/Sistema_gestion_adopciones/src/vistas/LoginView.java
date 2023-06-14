@@ -11,10 +11,6 @@ import vistas.utils.IngresoCli;
 public class LoginView implements ICliView {
 	private LoginController controlador;
 
-	private enum CodigosRetorno {
-		LOGIN_OK, LOGIN_ERROR, REGISTRO_OK, REGISTRO_ERROR, SALIR
-	}
-
 	private static final String[] opciones = { "Registrarse", "Ingresar", "Salir" };
 	private static final int opcion_Registrarse = 1;
 	private static final int opcion_Ingresar = 2;
@@ -25,7 +21,7 @@ public class LoginView implements ICliView {
 		FormatoCli.printOpciones(opciones);
 	}
 
-	private CodigosRetorno pedirOpcionesYProcesar() {
+	private LoginController.CodigosRetorno pedirOpcionesYProcesar() {
 		int opcion = IngresoCli.solicitarOpcion(opciones.length);
 		switch (opcion) {
 		case opcion_Registrarse:
@@ -33,13 +29,13 @@ public class LoginView implements ICliView {
 		case opcion_Ingresar:
 			return mostrarIngresarUsuario();
 		case opcion_Salir:
-			return CodigosRetorno.SALIR;
+			return LoginController.CodigosRetorno.SALIR;
 		default:
 			throw new RuntimeException("pedirOpcionesYProcesar > opcion invalida :[" + opcion + "]");
 		}
 	}
 
-	private CodigosRetorno mostrarRegistroUsuario() {
+	private LoginController.CodigosRetorno mostrarRegistroUsuario() {
 		FormatoCli.printCabecera("Nuevo Usuario");
 
 		UsuarioDto usuario = new UsuarioDto();
@@ -47,14 +43,13 @@ public class LoginView implements ICliView {
 		usuario.contrasena = IngresoCli.solicitarStringNoNulo("Ingrese una contraseña: ");
 		usuario.tipoUsuario = this.solicitarOpcionTipoUsuario();
 
-		boolean res = controlador.registrarUsuario(usuario);
-		if (res) {
+		LoginController.CodigosRetorno res = controlador.registrarUsuario(usuario);
+		if (res == LoginController.CodigosRetorno.REGISTRO_OK) {
 			System.out.println("Usuario registrado exitosamente");
-			return CodigosRetorno.REGISTRO_OK;
 		} else {
 			System.out.println("Error al registrarse.");
-			return CodigosRetorno.REGISTRO_ERROR;
 		}
+		return res;
 	}
 
 	private TipoUsuario solicitarOpcionTipoUsuario() {
@@ -62,20 +57,19 @@ public class LoginView implements ICliView {
 		return (IngresoCli.solicitarOpcion(2) == 1) ? TipoUsuario.VETERINARIO : TipoUsuario.VISITADOR;
 	}
 
-	private CodigosRetorno mostrarIngresarUsuario() {
+	private LoginController.CodigosRetorno mostrarIngresarUsuario() {
 		FormatoCli.printCabecera("Ingreso Usuario");
 		UsuarioDto usuario = new UsuarioDto();
 		usuario.usuario = IngresoCli.solicitarStringNoNulo("Ingrese su usuario: ");
 		usuario.contrasena = IngresoCli.solicitarStringNoNulo("Ingrese su contraseña: ");
 
-		boolean res = controlador.ingresarUsuario(usuario);
-		if (res) {
+		LoginController.CodigosRetorno res = controlador.ingresarUsuario(usuario);
+		if (res == LoginController.CodigosRetorno.LOGIN_OK) {
 			System.out.println("Ingreso exitoso");
-			return CodigosRetorno.LOGIN_OK;
 		} else {
 			System.out.println("Error al ingresar.");
-			return CodigosRetorno.LOGIN_ERROR;
 		}
+		return res;
 	}
 
 	public void setControlador(LoginController controlador) {
@@ -85,10 +79,10 @@ public class LoginView implements ICliView {
 	@Override
 	public CliViewNames procesar() {
 		mostrarMenuLogin();
-		LoginView.CodigosRetorno retCode = pedirOpcionesYProcesar();
-		if (retCode == LoginView.CodigosRetorno.SALIR)
+		LoginController.CodigosRetorno retCode = pedirOpcionesYProcesar();
+		if (retCode == LoginController.CodigosRetorno.SALIR)
 			return CliViewNames.BACK;
-		if (retCode != LoginView.CodigosRetorno.LOGIN_OK) {
+		if (retCode != LoginController.CodigosRetorno.LOGIN_OK) {
 			return CliViewNames.STAY;
 		}
 		return CliViewNames.MENU_PRINCIPAL;

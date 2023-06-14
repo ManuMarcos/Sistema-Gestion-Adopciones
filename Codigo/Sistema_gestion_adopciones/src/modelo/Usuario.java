@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.LoginController;
 import modelo.dto.UsuarioDto;
 
 public class Usuario {	
@@ -14,12 +15,12 @@ public class Usuario {
 		this.auth = new AutenticadorFalso();
 	}
 	
-	public boolean registrar() {
+	public LoginController.CodigosRetorno registrar() {
 		auth.registrarUsuario(usuarioData);
 		return guardarUsuario(usuarioData);
 	}
 
-	public boolean ingresar() {
+	public LoginController.CodigosRetorno ingresar() {
 		auth.iniciarSesion(usuarioData);
 		return validarUsuarioExiste(usuarioData);
 	}
@@ -27,25 +28,25 @@ public class Usuario {
 	// { InMemory
 	private static List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
 	
-	private static boolean guardarUsuario(UsuarioDto usuarioData) {
+	private static LoginController.CodigosRetorno guardarUsuario(UsuarioDto usuarioData) {
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
 			if(usuarioData.usuario.equals(usuarioAlmacenado.usuario)) {
 				// Usuario ya existente.
-				return false;
+				return LoginController.CodigosRetorno.REGISTRO_ERROR;
 			}
 		}
 		usuarios.add(usuarioData);
-		return true;
+		return LoginController.CodigosRetorno.REGISTRO_OK;
 	}
 	
-	private static boolean validarUsuarioExiste(UsuarioDto usuarioData) {
+	private static LoginController.CodigosRetorno validarUsuarioExiste(UsuarioDto usuarioData) {
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
 			if(usuarioData.equals(usuarioAlmacenado)) {
-				return true;
+				return LoginController.CodigosRetorno.LOGIN_OK;
 			}
 		}
 		// usuario no existente
-		return false;
+		return LoginController.CodigosRetorno.LOGIN_ERROR;
 	}
 	// } InMemory
 

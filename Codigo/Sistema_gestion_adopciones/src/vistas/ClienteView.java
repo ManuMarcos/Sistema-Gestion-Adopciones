@@ -11,10 +11,6 @@ import java.util.ArrayList;
 public class ClienteView implements ICliView {
 	private ClienteController controlador;
 
-	private enum CodigosRetorno {
-		ALTA_CLIENTE_OK, ALTA_CLIENTE_ERROR, BUSCAR_CLIENTE_OK, BUSCAR_CLIENTE_NOT_FOUND, ATRAS
-	}
-
 	private static final String[] opciones = { "Alta", "Búsqueda", "Atrás" };
 	private static final int opcion_Alta = 1;
 	private static final int opcion_Busqueda = 2;
@@ -25,7 +21,7 @@ public class ClienteView implements ICliView {
 		FormatoCli.printOpciones(opciones);
 	}
 
-	private CodigosRetorno pedirOpcionesYProcesar() {
+	private ClienteController.CodigosRetorno pedirOpcionesYProcesar() {
 		int opcion = IngresoCli.solicitarOpcion(opciones.length);
 		switch (opcion) {
 		case opcion_Alta:
@@ -33,13 +29,13 @@ public class ClienteView implements ICliView {
 		case opcion_Busqueda:
 			return mostrarBusquedaCliente();
 		case opcion_Atras:
-			return CodigosRetorno.ATRAS;
+			return ClienteController.CodigosRetorno.ATRAS;
 		default:
 			throw new RuntimeException("pedirOpciones > opcion invalida :[" + opcion + "]");
 		}
 	}
 
-	public CodigosRetorno mostrarAltaCliente() {
+	public ClienteController.CodigosRetorno mostrarAltaCliente() {
 		FormatoCli.printCabecera("Alta Cliente");
 		ClienteDto clienteDatos = new ClienteDto();
 
@@ -56,27 +52,26 @@ public class ClienteView implements ICliView {
 		clienteDatos.animalesDeInteres.add("Gato");
 		clienteDatos.animalesDeInteres.add("Perro");
 
-		boolean res = controlador.registrarCliente(clienteDatos);
-		if (res) {
+		ClienteController.CodigosRetorno res = controlador.registrarCliente(clienteDatos);
+		if (res == ClienteController.CodigosRetorno.ALTA_CLIENTE_OK) {
 			System.out.println("Cliente registrado exitosamente");
-			return CodigosRetorno.ALTA_CLIENTE_OK;
 		} else {
 			System.out.println("Error al registrar.");
-			return CodigosRetorno.ALTA_CLIENTE_ERROR;
 		}
+		return res;
 	}
 
-	public CodigosRetorno mostrarBusquedaCliente() {
+	public ClienteController.CodigosRetorno mostrarBusquedaCliente() {
 		FormatoCli.printCabecera("Buscar Cliente");
 		String documento = IngresoCli.solicitarStringNoNulo("Ingrese documento: ");
 
 		ClienteDto cliente = controlador.buscarCliente(documento);
 		if (cliente == null) {
 			System.out.println("Usuario no encontrado.");
-			return CodigosRetorno.BUSCAR_CLIENTE_NOT_FOUND;
+			return ClienteController.CodigosRetorno.BUSCAR_CLIENTE_NOT_FOUND;
 		} else {
 			mostrarDatosCliente(cliente);
-			return CodigosRetorno.BUSCAR_CLIENTE_OK;
+			return ClienteController.CodigosRetorno.BUSCAR_CLIENTE_OK;
 		}
 	}
 
@@ -93,8 +88,8 @@ public class ClienteView implements ICliView {
 	@Override
 	public CliViewNames procesar() {
 		mostrarMenuCliente();
-		CodigosRetorno retCode = pedirOpcionesYProcesar();
-		if (retCode == CodigosRetorno.ATRAS) {
+		ClienteController.CodigosRetorno retCode = pedirOpcionesYProcesar();
+		if (retCode == ClienteController.CodigosRetorno.ATRAS) {
 			return CliViewNames.BACK;
 		} else {
 			return CliViewNames.STAY;

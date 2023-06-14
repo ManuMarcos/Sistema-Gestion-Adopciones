@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.ClienteController;
 import modelo.dto.ClienteDto;
 
 public class Cliente {
@@ -15,22 +16,22 @@ public class Cliente {
 		this.adopciones = new ArrayList<Adopcion>(); //TODO: arreglar la "persistencia" de esto. Quizas usar Lista de IDs de adopcion en el DTO... No sé-
 	}
 
-	public boolean registrar() {
+	public ClienteController.CodigosRetorno registrar() {
 		return guardarCliente(this.getDto());
 	}
 
 	// { InMemory
 	private static List<ClienteDto> clientes = new ArrayList<ClienteDto>();
 	
-	private static boolean guardarCliente(ClienteDto clienteData) {
+	private static ClienteController.CodigosRetorno guardarCliente(ClienteDto clienteData) {
 		for (ClienteDto clienteAlmacenado : clientes) {
 			if(clienteData.documento.equals(clienteAlmacenado.documento)) {
 				// Cliente ya existente.
-				return false;
+				return ClienteController.CodigosRetorno.ALTA_CLIENTE_ERROR;
 			}
 		}
 		clientes.add(clienteData);
-		return true;
+		return ClienteController.CodigosRetorno.ALTA_CLIENTE_OK;
 	}
 	
 	public static Cliente buscarClientePorDocumento(String documento) {
