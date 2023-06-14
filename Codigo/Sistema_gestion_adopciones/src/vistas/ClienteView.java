@@ -1,10 +1,7 @@
 package vistas;
 
-import java.util.List;
-
 import controladores.ClienteController;
 import modelo.dto.ClienteDto;
-import modelo.enumeraciones.Ocupacion;
 import vistas.enumeraciones.CliViewNames;
 import vistas.utils.FormatoCli;
 import vistas.utils.ICliView;
@@ -13,30 +10,36 @@ import java.util.ArrayList;
 
 public class ClienteView implements ICliView {
 	private ClienteController controlador;
-	private static final String[] opciones = { "Alta", "Búsqueda", "Atrás" };
 
-	public void mostrarMenuCliente() {
+	private enum CodigosRetorno {
+		ALTA_CLIENTE_OK, ALTA_CLIENTE_ERROR, BUSCAR_CLIENTE_OK, BUSCAR_CLIENTE_NOT_FOUND, ATRAS
+	}
+
+	private static final String[] opciones = { "Alta", "Búsqueda", "Atrás" };
+	private static final int opcion_Alta = 1;
+	private static final int opcion_Busqueda = 2;
+	private static final int opcion_Atras = 3;
+
+	private void mostrarMenuCliente() {
 		FormatoCli.printCabecera("Menú Cliente");
 		FormatoCli.printOpciones(opciones);
 	}
 
-	public boolean pedirOpciones() {
+	private CodigosRetorno pedirOpcionesYProcesar() {
 		int opcion = IngresoCli.solicitarOpcion(opciones.length);
 		switch (opcion) {
-		case 1:
-			mostrarAltaCliente();
-			return true; // TODO: mejorar esto. true=quedarse.
-		case 2:
-			mostrarBusquedaCliente();
-			return true;
-		case 3:
-			return false;
+		case opcion_Alta:
+			return mostrarAltaCliente();
+		case opcion_Busqueda:
+			return mostrarBusquedaCliente();
+		case opcion_Atras:
+			return CodigosRetorno.ATRAS;
 		default:
 			throw new RuntimeException("pedirOpciones > opcion invalida :[" + opcion + "]");
 		}
 	}
 
-	public void mostrarAltaCliente() {
+	public CodigosRetorno mostrarAltaCliente() {
 		FormatoCli.printCabecera("Alta Cliente");
 		ClienteDto clienteDatos = new ClienteDto();
 
@@ -46,7 +49,7 @@ public class ClienteView implements ICliView {
 		clienteDatos.email = IngresoCli.solicitarStringNoNulo("Ingrese email: ");
 		clienteDatos.estadoCivil = IngresoCli.solicitarStringNoNulo("Ingrese estado civil: ");
 		clienteDatos.telefono = IngresoCli.solicitarStringNoNulo("Ingrese teléfono: ");
-		clienteDatos.setOcupacion(0); // TODO: completar el resto zzz
+		clienteDatos.setOcupacion(0); // TODO(ivo): completar el resto zzz
 		clienteDatos.tieneOtrasMascotas = false;
 		clienteDatos.motivoAdopta = "porque sí";
 		clienteDatos.animalesDeInteres = new ArrayList<String>();
@@ -56,28 +59,31 @@ public class ClienteView implements ICliView {
 		boolean res = controlador.registrarCliente(clienteDatos);
 		if (res) {
 			System.out.println("Cliente registrado exitosamente");
+			return CodigosRetorno.ALTA_CLIENTE_OK;
 		} else {
 			System.out.println("Error al registrar.");
+			return CodigosRetorno.ALTA_CLIENTE_ERROR;
 		}
-		mostrarMenuCliente();
 	}
 
-	public void mostrarBusquedaCliente() {
+	public CodigosRetorno mostrarBusquedaCliente() {
 		FormatoCli.printCabecera("Buscar Cliente");
 		String documento = IngresoCli.solicitarStringNoNulo("Ingrese documento: ");
 
 		ClienteDto cliente = controlador.buscarCliente(documento);
 		if (cliente == null) {
 			System.out.println("Usuario no encontrado.");
+			return CodigosRetorno.BUSCAR_CLIENTE_NOT_FOUND;
 		} else {
 			mostrarDatosCliente(cliente);
+			return CodigosRetorno.BUSCAR_CLIENTE_OK;
 		}
-		mostrarMenuCliente();
 	}
 
 	private void mostrarDatosCliente(ClienteDto cliente) {
 		// TODO mostrar datos del cliente
 		System.out.println("Nombre: " + cliente.nombre);
+		System.out.println("Todo: lo demas...");
 	}
 
 	public void setControlador(ClienteController controlador) {
@@ -87,11 +93,11 @@ public class ClienteView implements ICliView {
 	@Override
 	public CliViewNames procesar() {
 		mostrarMenuCliente();
-		boolean ret_code = pedirOpciones();
-		if(ret_code) {
-			return CliViewNames.STAY;
-		} else {
+		CodigosRetorno retCode = pedirOpcionesYProcesar();
+		if (retCode == CodigosRetorno.ATRAS) {
 			return CliViewNames.BACK;
+		} else {
+			return CliViewNames.STAY;
 		}
 	}
 

@@ -10,10 +10,6 @@ public class LoginController {
 	public LoginController(LoginView vista) {
 		this.vista = vista;
 	}
-		
-	public void mostrarMenuLogin() {
-		vista.mostrarMenuLogin();
-	}
 
 	public boolean registrarUsuario(UsuarioDto usuarioData) {
 		Usuario usuario = new Usuario(usuarioData);

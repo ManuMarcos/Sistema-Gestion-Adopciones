@@ -11,10 +11,6 @@ public class ClienteController {
 		this.vista = vista;
 	}
 
-	public void mostrarMenuCliente() {
-		vista.mostrarMenuCliente();
-	}
-
 	public boolean registrarCliente(ClienteDto clienteDatos) {
 		Cliente cliente = new Cliente(clienteDatos);
 		return cliente.registrar();
