@@ -34,10 +34,10 @@ public class Cliente {
 		return ClienteController.CodigosRetorno.ALTA_CLIENTE_OK;
 	}
 	
-	public static Cliente buscarClientePorDocumento(String documento) {
+	public static ClienteDto buscarClientePorDocumento(String documento) {
 		for (ClienteDto clienteAlmacenado : clientes) {
 			if(documento.equals(clienteAlmacenado.documento)) {
-				return new Cliente(clienteAlmacenado);
+				return new Cliente(clienteAlmacenado).getDto();
 			}
 		}
 		// cliente no existente
