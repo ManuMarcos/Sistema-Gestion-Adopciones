@@ -21,6 +21,7 @@ public class Animal {
 	private TipoAnimal tipo;
 	private List<Alarma> alarmas;
 	private FichaMedica fichaMedica;
+	private Adopcion adopcion;
 	
 	public Animal(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, 
 			TipoAnimal tipo) {
@@ -102,4 +103,7 @@ public class Animal {
 		return animalDto;
 	}
 	
+	public boolean esAdoptable() {
+		return this.estado == EstadoAnimal.SALUDABLE && this.tipo == TipoAnimal.DOMESTICO && adopcion == null;
+	}
 }
