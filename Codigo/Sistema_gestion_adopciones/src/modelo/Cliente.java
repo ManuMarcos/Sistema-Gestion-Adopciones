@@ -46,14 +46,14 @@ public class Cliente {
 		return ClienteController.CodigosRetorno.ALTA_CLIENTE_ERROR;
 	}
 
-	public static ClienteDto buscarClientePorDocumento(String documento) {
+	public static Cliente buscarClientePorDocumento(String documento) {
 		Cliente c = ClienteRepository.obtenerCliente(documento);
 		if (c == null)
 			return null;
-		return c.toDto();
+		return c;
 	}
 
-	private ClienteDto toDto() {
+	public ClienteDto toDto() {
 		ClienteDto cliente = new ClienteDto();
 		cliente.documento = this.documento;
 		cliente.nombre = this.nombre;
@@ -70,6 +70,10 @@ public class Cliente {
 
 	public String getDocumento() {
 		return this.documento;
+	}
+	
+	public int getAdopcionesRegistradas() {
+		return adopciones.size();
 	}
 
 }

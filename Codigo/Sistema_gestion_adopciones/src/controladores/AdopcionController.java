@@ -4,32 +4,39 @@ import modelo.Adopcion;
 import modelo.Animal;
 import modelo.Cliente;
 import modelo.Visitador;
+import modelo.dto.AdopcionDto;
 import modelo.dto.AltaAdopcionDto;
-import modelo.dto.ClienteDto;
-import modelo.dto.UsuarioDto;
 import modelo.enumeraciones.TipoUsuario;
+import vistas.AdopcionView;
 
 public class AdopcionController {
+	private AdopcionView vista;
 
 	public enum CodigosRetorno {
-		ERROR_ALTA_CLIENTE_NO_ENCONTRADO,
-		ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO,
-		ERROR_ALTA_ANIMAL_NO_ENCONTRADO,
-		ERROR_ALTA_NO_IMPLEMENTADA_DEL_TODO,
+		ERROR_ALTA_CLIENTE_NO_ENCONTRADO, ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO, ERROR_ALTA_ANIMAL_NO_ENCONTRADO,
+		ERROR_ALTA_CLIENTE_EXCEDE_LIMITE_ADOPCIONES, ALTA_OK, ERROR_ALTA_ANIMAL_NO_ADOPTABLE
+	}
+
+	public AdopcionController(AdopcionView vista) {
+		this.vista = vista;
 	}
 
 	public CodigosRetorno crearAdopcion(AltaAdopcionDto data) {
-		ClienteDto cliente = Cliente.buscarClientePorDocumento(data.documentoCliente);
-		if(cliente == null)
+		Cliente cliente = Cliente.buscarClientePorDocumento(data.documentoCliente);
+		if (cliente == null)
 			return CodigosRetorno.ERROR_ALTA_CLIENTE_NO_ENCONTRADO;
-		UsuarioDto visitador = Visitador.getVeterinario(data.usuarioDelVisitador);
-		if(visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
+		Visitador visitador = Visitador.getVisitador(data.usuarioDelVisitador);
+		if (visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
 			return CodigosRetorno.ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO;
-		Animal animal = null; //TODO: necesito forma de conesguir el animal por ID
-		Adopcion adopcion = new Adopcion(new Cliente(cliente), new Visitador(visitador), animal);
-		//TODO: adopcion me debería hacer un throw si no cumplo las precondiciones...
-		//adopcion.guardar();
-		return CodigosRetorno.ERROR_ALTA_NO_IMPLEMENTADA_DEL_TODO;
+		// TODO: necesito forma de conesguir el animal por ID. mientras, un null pa que
+		// reviente
+		Animal animal = null;
+		Adopcion adopcion = new Adopcion(cliente, visitador, animal);
+		return adopcion.guardar();
+	}
+
+	public AdopcionDto buscarAdopcionPorID(String id) {
+		return Adopcion.buscar(Integer.parseInt(id)).toDto();
 	}
 
 }

@@ -21,6 +21,9 @@ public class ClienteController {
 	}
 
 	public ClienteDto buscarCliente(String documento) {
-		return Cliente.buscarClientePorDocumento(documento);
+		Cliente c = Cliente.buscarClientePorDocumento(documento);
+		if (c != null)
+			return c.toDto();
+		return null;
 	}
 }
