@@ -8,7 +8,7 @@ public class LoginController {
 	private LoginView vista;
 
 	public enum CodigosRetorno {
-		LOGIN_OK, LOGIN_ERROR, REGISTRO_OK, REGISTRO_ERROR, SALIR
+		LOGIN_OK, LOGIN_ERROR, REGISTRO_OK, REGISTRO_ERROR
 	}
 
 	
