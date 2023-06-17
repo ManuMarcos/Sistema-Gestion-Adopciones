@@ -5,6 +5,7 @@ import java.util.List;
 
 import controladores.ClienteController;
 import modelo.dto.ClienteDto;
+import modelo.enumeraciones.Ocupacion;
 
 public class Cliente {
 
@@ -22,6 +23,27 @@ public class Cliente {
 
 	// { InMemory
 	private static List<ClienteDto> clientes = new ArrayList<ClienteDto>();
+	
+	static {
+		addHardcodeManoloCliente();
+	}
+
+	private static void addHardcodeManoloCliente() {
+		ClienteDto manolo = new ClienteDto(); // cliente #1 hardcodeado
+		manolo.documento = "40777888";
+		manolo.nombre = "Manolo" ;
+		manolo.apellido= "García" ;
+		manolo.email = "mgarcia@uade.edu.ar" ;
+		manolo.estadoCivil  = "Casado" ;
+		manolo.telefono  = "1144448888" ;
+		manolo.setOcupacion(0);
+		manolo.tieneOtrasMascotas= true ;
+		manolo.motivoAdopta = "me gustan los animales" ;
+		manolo.animalesDeInteres = new ArrayList<String>();
+		manolo.animalesDeInteres.add("Perro");
+		manolo.animalesDeInteres.add("Gato");
+		clientes.add(manolo);
+	}
 
 	private static ClienteController.CodigosRetorno guardarCliente(ClienteDto clienteData) {
 		if (clienteData.documento.isEmpty()) // seria la PK

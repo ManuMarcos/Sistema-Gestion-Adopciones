@@ -83,14 +83,21 @@ public class ClienteView implements ICliView {
 			return ClienteController.CodigosRetorno.BUSCAR_CLIENTE_NOT_FOUND;
 		} else {
 			mostrarDatosCliente(cliente);
+			System.out.println("Usuario encontrado.");
 			return ClienteController.CodigosRetorno.BUSCAR_CLIENTE_OK;
 		}
 	}
 
-	private void mostrarDatosCliente(ClienteDto cliente) {
-		// TODO mostrar datos del cliente
-		System.out.println("Nombre: " + cliente.nombre);
-		System.out.println("Todo: lo demas...");
+	private static void mostrarDatosCliente(ClienteDto cliente) {
+		System.out.println("  Nombre: " + cliente.nombre);
+		System.out.println("  Apellido: " + cliente.apellido);
+		System.out.println("  Email: " + cliente.email);		
+		System.out.println("  Telefono: " + cliente.telefono);
+		System.out.println("  Tiene otras mascotas: " + (cliente.tieneOtrasMascotas ? "Si" : "No"));
+		System.out.println("  Animales de interes: " );
+		for(String animal : cliente.animalesDeInteres) {
+			System.out.println("    - " + animal);
+		}
 	}
 
 	public void setControlador(ClienteController controlador) {

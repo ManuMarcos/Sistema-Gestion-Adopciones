@@ -5,16 +5,17 @@ import java.util.List;
 
 import controladores.LoginController;
 import modelo.dto.UsuarioDto;
+import modelo.enumeraciones.TipoUsuario;
 
-public class Usuario {	
+public class Usuario {
 	private UsuarioDto usuarioData;
 	private IAutenticador auth;
-	
-	public Usuario(UsuarioDto usuarioData){
+
+	public Usuario(UsuarioDto usuarioData) {
 		this.usuarioData = usuarioData;
 		this.auth = new AutenticadorFalso();
 	}
-	
+
 	public LoginController.CodigosRetorno registrar() {
 		auth.registrarUsuario(usuarioData);
 		return guardarUsuario(usuarioData);
@@ -28,9 +29,30 @@ public class Usuario {
 	// { InMemory
 	private static List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
 	
+	static {
+		addHardcodeGordoAdminVeterinario();
+		addHardcodeGordoAdminVisitador();
+	}
+
+	private static void addHardcodeGordoAdminVeterinario() {
+		UsuarioDto admin = new UsuarioDto();
+		admin.usuario = "admin";
+		admin.contrasena = "admin";
+		admin.tipoUsuario = TipoUsuario.VETERINARIO;
+		usuarios.add(admin);
+	}
+	
+	private static void addHardcodeGordoAdminVisitador() {
+		UsuarioDto admin = new UsuarioDto();
+		admin.usuario = "admin2";
+		admin.contrasena = "admin2";
+		admin.tipoUsuario = TipoUsuario.VETERINARIO;
+		usuarios.add(admin);
+	}
+
 	private static LoginController.CodigosRetorno guardarUsuario(UsuarioDto usuarioData) {
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
-			if(usuarioData.usuario.equals(usuarioAlmacenado.usuario)) {
+			if (usuarioData.usuario.equals(usuarioAlmacenado.usuario)) {
 				// Usuario ya existente.
 				return LoginController.CodigosRetorno.REGISTRO_ERROR;
 			}
@@ -38,10 +60,10 @@ public class Usuario {
 		usuarios.add(usuarioData);
 		return LoginController.CodigosRetorno.REGISTRO_OK;
 	}
-	
+
 	private static LoginController.CodigosRetorno validarUsuarioExiste(UsuarioDto usuarioData) {
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
-			if(usuarioData.equals(usuarioAlmacenado)) {
+			if (usuarioData.equals(usuarioAlmacenado)) {
 				return LoginController.CodigosRetorno.LOGIN_OK;
 			}
 		}
