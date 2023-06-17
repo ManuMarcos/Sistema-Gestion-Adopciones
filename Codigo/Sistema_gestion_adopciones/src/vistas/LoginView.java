@@ -56,8 +56,9 @@ public class LoginView implements ICliView {
 				return CliViewNames.STAY;
 			}
 		}
-
 	}
+
+	//
 
 	private static final String[] nombresOpciones = { "Registrarse", "Ingresar", "Salir" };
 	private List<ICliOption> opciones;
@@ -74,14 +75,10 @@ public class LoginView implements ICliView {
 		opciones.add(new ICliOption.OptionBack());
 	}
 
-	private void mostrarMenuLogin() {
-		FormatoCli.printCabecera("Menú Login");
-		FormatoCli.printOpciones(nombresOpciones);
-	}
-
 	@Override
 	public CliViewNames procesar() {
-		mostrarMenuLogin();
+		FormatoCli.printCabecera("Menú Login");
+		FormatoCli.printOpciones(nombresOpciones);
 		int opcion = IngresoCli.solicitarOpcion(nombresOpciones.length);
 		return opciones.get(opcion - 1).doAction();
 	}
