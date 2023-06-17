@@ -1,17 +1,16 @@
  package app.main;
 
-import java.util.Stack;
-
 import controladores.ClienteController;
 import controladores.LoginController;
 import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;
 import vistas.enumeraciones.CliViewNames;
+import vistas.utils.CliViewRunner;
 import vistas.utils.FormatoCli;
 import vistas.utils.ICliView;
 
-public class MainCli {
+public class MainCli extends CliViewRunner {
 	private MenuPrincipalView vistaMenuPrincipal;
 	
 	private LoginView vistaLogin;
@@ -19,11 +18,8 @@ public class MainCli {
 	
 	private ClienteView vistaCliente;
 	private ClienteController controladorCliente;
-	
-	public Stack<ICliView> stackCliView;
-	
+		
 	MainCli(){
-		stackCliView = new Stack<>();
 		vistaMenuPrincipal = new MenuPrincipalView();
 
 		//Login
@@ -36,7 +32,7 @@ public class MainCli {
 		controladorCliente = new ClienteController(vistaCliente);
 		vistaCliente.setControlador(controladorCliente);
 
-		stackCliView.push(vistaLogin);
+		setFirstView(vistaLogin);
 	}
 	
 	public void mostrarCabeceraApp() {
@@ -50,20 +46,9 @@ public class MainCli {
 		app.run();
 		System.out.println("Ha salido del sistema.");
 	}
-
-	private void run() {
-		while(!stackCliView.isEmpty()) {
-			CliViewNames nextName = stackCliView.peek().procesar();
-			ICliView next =  mapCliViewName(nextName);
-			if(next != null) {
-				stackCliView.push(next);
-			} else if(nextName == CliViewNames.BACK) {
-				stackCliView.pop();
-			}
-		}
-	}
 	
-	private ICliView mapCliViewName(CliViewNames next) {
+	@Override
+	protected ICliView mapCliViewName(CliViewNames next) {
 		switch(next) {
 		case MENU_PRINCIPAL:
 			return vistaMenuPrincipal;

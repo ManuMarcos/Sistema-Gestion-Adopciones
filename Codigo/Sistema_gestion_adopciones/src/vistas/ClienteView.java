@@ -37,21 +37,7 @@ public class ClienteView implements ICliView {
 
 	public ClienteController.CodigosRetorno mostrarAltaCliente() {
 		FormatoCli.printCabecera("Alta Cliente");
-		ClienteDto clienteDatos = new ClienteDto();
-
-		clienteDatos.documento = IngresoCli.solicitarStringNoNulo("Ingrese documento: ");
-		clienteDatos.nombre = IngresoCli.solicitarStringNoNulo("Ingrese nombre: ");
-		clienteDatos.apellido = IngresoCli.solicitarStringNoNulo("Ingrese apellido: ");
-		clienteDatos.email = IngresoCli.solicitarStringNoNulo("Ingrese email: ");
-		clienteDatos.estadoCivil = IngresoCli.solicitarStringNoNulo("Ingrese estado civil: ");
-		clienteDatos.telefono = IngresoCli.solicitarStringNoNulo("Ingrese teléfono: ");
-		clienteDatos.setOcupacion(0); // TODO(ivo): completar el resto zzz
-		clienteDatos.tieneOtrasMascotas = false;
-		clienteDatos.motivoAdopta = "porque sí";
-		clienteDatos.animalesDeInteres = new ArrayList<String>();
-		clienteDatos.animalesDeInteres.add("Gato");
-		clienteDatos.animalesDeInteres.add("Perro");
-
+		ClienteDto clienteDatos = cargarDatosCliente();
 		ClienteController.CodigosRetorno res = controlador.registrarCliente(clienteDatos);
 		if (res == ClienteController.CodigosRetorno.ALTA_CLIENTE_OK) {
 			System.out.println("Cliente registrado exitosamente");
@@ -59,6 +45,32 @@ public class ClienteView implements ICliView {
 			System.out.println("Error al registrar.");
 		}
 		return res;
+	}
+
+	private ClienteDto cargarDatosCliente() {
+		ClienteDto clienteDatos = new ClienteDto();
+		clienteDatos.documento = IngresoCli.solicitarStringNumericoNulo("Ingrese documento(numerico): ");
+		clienteDatos.nombre = IngresoCli.solicitarStringNoNulo("Ingrese nombre: ");
+		clienteDatos.apellido = IngresoCli.solicitarStringNoNulo("Ingrese apellido: ");
+		clienteDatos.email = IngresoCli.solicitarEmail("Ingrese email: ");
+		clienteDatos.estadoCivil = IngresoCli.solicitarStringNoNulo("Ingrese estado civil: ");
+		clienteDatos.telefono = IngresoCli.solicitarStringNoNulo("Ingrese teléfono: ");
+		clienteDatos.setOcupacion(0); // meh
+		clienteDatos.tieneOtrasMascotas = IngresoCli.solicitarSiNo("Tiene otras mascotas? (Y/N): ");
+		clienteDatos.motivoAdopta = IngresoCli.solicitarStringNoNulo("Ingrese motivo adopta: ");
+		clienteDatos.animalesDeInteres = new ArrayList<String>();
+		{
+			boolean fin = false;
+			do {
+				String inputAnimalesInteres = IngresoCli
+						.solicitarStringNoNulo("Ingrese que animales le interesan (FIN para terminar ingreso): ");
+				if (inputAnimalesInteres.equals("FIN"))
+					fin = true;
+				else
+					clienteDatos.animalesDeInteres.add(inputAnimalesInteres);
+			} while (!fin);
+		}
+		return clienteDatos;
 	}
 
 	public ClienteController.CodigosRetorno mostrarBusquedaCliente() {

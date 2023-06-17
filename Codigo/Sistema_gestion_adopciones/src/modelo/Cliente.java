@@ -13,7 +13,7 @@ public class Cliente {
 
 	public Cliente(ClienteDto clienteDatos) {
 		this.clienteDatos = clienteDatos;
-		this.adopciones = new ArrayList<Adopcion>(); //TODO: arreglar la "persistencia" de esto. Quizas usar Lista de IDs de adopcion en el DTO... No sé-
+		this.adopciones = new ArrayList<Adopcion>(); // TODO: buscar adopciones asociadas al cliente
 	}
 
 	public ClienteController.CodigosRetorno registrar() {
@@ -22,10 +22,12 @@ public class Cliente {
 
 	// { InMemory
 	private static List<ClienteDto> clientes = new ArrayList<ClienteDto>();
-	
+
 	private static ClienteController.CodigosRetorno guardarCliente(ClienteDto clienteData) {
+		if (clienteData.documento.isEmpty()) // seria la PK
+			return ClienteController.CodigosRetorno.ALTA_CLIENTE_ERROR;
 		for (ClienteDto clienteAlmacenado : clientes) {
-			if(clienteData.documento.equals(clienteAlmacenado.documento)) {
+			if (clienteData.documento.equals(clienteAlmacenado.documento)) {
 				// Cliente ya existente.
 				return ClienteController.CodigosRetorno.ALTA_CLIENTE_ERROR;
 			}
@@ -33,10 +35,10 @@ public class Cliente {
 		clientes.add(clienteData);
 		return ClienteController.CodigosRetorno.ALTA_CLIENTE_OK;
 	}
-	
+
 	public static ClienteDto buscarClientePorDocumento(String documento) {
 		for (ClienteDto clienteAlmacenado : clientes) {
-			if(documento.equals(clienteAlmacenado.documento)) {
+			if (documento.equals(clienteAlmacenado.documento)) {
 				return new Cliente(clienteAlmacenado).getDto();
 			}
 		}
@@ -48,6 +50,5 @@ public class Cliente {
 	public ClienteDto getDto() {
 		return this.clienteDatos;
 	}
-	
-	
+
 }
