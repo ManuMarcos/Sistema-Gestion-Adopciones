@@ -13,11 +13,6 @@ public class Visitador extends Usuario {
 	// y cambiarlo por un bool esVeterinario en Usuario ?
 
 	public static UsuarioDto getVeterinario(String usuario) {
-		for (UsuarioDto usuarioData : Usuario.usuarios) {
-			if (usuarioData.usuario.equals(usuario)) {
-				return usuarioData;
-			}
-		}
 		return null;
 	}
 }

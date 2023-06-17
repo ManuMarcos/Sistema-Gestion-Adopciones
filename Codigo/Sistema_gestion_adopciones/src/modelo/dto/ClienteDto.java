@@ -10,7 +10,7 @@ public class ClienteDto {
 	public String email;
 	public String estadoCivil;
 	public String telefono;
-	private Ocupacion ocupacion;
+	public Ocupacion ocupacion;
 	public boolean tieneOtrasMascotas;
 	public String motivoAdopta;
 	public List<String> animalesDeInteres;

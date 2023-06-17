@@ -1,79 +1,44 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import controladores.LoginController;
 import modelo.dto.UsuarioDto;
 import modelo.enumeraciones.TipoUsuario;
+import repositorios.UsuarioRepository;
 
 public class Usuario {
-	private UsuarioDto usuarioData;
+	public String nombreUsuario;
+	public String contrasena;
+	public TipoUsuario tipoUsuario; // dejar? sacar?
+
 	private IAutenticador auth;
 
+	public boolean equals(Usuario u) {
+		return this.nombreUsuario.equals(u.nombreUsuario);
+	}
+
 	public Usuario(UsuarioDto usuarioData) {
-		this.usuarioData = usuarioData;
+		this.nombreUsuario = usuarioData.nombreUsuario;
+		this.contrasena = usuarioData.contrasena;
+		this.tipoUsuario = usuarioData.tipoUsuario;
 		this.auth = new AutenticadorFalso();
 	}
 
 	public LoginController.CodigosRetorno registrar() {
-		auth.registrarUsuario(usuarioData);
-		return guardarUsuario(usuarioData);
+		auth.registrarUsuario(nombreUsuario, contrasena);
+		boolean resultOk = UsuarioRepository.guardarUsuario(this);
+		if (resultOk)
+			return LoginController.CodigosRetorno.REGISTRO_OK;
+		return LoginController.CodigosRetorno.REGISTRO_ERROR;
 	}
 
 	public LoginController.CodigosRetorno ingresar() {
-		auth.iniciarSesion(usuarioData);
-		return validarUsuarioExiste(usuarioData);
+		auth.iniciarSesion(nombreUsuario, contrasena);
+		Usuario u = UsuarioRepository.obtenerUsuario(nombreUsuario);
+		return (u == null) ? LoginController.CodigosRetorno.LOGIN_ERROR : LoginController.CodigosRetorno.LOGIN_OK;
 	}
 
-	// { InMemory
-	protected static List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
-
-	static {
-		addHardcodeGordoAdminVeterinario();
-		addHardcodeGordoAdminVisitador();
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
-
-	private static void addHardcodeGordoAdminVeterinario() {
-		UsuarioDto admin = new UsuarioDto();
-		admin.usuario = "admin";
-		admin.contrasena = "admin";
-		admin.tipoUsuario = TipoUsuario.VETERINARIO;
-		usuarios.add(admin);
-	}
-
-	private static void addHardcodeGordoAdminVisitador() {
-		UsuarioDto admin = new UsuarioDto();
-		admin.usuario = "admin2";
-		admin.contrasena = "admin2";
-		admin.tipoUsuario = TipoUsuario.VETERINARIO;
-		usuarios.add(admin);
-	}
-
-	private static LoginController.CodigosRetorno guardarUsuario(UsuarioDto usuarioData) {
-		if (usuarioData.usuario.isEmpty() || usuarioData.contrasena.isEmpty())
-			return LoginController.CodigosRetorno.REGISTRO_ERROR;
-		for (UsuarioDto usuarioAlmacenado : usuarios) {
-			if (usuarioData.usuario.equals(usuarioAlmacenado.usuario)) {
-				// Usuario ya existente.
-				return LoginController.CodigosRetorno.REGISTRO_ERROR;
-			}
-		}
-		usuarios.add(usuarioData);
-		return LoginController.CodigosRetorno.REGISTRO_OK;
-	}
-
-	private static LoginController.CodigosRetorno validarUsuarioExiste(UsuarioDto usuarioData) {
-		if (usuarioData.usuario.isEmpty() || usuarioData.contrasena.isEmpty())
-			return LoginController.CodigosRetorno.LOGIN_ERROR;
-		for (UsuarioDto usuarioAlmacenado : usuarios) {
-			if (usuarioData.equals(usuarioAlmacenado)) {
-				return LoginController.CodigosRetorno.LOGIN_OK;
-			}
-		}
-		// usuario no existente
-		return LoginController.CodigosRetorno.LOGIN_ERROR;
-	}
-	// } InMemory
 
 }

@@ -20,7 +20,7 @@ public class LoginView implements ICliView {
 			FormatoCli.printCabecera("Nuevo Usuario");
 
 			UsuarioDto usuario = new UsuarioDto();
-			usuario.usuario = IngresoCli.solicitarStringNoNulo("Ingrese un usuario: ");
+			usuario.nombreUsuario = IngresoCli.solicitarStringNoNulo("Ingrese un usuario: ");
 			usuario.contrasena = IngresoCli.solicitarStringNoNulo("Ingrese una contraseña: ");
 			usuario.tipoUsuario = this.solicitarOpcionTipoUsuario();
 
@@ -44,7 +44,7 @@ public class LoginView implements ICliView {
 		public CliViewNames doAction() {
 			FormatoCli.printCabecera("Ingreso Usuario");
 			UsuarioDto usuario = new UsuarioDto();
-			usuario.usuario = IngresoCli.solicitarStringNoNulo("Ingrese su usuario: ");
+			usuario.nombreUsuario = IngresoCli.solicitarStringNoNulo("Ingrese su usuario: ");
 			usuario.contrasena = IngresoCli.solicitarStringNoNulo("Ingrese su contraseña: ");
 
 			LoginController.CodigosRetorno res = controlador.ingresarUsuario(usuario);
