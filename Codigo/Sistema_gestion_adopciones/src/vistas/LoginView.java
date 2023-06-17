@@ -59,14 +59,6 @@ public class LoginView implements ICliView {
 
 	}
 
-	class OptionSalir implements ICliOption {
-		@Override
-		public CliViewNames doAction() {
-			return CliViewNames.BACK;
-		}
-
-	}
-
 	private static final String[] nombresOpciones = { "Registrarse", "Ingresar", "Salir" };
 	private List<ICliOption> opciones;
 	private LoginController controlador;
@@ -79,7 +71,7 @@ public class LoginView implements ICliView {
 		opciones = new ArrayList<>();
 		opciones.add(new OptionRegistroUsuario());
 		opciones.add(new OptionLoginUsuario());
-		opciones.add(new OptionSalir());
+		opciones.add(new ICliOption.OptionBack());
 	}
 
 	private void mostrarMenuLogin() {
