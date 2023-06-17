@@ -27,8 +27,8 @@ public class Usuario {
 	}
 
 	// { InMemory
-	private static List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
-	
+	protected static List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
+
 	static {
 		addHardcodeGordoAdminVeterinario();
 		addHardcodeGordoAdminVisitador();
@@ -41,7 +41,7 @@ public class Usuario {
 		admin.tipoUsuario = TipoUsuario.VETERINARIO;
 		usuarios.add(admin);
 	}
-	
+
 	private static void addHardcodeGordoAdminVisitador() {
 		UsuarioDto admin = new UsuarioDto();
 		admin.usuario = "admin2";
@@ -51,6 +51,8 @@ public class Usuario {
 	}
 
 	private static LoginController.CodigosRetorno guardarUsuario(UsuarioDto usuarioData) {
+		if (usuarioData.usuario.isEmpty() || usuarioData.contrasena.isEmpty())
+			return LoginController.CodigosRetorno.REGISTRO_ERROR;
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
 			if (usuarioData.usuario.equals(usuarioAlmacenado.usuario)) {
 				// Usuario ya existente.
@@ -62,6 +64,8 @@ public class Usuario {
 	}
 
 	private static LoginController.CodigosRetorno validarUsuarioExiste(UsuarioDto usuarioData) {
+		if (usuarioData.usuario.isEmpty() || usuarioData.contrasena.isEmpty())
+			return LoginController.CodigosRetorno.LOGIN_ERROR;
 		for (UsuarioDto usuarioAlmacenado : usuarios) {
 			if (usuarioData.equals(usuarioAlmacenado)) {
 				return LoginController.CodigosRetorno.LOGIN_OK;
