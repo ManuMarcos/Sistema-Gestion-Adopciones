@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controladores.AdopcionController;
+import controladores.AdopcionController.CodigosRetorno;
 import modelo.dto.AdopcionDto;
 import modelo.dto.AltaAdopcionDto;
 import vistas.enumeraciones.CliViewNames;
@@ -14,6 +15,12 @@ import vistas.utils.IngresoCli;
 
 public class AdopcionView implements ICliView {
 
+	private void mostrarInfoAdopcion(AdopcionDto data) {
+		// TODO: se podria hacer una busqueda por cada id para traer mas datos...
+		System.out.println("  Documento Cliente: " + data.documentoCliente);
+		System.out.println("  Id Animal: " + data.idAnimal);
+	}
+
 	class OptionNuevaAdopcion implements ICliOption {
 		@Override
 		public CliViewNames doAction() {
@@ -23,6 +30,11 @@ public class AdopcionView implements ICliView {
 			data.documentoCliente = IngresoCli.solicitarStringNumericoNulo("Documento del cliente: ");
 			data.idAnimal = Integer.parseInt(IngresoCli.solicitarStringNoNulo("Ingrese identificador del Animal: "));
 			var ret = controlador.crearAdopcion(data);
+			mostrarMensajeSegunRta(ret);
+			return CliViewNames.STAY;
+		}
+
+		private void mostrarMensajeSegunRta(CodigosRetorno ret) throws RuntimeException {
 			switch (ret) {
 			case ERROR_ALTA_ANIMAL_NO_ADOPTABLE:
 				System.out.println("Animal no es apto para adopcion.");
@@ -45,7 +57,6 @@ public class AdopcionView implements ICliView {
 			default:
 				throw new RuntimeException("OptionNuevaAdopcion - codigo de respuesta no mapeado ");
 			}
-			return CliViewNames.STAY;
 		}
 	}
 
@@ -56,15 +67,11 @@ public class AdopcionView implements ICliView {
 			AdopcionDto adopcion = controlador.buscarAdopcionPorID(id);
 			if (adopcion == null)
 				System.out.println("Adopcion no encontrada");
-			System.out.println("Adopcion encontrada");
-			mostrarInfoAdopcion(adopcion);
+			else {
+				System.out.println("Adopcion encontrada");
+				mostrarInfoAdopcion(adopcion);
+			}
 			return CliViewNames.STAY;
-		}
-
-		private void mostrarInfoAdopcion(AdopcionDto data) {
-			// TODO: se podria hacer una busqueda por cada id para traer mas datos...
-			System.out.println("  Documento Cliente: " + data.documentoCliente);
-			System.out.println("  Id Animal: " + data.idAnimal);
 		}
 	}
 
@@ -72,7 +79,17 @@ public class AdopcionView implements ICliView {
 		@Override
 		public CliViewNames doAction() {
 			String documento = IngresoCli.solicitarStringNoNulo("Ingrese documento: ");
-			System.out.println("TODO: no implementado aún");
+			var adopciones = controlador.buscarAdopcionesPorCliente(documento);
+			if (adopciones.isEmpty()) {
+				System.out.println("No se encontraron adopciones para ese cliente.");
+			} else {
+				System.out.println("Adopciones encontradas: ");
+				System.out.println("---");
+				for (AdopcionDto a : adopciones) {
+					mostrarInfoAdopcion(a);
+					System.out.println("---");
+				}
+			}
 			return CliViewNames.STAY;
 		}
 	}
@@ -81,7 +98,13 @@ public class AdopcionView implements ICliView {
 		@Override
 		public CliViewNames doAction() {
 			String idAnimal = IngresoCli.solicitarStringNoNulo("Ingrese id animal: ");
-			System.out.println("TODO: no implementado aún");
+			var adopcion = controlador.buscarAdopcionesPorAnimal(idAnimal);
+			if (adopcion == null)
+				System.out.println("Adopcion no encontrada");
+			else {
+				System.out.println("Adopcion encontrada:");
+				mostrarInfoAdopcion(adopcion);
+			}
 			return CliViewNames.STAY;
 		}
 	}

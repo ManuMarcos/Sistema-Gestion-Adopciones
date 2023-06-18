@@ -127,4 +127,12 @@ public class Animal {
 		else
 			return null;
 	}
+
+	public void setAdopcion(Adopcion adopcion) {
+		this.adopcion = adopcion;
+	}
+
+	public Adopcion getAdopcion() {
+		return this.adopcion;
+	}
 }

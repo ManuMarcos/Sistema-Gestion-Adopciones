@@ -72,8 +72,12 @@ public class Cliente {
 		return this.documento;
 	}
 	
-	public int getAdopcionesRegistradas() {
-		return adopciones.size();
+	public List<Adopcion> getAdopcionesRegistradas() {
+		return adopciones;
+	}
+
+	public void addAdopcion(Adopcion adopcion) {
+		this.adopciones.add(adopcion);
 	}
 
 }

@@ -1,5 +1,8 @@
 package controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import modelo.Adopcion;
 import modelo.Animal;
 import modelo.Cliente;
@@ -35,6 +38,29 @@ public class AdopcionController {
 
 	public AdopcionDto buscarAdopcionPorID(String id) {
 		return Adopcion.buscar(Integer.parseInt(id)).toDto();
+	}
+
+	public List<AdopcionDto> buscarAdopcionesPorCliente(String documento) {
+		Cliente cliente = Cliente.buscarClientePorDocumento(documento);
+		var dtos = new ArrayList<AdopcionDto>();
+		if (cliente != null) {
+			var adopciones = cliente.getAdopcionesRegistradas();
+			for (Adopcion adop : adopciones) {
+				dtos.add(adop.toDto());
+			}
+		}
+		return dtos;
+	}
+
+	public AdopcionDto buscarAdopcionesPorAnimal(String idAnimal) {
+		// TODO: tremendo hardcodeo para poder probar esto
+		Animal animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
+		if (animal == null)
+			return null;
+		Adopcion adopcion = animal.getAdopcion();
+		if (adopcion == null)
+			return null;
+		return adopcion.toDto();
 	}
 
 }

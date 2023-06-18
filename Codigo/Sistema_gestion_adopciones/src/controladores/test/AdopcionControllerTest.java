@@ -7,7 +7,7 @@ import vistas.enumeraciones.CliViewNames;
 public class AdopcionControllerTest {
 
 	public static void main(String[] args) {
-		System.err.println("ClienteControllerTest BEGIN");
+		System.err.println("AdopcionControllerTest BEGIN");
 		AdopcionView vista = new AdopcionView();
 		AdopcionController controlador = new AdopcionController(vista);
 		vista.setControlador(controlador);
@@ -23,6 +23,6 @@ public class AdopcionControllerTest {
 		} else {
 			System.err.println("Error inesperado");
 		}
-		System.err.println("ClienteControllerTest END");
+		System.err.println("AdopcionControllerTest END");
 	}
 }

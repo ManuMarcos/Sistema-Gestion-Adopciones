@@ -15,7 +15,7 @@ public class ClienteRepository {
 
 	private static void addHardcodeManoloCliente() {
 		ClienteDto manolo = new ClienteDto(); // cliente #1 hardcodeado
-		manolo.documento = "40777888";
+		manolo.documento = "333";
 		manolo.nombre = "Manolo";
 		manolo.apellido = "García";
 		manolo.email = "mgarcia@uade.edu.ar";
