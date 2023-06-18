@@ -1,7 +1,9 @@
- package app.main;
+package app.main;
 
+import controladores.AdopcionController;
 import controladores.ClienteController;
 import controladores.LoginController;
+import vistas.AdopcionView;
 import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;
@@ -12,44 +14,53 @@ import vistas.utils.ICliView;
 
 public class MainCli extends CliViewRunner {
 	private MenuPrincipalView vistaMenuPrincipal;
-	
+
 	private LoginView vistaLogin;
-	private LoginController controladorLogin; 
-	
+	private LoginController controladorLogin;
+
 	private ClienteView vistaCliente;
 	private ClienteController controladorCliente;
-		
-	MainCli(){
+
+	private AdopcionView vistaAdopciones;
+
+	private AdopcionController controladorAdopciones;
+
+	MainCli() {
 		vistaMenuPrincipal = new MenuPrincipalView();
 
-		//Login
+		// Login
 		vistaLogin = new LoginView();
 		controladorLogin = new LoginController(vistaLogin);
 		vistaLogin.setControlador(controladorLogin);
-		
-		//Cliente
+
+		// Cliente
 		vistaCliente = new ClienteView();
 		controladorCliente = new ClienteController(vistaCliente);
 		vistaCliente.setControlador(controladorCliente);
 
+		// Adopciones
+		vistaAdopciones = new AdopcionView();
+		controladorAdopciones = new AdopcionController(vistaAdopciones);
+		vistaAdopciones.setControlador(controladorAdopciones);
+
 		setFirstView(vistaLogin);
 	}
-	
+
 	public void mostrarCabeceraApp() {
 		FormatoCli.printCabecera("Refugio - Gud Boy");
 		FormatoCli.esperaTruchanga();
 	}
-	
+
 	public static void main(String[] args) {
 		var app = new MainCli();
 		app.mostrarCabeceraApp();
 		app.run();
 		System.out.println("Ha salido del sistema.");
 	}
-	
+
 	@Override
 	protected ICliView mapCliViewName(CliViewNames next) {
-		switch(next) {
+		switch (next) {
 		case MENU_PRINCIPAL:
 			return vistaMenuPrincipal;
 		case MENU_LOGIN:
@@ -59,6 +70,7 @@ public class MainCli extends CliViewRunner {
 		case MENU_ANIMALES:
 		case MENU_ALARMAS:
 		case MENU_ADOPCIONES:
+			return vistaAdopciones;
 		case MENU_VISITAS:
 			System.err.printf("View no conectada: %s%n", next.name());
 			return null;
