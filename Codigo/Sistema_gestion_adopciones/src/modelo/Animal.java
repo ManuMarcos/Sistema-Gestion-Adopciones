@@ -22,9 +22,8 @@ public class Animal {
 	private List<Alarma> alarmas;
 	private FichaMedica fichaMedica;
 	private Adopcion adopcion;
-	
-	public Animal(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, 
-			TipoAnimal tipo) {
+
+	public Animal(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
 		this.altura = altura;
 		this.peso = peso;
 		this.fecha_nac = fecha_nac;
@@ -36,8 +35,7 @@ public class Animal {
 		this.id = generador;
 		generador += 1;
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -57,53 +55,76 @@ public class Animal {
 	public int getAltura() {
 		return altura;
 	}
+
 	public void setAltura(int altura) {
 		this.altura = altura;
 	}
+
 	public int getPeso() {
 		return peso;
 	}
+
 	public void setPeso(int peso) {
 		this.peso = peso;
 	}
+
 	public Date getFecha_nac() {
 		return fecha_nac;
 	}
+
 	public void setFecha_nac(Date fecha_nac) {
 		this.fecha_nac = fecha_nac;
 	}
+
 	public String getEspecie() {
 		return especie;
 	}
+
 	public void setEspecie(String especie) {
 		this.especie = especie;
 	}
+
 	public EstadoAnimal getEstado() {
 		return estado;
 	}
+
 	public void setEstado(EstadoAnimal estado) {
 		this.estado = estado;
 	}
+
 	public TipoAnimal getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(TipoAnimal tipo) {
 		this.tipo = tipo;
 	}
+
 	public List<Alarma> getAlarmas() {
 		return alarmas;
 	}
+
 	public void setAlarmas(List<Alarma> alarmas) {
 		this.alarmas = alarmas;
 	}
-	
+
 	public AnimalDto toDto() {
-		AnimalDto animalDto = new AnimalDto(this.getId(), this.getAltura(),this.getPeso(), this.getFecha_nac(),
-				this.getEspecie(), this.getEstado(), this.getTipo());
-		return animalDto;
+		return new AnimalDto(this.getId(), this.getAltura(), this.getPeso(), this.getFecha_nac(), this.getEspecie(),
+				this.getEstado(), this.getTipo());
 	}
-	
+
 	public boolean esAdoptable() {
 		return this.estado == EstadoAnimal.SALUDABLE && this.tipo == TipoAnimal.DOMESTICO && adopcion == null;
+	}
+
+	// TODO: agrego esto porque necesito poder conseguir un animal por id (o alguna
+	// PK) para avanzar. despues implementarlo bien...
+	static Animal a = new Animal(60, 60, new Date(), "Gato", EstadoAnimal.SALUDABLE, TipoAnimal.DOMESTICO);
+
+	public static Animal getAnimalHardCodeado(int id) {
+		if (id == 1)
+			return a;
+		else
+			return null;
 	}
 }

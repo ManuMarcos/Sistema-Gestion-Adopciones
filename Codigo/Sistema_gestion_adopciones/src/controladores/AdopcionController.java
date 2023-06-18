@@ -28,9 +28,7 @@ public class AdopcionController {
 		Visitador visitador = Visitador.getVisitador(data.usuarioDelVisitador);
 		if (visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
 			return CodigosRetorno.ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO;
-		// TODO: necesito forma de conesguir el animal por ID. mientras, un null pa que
-		// reviente
-		Animal animal = null;
+		Animal animal = Animal.getAnimalHardCodeado(data.idAnimal);
 		Adopcion adopcion = new Adopcion(cliente, visitador, animal);
 		return adopcion.guardar();
 	}
