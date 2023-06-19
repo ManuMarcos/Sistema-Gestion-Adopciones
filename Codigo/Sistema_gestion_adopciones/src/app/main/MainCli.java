@@ -49,6 +49,12 @@ public class MainCli {
 		app.mostrarCabeceraApp();
 		app.run();
 		System.out.println("Ha salido del sistema.");
+
+
+		
+		
+		
+		
 	}
 
 	private void run() {
