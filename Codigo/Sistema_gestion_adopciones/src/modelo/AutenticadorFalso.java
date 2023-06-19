@@ -1,17 +1,17 @@
 package modelo;
 
-import modelo.dto.UsuarioDto;
-
 public class AutenticadorFalso implements IAutenticador {
 
 	@Override
-	public void registrarUsuario(UsuarioDto usuario) {
+	public void registrarUsuario(String usuario, String password) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void iniciarSesion(UsuarioDto usuario) {
-	
+	public void iniciarSesion(String usuario, String password) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

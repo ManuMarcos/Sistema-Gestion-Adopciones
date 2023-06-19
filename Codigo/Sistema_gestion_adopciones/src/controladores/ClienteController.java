@@ -8,9 +8,9 @@ public class ClienteController {
 	private ClienteView vista;
 
 	public enum CodigosRetorno {
-		ALTA_CLIENTE_OK, ALTA_CLIENTE_ERROR, BUSCAR_CLIENTE_OK, BUSCAR_CLIENTE_NOT_FOUND, ATRAS
+		ALTA_CLIENTE_OK, ALTA_CLIENTE_ERROR
 	}
-	
+
 	public ClienteController(ClienteView vista) {
 		this.vista = vista;
 	}
@@ -19,8 +19,11 @@ public class ClienteController {
 		Cliente cliente = new Cliente(clienteDatos);
 		return cliente.registrar();
 	}
-	
+
 	public ClienteDto buscarCliente(String documento) {
-		return Cliente.buscarClientePorDocumento(documento);
+		Cliente c = Cliente.buscarClientePorDocumento(documento);
+		if (c != null)
+			return c.toDto();
+		return null;
 	}
 }

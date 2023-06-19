@@ -16,4 +16,5 @@ public class Veterinario extends Usuario {
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
+	
 }

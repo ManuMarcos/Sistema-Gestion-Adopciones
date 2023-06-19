@@ -1,8 +1,6 @@
 package modelo;
 
-import modelo.dto.UsuarioDto;
-
 public interface IAutenticador {
-	public void registrarUsuario(UsuarioDto usuario);
-	public void iniciarSesion(UsuarioDto usuario);
+	public void registrarUsuario(String usuario, String password);
+	public void iniciarSesion(String usuario, String password);
 }
