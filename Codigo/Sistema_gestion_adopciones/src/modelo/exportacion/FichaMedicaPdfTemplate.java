@@ -66,10 +66,10 @@ public class FichaMedicaPdfTemplate {
 		return contentStream;
 	}
 	
-	private void agregarDatos(PDPageContentStream pagina, Map<String, String> datos) throws IOException {
+	private void agregarDatos(PDPageContentStream pagina, Map<String, List<String>> datos) throws IOException {
 		pagina.setFont(fuente, 20);
 		pagina.setNonStrokingColor(Color.BLACK);
-		for (Map.Entry<String, String> entry : datos.entrySet()) {
+		for (Map.Entry<String, List<String>> entry : datos.entrySet()) {
             pagina.newLine();
             String datosDeLaFila = entry.getKey() + ": " + entry.getValue();
             pagina.showText(datosDeLaFila);

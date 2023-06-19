@@ -3,6 +3,8 @@ package modelo;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,32 +37,35 @@ public class FichaMedica implements IExportable{
 				, this.animal.getFecha_nac(), this.animal.getEstado().toString());
 	}
 	
-	
-	
+
 	public void exportar() {
 		formato.exportar(this);
 	}
-	
+
 	public void cambiarFormatoExportacion(IFormatoStrategy formato) {
 		this.formato = formato;
 	}
 
-	
-	
-	//TO DO: La ficha medica deberia saber devolver sus datos en un Map
 	@Override
-	public Map<String, String> datos() {
+	public Map<String,List<String>> datos() {
 		// TODO Auto-generated method stub
-		Map<String, String> datos = new HashMap<String, String>();
+		Map<String, List<String>> datos = new HashMap<String, List<String>>();
 		String patronFecha = "dd/MM/yyyy";
 		SimpleDateFormat formatoFecha = new SimpleDateFormat(patronFecha);
+		List<String> columnas = Arrays.asList("Tipo", "Especie", "Altura", "Peso", 
+				"Fecha Nacimiento", "Condicion Medica");
+		List<String> celdas = Arrays.asList(
+				/*Tipo*/ this.animal.getTipo().toString().toLowerCase(),
+				/*Especie*/ this.animal.getEspecie(),
+				/*Altura*/ Integer.toString(this.animal.getAltura()) + " cm",
+				/*Peso*/ Integer.toString(this.animal.getPeso()) + " g",
+				/*Fecha Nacimiento*/ formatoFecha.format(this.animal.getFecha_nac()),
+				/*Estado*/ this.animal.getEstado().toString().replace("_", " ").toLowerCase());
 		
-		datos.put("Tipo", this.animal.getTipo().toString().toLowerCase());
-		datos.put("Especie", this.animal.getEspecie());
-		datos.put("Altura", Integer.toString(this.animal.getAltura()) + " cm");
-		datos.put("Peso", Integer.toString(this.animal.getPeso()) + " g");
-		datos.put("Fecha Nacimiento" , formatoFecha.format(this.animal.getFecha_nac()));
-		datos.put("Condicion medica", this.animal.getEstado().toString().replace("_", " ").toLowerCase());
+		datos.put("0", columnas);
+		datos.put("1", celdas);
+		
 		return datos;
 	}
+	
 }

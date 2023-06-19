@@ -15,8 +15,11 @@ public class TestExportador {
 		// TODO Auto-generated method stub
 		
 		FacadeExportador exportador = new FacadeExportador();
-		exportador.exportar(new FichaMedica(new Animal(190, 85, new Date(), "Perro", 
-				EstadoAnimal.EN_TRATAMIENTO,TipoAnimal.DOMESTICO)), FormatoExportacion.PDF, "fichaMedica");
+		FichaMedica fm = new FichaMedica(new Animal(190, 85, new Date(), "Perro", 
+				EstadoAnimal.EN_TRATAMIENTO,TipoAnimal.DOMESTICO));
+		
+		exportador.exportar(fm,FormatoExportacion.PDF , "FichaMedica");
+		exportador.exportar(fm, FormatoExportacion.EXCEL, "FichaMedica");
 		
 		
 		

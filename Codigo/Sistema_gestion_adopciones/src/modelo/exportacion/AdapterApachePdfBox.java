@@ -1,6 +1,9 @@
 package modelo.exportacion;
 
+import java.awt.Color;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -9,53 +12,60 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
+import be.quodlibet.boxable.BaseTable;
+import be.quodlibet.boxable.Cell;
+import be.quodlibet.boxable.HorizontalAlignment;
+import be.quodlibet.boxable.Row;
+import be.quodlibet.boxable.VerticalAlignment;
+import be.quodlibet.boxable.line.LineStyle;
 import config.Config;
-import modelo.FichaMedica;
 
-public class AdapterApachePdfBox implements IAdapterExportacionPdf{
+public class AdapterApachePdfBox implements IAdapterExportacionPdf {
 
 	private String nombreArchivo;
-	
-	
+
 	public AdapterApachePdfBox(String nombreArchivo) {
 		this.nombreArchivo = nombreArchivo;
 	}
-	
+
 	@Override
 	public String exportar(IExportable exportable) {
 		// TODO Auto-generated method stub
 		
-		//Crea un nuevo documento vacio
-		PDDocument documento = new PDDocument();
-		
-		
-		
-		//Crea una nueva pagina en blanco y se la agrega al documento
-		PDRectangle tamanoPagina = PDRectangle.A4;
-		PDPage pagina = new PDPage(tamanoPagina);
-		documento.addPage(pagina);
+		PDDocument doc = new PDDocument();
+        PDPage myPage = new PDPage();
+        doc.addPage(myPage);
+        try {
+            PDPageContentStream cont = new PDPageContentStream(doc, myPage);
+            cont.beginText();
+            cont.setFont(PDType1Font.TIMES_ROMAN, 12);
+            cont.setLeading(14.5f);
+            cont.newLineAtOffset(25, 700);
+            agregarDatos(cont, exportable.datos());
 
-		//Guarda el nuevo documento creado
-		try {
-			//Se crea un template para la Ficha Medica (actualmente no es escalable esto)
-			FichaMedicaPdfTemplate fichaMedicaTemplate = new FichaMedicaPdfTemplate((FichaMedica) exportable);
-			fichaMedicaTemplate.escribirPagina(documento, pagina);
-			documento.save(this.rutaCompletaArchivo());
-			documento.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+            cont.endText();
+            cont.close();
+            doc.save(rutaCompletaArchivo());
+            doc.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 		System.out.println("Documento Exportado correctamente");
 		return rutaCompletaArchivo();
+
 	}
-	
+
 	private String rutaCompletaArchivo() {
 		return Config.RUTA_EXPORTACION + this.nombreArchivo + ".pdf";
 	}
-	
-	
-	
+
+	private void agregarDatos(PDPageContentStream pagina, Map<String, List<String>> datos) throws IOException {
+		for (Map.Entry<String, List<String>> entry : datos.entrySet()) {
+			pagina.newLine();
+			String datosDeLaFila = String.join(", ", entry.getValue());
+			pagina.showText(datosDeLaFila);
+		}
+	}
 
 }
