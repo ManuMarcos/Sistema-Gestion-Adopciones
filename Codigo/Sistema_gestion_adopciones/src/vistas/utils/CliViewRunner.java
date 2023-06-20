@@ -7,8 +7,9 @@ import vistas.enumeraciones.CliViewNames;
 public abstract class CliViewRunner {
 	private Stack<ICliView> stackCliView;
 	
-	private void printIndicadorCambioDePantalla() {
-		System.out.println("<<<<<<<<<");
+	private void clearPantalla() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
 	
 	protected CliViewRunner() {
@@ -20,6 +21,7 @@ public abstract class CliViewRunner {
 	}
 
 	protected void run() {
+		clearPantalla();
 		while(!stackCliView.isEmpty()) {
 			CliViewNames nextName = stackCliView.peek().procesar();
 			ICliView next =  mapCliViewName(nextName);
@@ -28,7 +30,7 @@ public abstract class CliViewRunner {
 			} else if(nextName == CliViewNames.BACK) {
 				stackCliView.pop();
 			}
-			printIndicadorCambioDePantalla();
+			clearPantalla();
 		}
 	}
 	
