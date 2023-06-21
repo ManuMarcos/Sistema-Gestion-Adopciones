@@ -83,12 +83,13 @@ public class MainCli extends CliViewRunner {
 			return vistaLogin;
 		case MENU_CLIENTE:
 			return vistaCliente;
-		case MENU_ANIMALES:
-		case MENU_ALARMAS:
 		case MENU_ADOPCIONES:
 			return vistaAdopciones;
+		case MENU_ANIMALES:
+		case MENU_ALARMAS:
 		case MENU_VISITAS:
 			System.err.printf("View no conectada: %s%n", next.name());
+			FormatoCli.esperaTruchanga();
 			return null;
 		case STAY:
 		case BACK:

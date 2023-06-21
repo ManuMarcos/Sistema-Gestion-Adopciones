@@ -37,7 +37,10 @@ public class AdopcionController {
 	}
 
 	public AdopcionDto buscarAdopcionPorID(String id) {
-		return Adopcion.buscar(Integer.parseInt(id)).toDto();
+		var adopcion = Adopcion.buscar(Integer.parseInt(id));
+		if(adopcion == null)
+			return null;
+		return adopcion.toDto();
 	}
 
 	public List<AdopcionDto> buscarAdopcionesPorCliente(String documento) {
