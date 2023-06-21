@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class IngresoCli {
 	private static Scanner sc = new Scanner(System.in);
-	private static String mail_regex = ".+@.+\\..+"; //algo@algo.algo, cubre poco, pero sirve para mostrar
+	private static String mailRegex = ".+@.+\\..+"; // algo@algo.algo, cubre poco, pero sirve para mostrar
 
 	private IngresoCli() {
 	}; // static class
@@ -19,8 +19,8 @@ public class IngresoCli {
 			opcion = -1;
 		}
 		while (opcion > cantidadDeOpciones || opcion < 1) {
-			System.out.println("opción inválida. Ingrese una opción: ");
-			sc.next(); // clear
+			System.out.print("opción inválida. Ingrese una opción: ");
+			sc.nextLine(); // clear
 			try {
 				opcion = sc.nextInt();
 			} catch (InputMismatchException e) {
@@ -35,16 +35,18 @@ public class IngresoCli {
 		String input = sc.next();
 		while (input.isEmpty()) {
 			System.out.print("Ingreso inválido. " + mensaje);
+			sc.nextLine();
 			input = sc.next();
 		}
 		return input;
 	}
-	
+
 	public static String solicitarEmail(String mensaje) {
 		System.out.print(mensaje);
 		String input = sc.next();
-		while (input.isEmpty() || !input.matches(mail_regex)) {
+		while (input.isEmpty() || !input.matches(mailRegex)) {
 			System.out.print("Ingreso inválido. " + mensaje);
+			sc.nextLine();
 			input = sc.next();
 		}
 		return input;
@@ -61,6 +63,7 @@ public class IngresoCli {
 		}
 		while (input.isEmpty() || num == -1) {
 			System.out.print("Ingreso inválido. " + mensaje);
+			sc.nextLine();
 			input = sc.next();
 			try {
 				num = Integer.parseInt(input);
@@ -76,8 +79,21 @@ public class IngresoCli {
 		String input = sc.next();
 		while (!input.equals("Y") && !input.equals("N")) {
 			System.out.print("Ingreso inválido. " + mensaje);
+			sc.nextLine();
 			input = sc.next();
 		}
 		return input.equals("Y");
+	}
+
+	public static void pedirContinuar() {
+		System.out.print("\033[33m");
+		System.out.print("Presione Enter para continuar...");
+		try {
+			System.in.read();
+			sc.nextLine();
+		} catch (Exception e) {
+			System.out.print(e);
+		}
+		System.out.print("\033[0m");
 	}
 }
