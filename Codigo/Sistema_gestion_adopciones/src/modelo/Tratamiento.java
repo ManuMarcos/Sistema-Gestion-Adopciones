@@ -3,13 +3,12 @@ package modelo;
 import java.util.Date;
 import java.util.List;
 
-public class Tratamiento implements ITipoAlarma {
+public class Tratamiento extends TipoAlarma {
 
 	private Date fechaInicio;
 	private Date fechaFin;
 	private String nombre;
 	private String descripcion;
-	private List<Accion> acciones;
 	private boolean finalizado;
 	
 	public void finalizar() {
@@ -17,8 +16,6 @@ public class Tratamiento implements ITipoAlarma {
 	}
 
 	public Tratamiento() {
-		//TODO: sacar este constructor
-		this.finalizado = false;
 	}
 	
 	public Tratamiento(Date fechaInicio, Date fechaFin, String nombre, String descripcion, List<Accion> acciones) {
@@ -27,7 +24,17 @@ public class Tratamiento implements ITipoAlarma {
 		this.fechaFin = fechaFin;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.acciones = acciones;
 		this.finalizado = false;
 	}
+
+
+	@Override
+	public Alarma crearAlarma(int periodicidad) {
+		// TODO Auto-generated method stub
+		return new Alarma(this, periodicidad);
+	}
+
+	
+	
+	
 }

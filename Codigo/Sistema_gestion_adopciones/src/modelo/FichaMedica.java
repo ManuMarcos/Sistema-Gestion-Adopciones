@@ -1,49 +1,38 @@
 package modelo;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import modelo.dto.FichaMedicaDto;
+import modelo.exportacion.FormatoExportacion;
 import modelo.exportacion.IExportable;
-import modelo.utils.Utils;
+
 
 public class FichaMedica implements IExportable{
 
 	private Animal animal;
-	private List<Control> controles;
-	private List<SeguimientoTratamiento> tratamientos;
+	private List<Alarma> alarmas;
 	private List<Visita> visitas;
-	private IFormatoStrategy formato;
 	
 	public FichaMedica(Animal animal) {
 		this.animal = animal;
-		this.controles = controles;
-		this.tratamientos = tratamientos;
-		this.visitas = visitas;
-		
-		//Por default pongo que se pueda exportar solo en PDF
-		
+		this.alarmas = new ArrayList<Alarma>();
+		this.visitas = new ArrayList<Visita>();
 	}
 	
-	public FichaMedicaDto toDto() {
-		return new FichaMedicaDto(this.animal.getTipo().toString(),
-				this.animal.getEspecie(), this.animal.getPeso(), this.animal.getAltura()
-				, this.animal.getFecha_nac(), this.animal.getEstado().toString());
+//	public FichaMedicaDto toDto() {
+//		return new FichaMedicaDto(this.animal.buscarAnimal(animal.getId()).toDto());
+//	}
+	
+	public void agregarAlarma(Alarma alarma) {
+		this.alarmas.add(alarma);
 	}
 	
-
-	public void exportar() {
-		formato.exportar(this);
-	}
-
-	public void cambiarFormatoExportacion(IFormatoStrategy formato) {
-		this.formato = formato;
+	public List<Alarma> getAlarmas(){
+		return this.alarmas;
 	}
 
 	@Override

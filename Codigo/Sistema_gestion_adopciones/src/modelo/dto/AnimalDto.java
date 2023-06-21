@@ -2,6 +2,7 @@ package modelo.dto;
 
 import java.util.Date;
 
+import modelo.Animal;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
 
@@ -14,6 +15,9 @@ public class AnimalDto {
 	private String especie;
 	private EstadoAnimal estado;
 	private TipoAnimal tipo;
+	
+	
+	public AnimalDto() {};
 	
 	
 	//Constructor sin Id
@@ -36,6 +40,10 @@ public class AnimalDto {
 		this.especie = especie;
 		this.estado = estado;
 		this.tipo = tipo;
+	}
+	
+	public Animal toEntity() {
+		return new Animal(altura, peso, fecha_nac, especie, estado, tipo);
 	}
 	
 

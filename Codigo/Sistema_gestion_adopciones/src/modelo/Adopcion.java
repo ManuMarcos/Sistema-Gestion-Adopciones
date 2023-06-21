@@ -14,16 +14,13 @@ public class Adopcion {
 	private Animal animal;
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
-	private NotificadorStrategy notificador;
 	private boolean continuarConVisitas;
 
 	public void finalizarSeguimiento() {
 		continuarConVisitas = false;
 	}
 
-	public void cambiarNotificacion(NotificadorStrategy notificador) {
-		this.notificador = notificador;
-	}
+	
 
 	public Adopcion(Cliente cliente, Visitador visitador, Animal animal) {
 		this.id = ++generador_id;

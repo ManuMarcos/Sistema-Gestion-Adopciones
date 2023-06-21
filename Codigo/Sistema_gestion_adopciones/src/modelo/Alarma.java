@@ -3,28 +3,37 @@ package modelo;
 import java.util.Date;
 import java.util.List;
 
-import modelo.enumeraciones.TipoDeAlarma;
+import modelo.dto.AlarmaDto;
+
 
 public class Alarma {
 
-	private ITipoAlarma tipoAlarma;
+	private TipoAlarma tipo;
 	private int periodicidad;
-	private List<Accion> acciones;
 	
-	public Alarma(TipoDeAlarma tipoDeAlarma, int periodicidad) throws Exception {
-		this.tipoAlarma = TipoAlarmaFactory.crearTipoAlarma(tipoDeAlarma);
+	public Alarma(TipoAlarma tipo, int periodicidad) {
+		this.tipo = tipo;
 		this.periodicidad = periodicidad;
 	}
 	
-	public void agregarAccion(Accion accion) {
-		this.acciones.add(accion);
-	}
-	
 	public void atender() {
-		
+		if (tipo instanceof Tratamiento) {
+			Tratamiento tratamiento = (Tratamiento) tipo;
+		}
+		else if (tipo instanceof Control) {
+			//CASTEAR Y HACER ALGO
+		}
 	}
 	
-	public void enviar(String notificacion) {
-		
+	public void agregarAccion(String nombre) {
+		this.tipo.agregarAccion(nombre);
+	}
+	
+	public void enviar() {
+		//ESTA ALARMA VA A USAR EL NOTIFICADOR CON LA ESTRATEGIA DE ENVIO PUSH
+	}
+	
+	public AlarmaDto toDto() {
+		return new AlarmaDto(tipo.getAcciones(), periodicidad);
 	}
 }

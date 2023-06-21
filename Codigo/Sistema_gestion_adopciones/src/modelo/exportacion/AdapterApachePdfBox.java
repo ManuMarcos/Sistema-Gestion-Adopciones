@@ -1,23 +1,13 @@
 package modelo.exportacion;
 
-import java.awt.Color;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
-import be.quodlibet.boxable.BaseTable;
-import be.quodlibet.boxable.Cell;
-import be.quodlibet.boxable.HorizontalAlignment;
-import be.quodlibet.boxable.Row;
-import be.quodlibet.boxable.VerticalAlignment;
-import be.quodlibet.boxable.line.LineStyle;
 import config.Config;
 
 public class AdapterApachePdfBox implements IAdapterExportacionPdf {

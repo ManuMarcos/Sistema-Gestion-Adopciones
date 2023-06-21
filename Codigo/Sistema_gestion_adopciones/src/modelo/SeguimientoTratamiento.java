@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.Date;
 
-public class SeguimientoTratamiento implements ITipoAlarma{
+public class SeguimientoTratamiento{
 	
 	private Date fecha;
 	private Tratamiento tratamiento;
@@ -14,7 +14,9 @@ public class SeguimientoTratamiento implements ITipoAlarma{
 		this.tratamiento = tratamiento;
 		this.veterinario = veterinario;
 		this.comentario = comentario;
-	}	
+	}
+
+	
 	
 	
 	

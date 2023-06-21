@@ -1,21 +1,25 @@
 package modelo.facades;
 
-import modelo.Accion;
+import java.util.List;
+
 import modelo.Alarma;
+import modelo.Animal;
+import modelo.FactoryTipoAlarma;
+import modelo.TipoAlarma;
 import modelo.enumeraciones.TipoDeAlarma;
 
 public class AlarmaFacade {
 
-	public Alarma crearAlarmaDeControl(String[] acciones, int periodicidad) throws Exception {
-		if (acciones.length == 0) {
-			throw new Exception("ERROR. Se debe agregar como minimo una accion");
+	public void crearAlarma(Animal animal, TipoDeAlarma tipo, int periodicidad, List<String> acciones) {
+		Alarma alarma =  new Alarma(FactoryTipoAlarma.crearTipoDeAlarma(tipo), periodicidad);
+		for (String nombreAccion : acciones) {
+			alarma.agregarAccion(nombreAccion);
 		}
-		Alarma alarma = new Alarma(TipoDeAlarma.CONTROL, periodicidad);
-		for (String accion : acciones) {
-			alarma.agregarAccion(new Accion(accion));
-		}
-		return alarma;
+		animal.agregarAlarma(alarma);
 	}
 	
+	public List<Alarma> listarAlarmas(Animal animal){
+		return animal.obtenerAlarmas();
+	}
 	
 }

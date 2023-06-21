@@ -2,9 +2,7 @@ package modelo.exportacion;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +11,12 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-
-import modelo.FichaMedica;
-import modelo.dto.FichaMedicaDto;
-import modelo.utils.Utils;
 
 public class FichaMedicaPdfTemplate {
 
+	//CLASE ACTUALMENTE EN DESUSO
+	
+	
 	private IExportable exportable;
 	private PDFont fuente;
 

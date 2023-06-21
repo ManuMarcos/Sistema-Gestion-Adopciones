@@ -51,15 +51,15 @@ public class AdapterApachePoi implements IAdapterExportacionExcel{
 		return Config.RUTA_EXPORTACION + this.nombreArchivo + ".xlsx";
 	}
 	
-	public void crearLibroDeTrabajo() {
+	private void crearLibroDeTrabajo() {
 		this.workbook = new XSSFWorkbook();
 	}
 	
-	public XSSFSheet crearHoja(String nombre) {
+	private XSSFSheet crearHoja(String nombre) {
 		return workbook.createSheet(nombre);
 	}
 	
-	public void agregarDatos(XSSFSheet hoja, Map<String, List<String>> datos) {
+	private void agregarDatos(XSSFSheet hoja, Map<String, List<String>> datos) {
 		int numeroDeFila = 0;
 		
 		for (Map.Entry<String, List<String>> entry : datos.entrySet()) {
@@ -71,9 +71,7 @@ public class AdapterApachePoi implements IAdapterExportacionExcel{
 			
 	}
 	
-	
-	
-	
+
 	private Row crearFila(XSSFSheet hoja, int numeroDeFila) {
 		return hoja.createRow(numeroDeFila);
 	}
