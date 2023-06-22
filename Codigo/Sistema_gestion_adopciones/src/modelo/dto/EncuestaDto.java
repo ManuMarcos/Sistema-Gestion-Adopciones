@@ -38,5 +38,6 @@ public class EncuestaDto {
 		this.ambiente = ambiente;
 	}
 	
+
 	
 }

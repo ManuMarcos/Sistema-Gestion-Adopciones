@@ -56,5 +56,10 @@ public class FichaMedica implements IExportable{
 		
 		return datos;
 	}
+
+	public boolean agregarVisita(Visita v) {
+		this.visitas.add(v);
+		return true;
+	}
 	
 }

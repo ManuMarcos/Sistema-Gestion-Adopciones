@@ -171,6 +171,9 @@ public class Animal {
 				
 	}
 	
+	public boolean agregarVisitaAFicha(Visita v) {
+		return this.fichaMedica.agregarVisita(v);
+	}
 	
 	// TODO: agrego esto porque necesito poder conseguir un animal por id (o alguna
 		// PK) para avanzar. despues implementarlo bien...

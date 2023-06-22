@@ -72,6 +72,7 @@ public class MainCli extends CliViewRunner {
 		vistaVisitas = new VisitasView();
 		controladorVisitas = new VisitasController(vistaVisitas);
 		vistaVisitas.setControlador(controladorVisitas);
+		
 		//Alarmas
 		vistaAlarmas = new AlarmaView(controladorAnimales);
 		controladorAlarmas= new AlarmaController(vistaAlarmas);
@@ -112,13 +113,13 @@ public class MainCli extends CliViewRunner {
 		case MENU_ADOPCIONES:
 			return vistaAdopciones;
 		case MENU_ANIMALES:
-			
+			System.err.printf("View no conectada: %s%n", next.name());
+			FormatoCli.esperaTruchanga();
+			return null;			
 		case MENU_ALARMAS:
 			return vistaAlarmas;
 		case MENU_VISITAS:
-			System.err.printf("View no conectada: %s%n", next.name());
-			FormatoCli.esperaTruchanga();
-			return null;
+			return vistaVisitas;
 		case STAY:
 		case BACK:
 			return null;
