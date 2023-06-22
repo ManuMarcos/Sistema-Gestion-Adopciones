@@ -37,6 +37,13 @@ public class AnimalController {
 	}
 	
 	public void mostrarVentanaRegistro() {
+		this.ventanaRegistro.limpiar();
+		this.ventanaRegistro.setVisible(true);
+	}
+	
+	public void mostrarVentanaRegistro(int id) {
+		Animal animal = new Animal();
+		this.ventanaRegistro.mostrarDatos(animal.buscarAnimal(id).toDto());
 		this.ventanaRegistro.setVisible(true);
 	}
 	
@@ -57,22 +64,6 @@ public class AnimalController {
 		}
 		return animalesDto;
 	}
-	
-	public List<String> getTipos(){
-		List<String> tipos = new ArrayList<String>();
-		for(TipoAnimal tipo : TipoAnimal.values()) {
-			tipos.add(tipo.toString());
-		}
-		return tipos;
-	}
-	
-	public List<String> getEstados(){
-		List<String> estados = new ArrayList<String>();
-		for(EstadoAnimal estado : EstadoAnimal.values()) {
-			estados.add(estado.toString());
-		}
-		return estados;
-	}
-	
+
 
 }

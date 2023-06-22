@@ -9,6 +9,7 @@ import modelo.dto.AnimalDto;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Animal {
@@ -16,7 +17,7 @@ public class Animal {
 	private int id;
 	private int altura;
 	private int peso;
-	private Date fecha_nac;
+	private LocalDate fecha_nac;
 	private String especie;
 	private EstadoAnimal estado;
 	private TipoAnimal tipo;
@@ -25,8 +26,18 @@ public class Animal {
 	
 	public Animal() {}
 	
+	public Animal(int id, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
+		this.id = id;
+		this.altura = altura;
+		this.peso = peso;
+		this.fecha_nac = fecha_nac;
+		this.especie = especie;
+		this.estado = estado;
+		this.tipo = tipo;
+		this.fichaMedica = new FichaMedica(this);
+	}
 	
-	public Animal(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
+	public Animal(int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
 		this.altura = altura;
 		this.peso = peso;
 		this.fecha_nac = fecha_nac;
@@ -39,14 +50,8 @@ public class Animal {
 	
 	//Cuando se registra el animal se hace sin el id seteado, este se lo setea el repository
 	public void registrarAnimal(Animal animal) {
-		AnimalDao animalDao;
-		if(animal.getId() == 0) {
-			animalDao = new InMemoryAnimalDao();
-			animalDao.add(animal);
-		}
-		else {
-			System.out.println("El animal a registrar no debe tener un id asignado");
-		}
+		AnimalDao animalDao = new InMemoryAnimalDao();
+		animalDao.add(animal);
 	}
 	
 	
@@ -103,12 +108,12 @@ public class Animal {
 	}
 
 
-	public Date getFecha_nac() {
+	public LocalDate getFecha_nac() {
 		return fecha_nac;
 	}
 
 
-	public void setFecha_nac(Date fecha_nac) {
+	public void setFecha_nac(LocalDate fecha_nac) {
 		this.fecha_nac = fecha_nac;
 	}
 
@@ -169,7 +174,7 @@ public class Animal {
 	
 	// TODO: agrego esto porque necesito poder conseguir un animal por id (o alguna
 		// PK) para avanzar. despues implementarlo bien...
-		static Animal a = new Animal(60, 60, new Date(), "Gato", EstadoAnimal.SALUDABLE, TipoAnimal.DOMESTICO);
+		static Animal a = new Animal(60, 60, LocalDate.now(), "Gato", EstadoAnimal.SALUDABLE, TipoAnimal.DOMESTICO);
 
 		
 		public static Animal getAnimalHardCodeado(int id) {

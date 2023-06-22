@@ -93,9 +93,9 @@ public class AnimalView {
 		entrada.nextLine();
 		estado = obtenerEstadoAnimal();
 		
-		animal = new AnimalDto(altura, peso, fechaNac, especie, estado, tipoAnimal);
+		//animal = new AnimalDto(altura, peso, fechaNac, especie, estado, tipoAnimal);
 		
-		this.controlador.cargarAnimal(animal);
+		//this.controlador.cargarAnimal(animal);
 		
 		System.out.println("Animal cargado correctamente!");
 		this.mostrarMenu();

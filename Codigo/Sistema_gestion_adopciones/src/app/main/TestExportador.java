@@ -1,5 +1,6 @@
 package app.main;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import modelo.Animal;
@@ -15,7 +16,7 @@ public class TestExportador {
 		// TODO Auto-generated method stub
 		
 		FacadeExportador exportador = new FacadeExportador();
-		FichaMedica fm = new FichaMedica(new Animal(190, 85, new Date(), "Perro", 
+		FichaMedica fm = new FichaMedica(new Animal(190, 85, LocalDate.now(), "Perro", 
 				EstadoAnimal.EN_TRATAMIENTO,TipoAnimal.DOMESTICO));
 		
 		exportador.exportar(fm,FormatoExportacion.PDF , "FichaMedica");

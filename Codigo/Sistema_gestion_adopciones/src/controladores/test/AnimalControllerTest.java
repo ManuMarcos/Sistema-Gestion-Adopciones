@@ -1,5 +1,6 @@
 package controladores.test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import controladores.AnimalController;
@@ -19,8 +20,8 @@ public class AnimalControllerTest {
 		AnimalController controlador = new AnimalController();
 		
 		//Animales de prueba
-		controlador.cargarAnimal(new AnimalDto(199,5000,new Date(), "Perro",EstadoAnimal.EN_TRATAMIENTO, TipoAnimal.DOMESTICO));
-		controlador.cargarAnimal(new AnimalDto(120,3021,new Date(), "Gato",EstadoAnimal.SALUDABLE, TipoAnimal.SALVAJE));
+		controlador.cargarAnimal(new AnimalDto(199,5000,LocalDate.of(2010, 6, 30), "Perro",EstadoAnimal.EN_TRATAMIENTO, TipoAnimal.DOMESTICO));
+		controlador.cargarAnimal(new AnimalDto(120,3021,LocalDate.of(2010, 9, 22), "Gato",EstadoAnimal.SALUDABLE, TipoAnimal.SALVAJE));
 		
 		
 		VentanaPrincipalAnimal ventanaPrincipal = new VentanaPrincipalAnimal();

@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,6 +36,7 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 	private JTextField textFieldAltura;
 	private JTextField textFieldPeso;
 	private JTextField textFieldEdad;
+	private JTextField textFieldId;
 	private JButton botonCancelar ;
 	private JButton botonGuardar;
 	private JComboBox<TipoAnimal> comboBoxTipo;
@@ -121,6 +123,7 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		JLabel labelCondicion = new JLabel("Condición Médica");
 		panel_8.add(labelCondicion);
 		
+		textFieldId = new JTextField();
 		
 		
 		JPanel panel_1 = new JPanel();
@@ -143,6 +146,17 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		this.setComboBoxes();
 	}
 
+	public void mostrarDatos(AnimalDto animal) {
+		comboBoxTipo.setSelectedItem(animal.getTipo());
+		textFieldEspecie.setText(animal.getEspecie());
+		textFieldAltura.setText(Integer.toString(animal.getAltura()));
+		textFieldPeso.setText(Integer.toString(animal.getPeso()));
+		textFieldEdad.setText(Integer.toString(fechaNacimientoToEdad(animal.getFecha_nac())));
+		comboBoxEstado.setSelectedItem(animal.getEstado());
+		textFieldId.setText(Integer.toString(animal.getId()));
+	}
+	
+	
 	
 	private void setComboBoxes() {
 		comboBoxTipo = new JComboBox<TipoAnimal>();
@@ -153,10 +167,26 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		panel_8.add(comboBoxEstado);
 	}
 	
-	private Date calcularFechaNacimiento(int edadAproximada) {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -edadAproximada);
-		return cal.getTime();
+	private int fechaNacimientoToEdad(LocalDate fechaNacimiento) {
+		LocalDate fechaActual = LocalDate.now();
+		return fechaActual.getYear() - fechaNacimiento.getYear();
+	}
+	
+	public void limpiar() {
+		comboBoxTipo.setSelectedItem(TipoAnimal.DOMESTICO);
+		comboBoxEstado.setSelectedItem(EstadoAnimal.SALUDABLE);
+		textFieldEspecie.setText("");
+		textFieldAltura.setText("");
+		textFieldPeso.setText("");
+		textFieldEdad.setText("");
+		textFieldId.setText("");
+	}
+	
+	
+
+	private LocalDate calcularFechaNacimiento(int edadAproximada) {
+		LocalDate fechaActual = LocalDate.now();
+		return fechaActual.minusYears(edadAproximada);
 	}
 	
 	@Override
@@ -175,7 +205,7 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 				int edadAproximada = Integer.parseInt(textFieldEdad.getText());
 				animal.setFecha_nac(calcularFechaNacimiento(edadAproximada));
 				animal.setEstado((EstadoAnimal) comboBoxEstado.getSelectedItem());
-				
+				animal.setId(Integer.parseInt(textFieldId.getText()));
 				controlador.cargarAnimal(animal);
 				this.setVisible(false);
 			}
