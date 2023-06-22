@@ -4,12 +4,14 @@ import controladores.AdopcionController;
 import controladores.AnimalController;
 import controladores.ClienteController;
 import controladores.LoginController;
+import controladores.VisitasController;
 import vistas.AdopcionView;
 import vistas.AnimalView;
 import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;
 import vistas.VentanaPrincipalAnimal;
+import vistas.VisitasView;
 import vistas.enumeraciones.CliViewNames;
 import vistas.utils.CliViewRunner;
 import vistas.utils.FormatoCli;
@@ -29,6 +31,9 @@ public class MainCli extends CliViewRunner {
 	
 	private VentanaPrincipalAnimal vistaAnimales;
 	private AnimalController controladorAnimales;
+	
+	private VisitasView vistaVisitas;
+	private VisitasController controladorVisitas;
 
 	MainCli() {
 		vistaMenuPrincipal = new MenuPrincipalView();
@@ -52,6 +57,12 @@ public class MainCli extends CliViewRunner {
 		vistaAnimales = new VentanaPrincipalAnimal();
 		controladorAnimales = new AnimalController(vistaAnimales);
 		vistaAnimales.setController(controladorAnimales);
+		
+		//Visitas
+		vistaVisitas = new VisitasView();
+		controladorVisitas = new VisitasController(vistaVisitas);
+		vistaVisitas.setControlador(controladorVisitas);
+
 		
 		setFirstView(vistaLogin);
 	}
