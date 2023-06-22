@@ -1,5 +1,10 @@
 package controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.poi.hpsf.Array;
+
 import modelo.Adopcion;
 import modelo.Animal;
 import modelo.Visita;
@@ -42,6 +47,16 @@ public class VisitasController {
 		Visita v = new Visita(datosVisita.fecha, datosVisita.encuesta, adopcion);
 		Visita.registrar(v, animal);
 		return CodigosRetorno.ADOPCION_CARGADA;
+	}
+
+	public List<VisitaDto> getVisitas(String idAnimal) {
+		var animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
+		var visitas = animal.getVisitasDeFicha();
+		List<VisitaDto> visitasDto = new ArrayList<>();
+		for(Visita v : visitas) {
+			visitasDto.add(v.toDto());
+		}
+		return visitasDto;
 	}
 
 }

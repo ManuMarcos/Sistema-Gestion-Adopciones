@@ -38,13 +38,13 @@ public class VisitasView implements ICliView {
 
 		private VisitasController.CodigosRetorno cargarVisita(String idAnimal) {
 			System.out.println("Debera completar una breve encuesta:");
-			System.out.println("Valoraciones: 2=bueno | 1=regular | 0=malo");
-			System.out.print("Ingrese estado del animal: ");
-			int estadoAnimal = IngresoCli.solicitarOpcion(2);
-			System.out.print("Ingrese estado del ambiente: ");
-			int estadoAmbiente = IngresoCli.solicitarOpcion(2);
-			System.out.print("Ingrese estado de limpieza: ");
-			int estadoLimpieza = IngresoCli.solicitarOpcion(2);
+			System.out.println("Valoraciones: 3=bueno | 2=regular | 1=malo");
+			System.out.print("Estado del animal. ");
+			int estadoAnimal = IngresoCli.solicitarOpcion(3);
+			System.out.print("Estado del ambiente. ");
+			int estadoAmbiente = IngresoCli.solicitarOpcion(3);
+			System.out.print("Estado de limpieza. ");
+			int estadoLimpieza = IngresoCli.solicitarOpcion(3);
 
 			VisitaDto visita = new VisitaDto();
 			visita.encuesta = new EncuestaDto(Calificacion.toCalificacion(estadoAnimal),
@@ -58,9 +58,27 @@ public class VisitasView implements ICliView {
 	class OptionConsultarVisitas implements ICliOption {
 		@Override
 		public CliViewNames doAction() {
-			// TODO: implementar
-			System.out.print("TODO: pendiente");
+			String idAnimal = IngresoCli.solicitarStringNumericoNulo("Ingrese id animal: ");
+			var ret = controlador.validarExisteAdopcion(idAnimal);
+			if (ret == VisitasController.CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE) {
+				System.out.println("No se encontró el animal.");
+			} else if (ret == VisitasController.CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE) {
+				System.out.println("El animal no se encuentra adoptado.");
+			} else {
+				System.out.println("Visitas:");
+				var visitasDto = controlador.getVisitas(idAnimal);
+				for(VisitaDto visita : visitasDto) {
+					printVisita(visita);
+				}
+			}
 			return CliViewNames.STAY;
+		}
+
+		private void printVisita(VisitaDto visita) {
+			System.out.println("> " + visita.fecha.toString());
+			System.out.println("  + Calificacion Animal: " + visita.encuesta.getEstadoAnimal().toString());
+			System.out.println("  + Calificacion Ambiente: " + visita.encuesta.getAmbiente().toString());
+			System.out.println("  + Calificacion Limpieza: " + visita.encuesta.getLimpiezaLugar().toString());
 		}
 	}
 
