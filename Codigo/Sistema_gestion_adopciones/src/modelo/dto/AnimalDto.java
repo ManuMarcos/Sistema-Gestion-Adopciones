@@ -1,5 +1,6 @@
 package modelo.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import modelo.Animal;
@@ -11,7 +12,7 @@ public class AnimalDto {
 	private int id;
 	private int altura;
 	private int peso;
-	private Date fecha_nac;
+	private LocalDate fecha_nac;
 	private String especie;
 	private EstadoAnimal estado;
 	private TipoAnimal tipo;
@@ -21,7 +22,7 @@ public class AnimalDto {
 	
 	
 	//Constructor sin Id
-	public AnimalDto(int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
+	public AnimalDto(int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
 		this.altura = altura;
 		this.peso = peso;
 		this.fecha_nac = fecha_nac;
@@ -31,7 +32,7 @@ public class AnimalDto {
 	}
 	
 	//Constructor con Id
-	public AnimalDto(int id, int altura, int peso, Date fecha_nac, String especie, EstadoAnimal estado,
+	public AnimalDto(int id, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado,
 			TipoAnimal tipo) {
 		this.id = id;
 		this.altura = altura;
@@ -43,7 +44,7 @@ public class AnimalDto {
 	}
 	
 	public Animal toEntity() {
-		return new Animal(altura, peso, fecha_nac, especie, estado, tipo);
+		return new Animal(id, altura, peso, fecha_nac, especie, estado, tipo);
 	}
 	
 
@@ -66,10 +67,10 @@ public class AnimalDto {
 	public void setPeso(int peso) {
 		this.peso = peso;
 	}
-	public Date getFecha_nac() {
+	public LocalDate getFecha_nac() {
 		return fecha_nac;
 	}
-	public void setFecha_nac(Date fecha_nac) {
+	public void setFecha_nac(LocalDate fecha_nac) {
 		this.fecha_nac = fecha_nac;
 	}
 	public String getEspecie() {

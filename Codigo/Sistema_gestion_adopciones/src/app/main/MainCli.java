@@ -86,6 +86,7 @@ public class MainCli extends CliViewRunner {
 		case MENU_ADOPCIONES:
 			return vistaAdopciones;
 		case MENU_ANIMALES:
+			
 		case MENU_ALARMAS:
 		case MENU_VISITAS:
 			System.err.printf("View no conectada: %s%n", next.name());

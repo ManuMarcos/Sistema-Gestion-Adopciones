@@ -30,16 +30,17 @@ public class InMemoryAnimalDao implements AnimalDao{
 	}
 
 	@Override
-	public boolean add(Animal animal) {
+	public void add(Animal animal) {
 		// TODO Auto-generated method stub
 		Animal animalBuscado = getById(animal.getId());
 		if (animalBuscado == null) {
 			animal.setId(generador);
 			generador++;
 			animales.add(animal);
-			return true;
 		}
-		return false;
+		else {
+			update(animal);
+		}
 	}
 
 	@Override
@@ -47,7 +48,12 @@ public class InMemoryAnimalDao implements AnimalDao{
 		// TODO Auto-generated method stub
 		Animal animalToUpdate = getById(animal.getId());
 		if (animalToUpdate != null) {
-			animalToUpdate = animal;
+			animalToUpdate.setTipo(animal.getTipo());
+			animalToUpdate.setEspecie(animal.getEspecie());
+			animalToUpdate.setAltura(animal.getAltura());
+			animalToUpdate.setPeso(animal.getPeso());
+			animalToUpdate.setFecha_nac(animal.getFecha_nac());
+			animalToUpdate.setEstado(animal.getEstado());
 			return true;
 		}
 		return false;
