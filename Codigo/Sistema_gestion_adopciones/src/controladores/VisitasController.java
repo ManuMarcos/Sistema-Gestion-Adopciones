@@ -13,7 +13,8 @@ import vistas.VisitasView;
 
 public class VisitasController {
 	public enum CodigosRetorno {
-		ERROR_ANIMAL_NO_EXISTENTE, ERROR_ADOPCION_NO_EXISTENTE, ADOPCION_ENCONTRADA, ADOPCION_CARGADA
+		ERROR_ANIMAL_NO_EXISTENTE, ERROR_ADOPCION_NO_EXISTENTE, ADOPCION_ENCONTRADA, ADOPCION_CARGADA,
+		ERROR_SEGUIMIENTO_FINALIZADO_PREVIAMENTE, SEGUIMIENTO_FINALIZADO
 	}
 
 	private VisitasView vistaVisitas;
@@ -43,20 +44,38 @@ public class VisitasController {
 		Adopcion adopcion = animal.getAdopcion();
 		if (adopcion == null)
 			return CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE;
-
+		if(!adopcion.getContinuarConVisitas())
+			return CodigosRetorno.ERROR_SEGUIMIENTO_FINALIZADO_PREVIAMENTE;
 		Visita v = new Visita(datosVisita.fecha, datosVisita.encuesta, adopcion);
 		Visita.registrar(v, animal);
 		return CodigosRetorno.ADOPCION_CARGADA;
 	}
 
 	public List<VisitaDto> getVisitas(String idAnimal) {
-		var animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
-		var visitas = animal.getVisitasDeFicha();
 		List<VisitaDto> visitasDto = new ArrayList<>();
-		for(Visita v : visitas) {
+		var animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
+		if (animal == null) {
+			return visitasDto;
+		}
+		var visitas = animal.getVisitasDeFicha();
+		for (Visita v : visitas) {
 			visitasDto.add(v.toDto());
 		}
 		return visitasDto;
+	}
+
+	public VisitasController.CodigosRetorno terminarSeguimiento(String idAnimal) {
+		Animal animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
+		if (animal == null) {
+			return CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE;
+		}
+		Adopcion adopcion = animal.getAdopcion();
+		if (adopcion == null)
+			return CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE;
+		boolean finalizarOK = adopcion.finalizarSeguimiento();
+		if (!finalizarOK)
+			return CodigosRetorno.ERROR_SEGUIMIENTO_FINALIZADO_PREVIAMENTE;
+		return CodigosRetorno.SEGUIMIENTO_FINALIZADO;
 	}
 
 }

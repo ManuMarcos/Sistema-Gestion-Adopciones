@@ -16,21 +16,28 @@ import vistas.utils.IngresoCli;
 
 public class VisitasView implements ICliView {
 
+	private boolean validarExisteAnimalYAdopcion(String idAnimal) {
+		var ret = controlador.validarExisteAdopcion(idAnimal);
+		if (ret == VisitasController.CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE) {
+			System.out.println("No se encontró el animal.");
+			return false;
+		} else if (ret == VisitasController.CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE) {
+			System.out.println("El animal no se encuentra adoptado.");
+			return false;
+		}
+		return true;
+	}
+
 	class OptionCargarVisita implements ICliOption {
 		@Override
 		public CliViewNames doAction() {
 			String idAnimal = IngresoCli.solicitarStringNumericoNulo("Ingrese id animal: ");
-			var ret = controlador.validarExisteAdopcion(idAnimal);
-			if (ret == VisitasController.CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE) {
-				System.out.println("No se encontró el animal.");
-			} else if (ret == VisitasController.CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE) {
-				System.out.println("El animal no se encuentra adoptado.");
-			} else {
+			if (validarExisteAnimalYAdopcion(idAnimal)) {
 				VisitasController.CodigosRetorno retvis = cargarVisita(idAnimal);
 				if (retvis == VisitasController.CodigosRetorno.ADOPCION_CARGADA) {
 					System.out.println("Visita cargada exitosamente.");
 				} else {
-					System.out.println("Error al cargar la visita.");
+					System.out.println("Error al cargar la visita...");
 				}
 			}
 			return CliViewNames.STAY;
@@ -59,15 +66,10 @@ public class VisitasView implements ICliView {
 		@Override
 		public CliViewNames doAction() {
 			String idAnimal = IngresoCli.solicitarStringNumericoNulo("Ingrese id animal: ");
-			var ret = controlador.validarExisteAdopcion(idAnimal);
-			if (ret == VisitasController.CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE) {
-				System.out.println("No se encontró el animal.");
-			} else if (ret == VisitasController.CodigosRetorno.ERROR_ADOPCION_NO_EXISTENTE) {
-				System.out.println("El animal no se encuentra adoptado.");
-			} else {
+			if (validarExisteAnimalYAdopcion(idAnimal)) {
 				System.out.println("Visitas:");
 				var visitasDto = controlador.getVisitas(idAnimal);
-				for(VisitaDto visita : visitasDto) {
+				for (VisitaDto visita : visitasDto) {
 					printVisita(visita);
 				}
 			}
@@ -82,9 +84,25 @@ public class VisitasView implements ICliView {
 		}
 	}
 
+	class OptionFinalizarVisitas implements ICliOption {
+		@Override
+		public CliViewNames doAction() {
+			String idAnimal = IngresoCli.solicitarStringNumericoNulo("Ingrese id animal: ");
+			if (validarExisteAnimalYAdopcion(idAnimal)) {
+				var ret = controlador.terminarSeguimiento(idAnimal);
+				if (ret == VisitasController.CodigosRetorno.ERROR_SEGUIMIENTO_FINALIZADO_PREVIAMENTE)
+					System.out.println("Ya se había finalizado los seguimientso previamente.");
+				else
+					System.out.println("Seguimientos finalizados exitosamente.");
+			}
+			return CliViewNames.STAY;
+		}
+	}
+
 	//
 
-	private static final String[] nombresOpciones = { "Cargar Visita", "Consultar Visitas", "Atrás" };
+	private static final String[] nombresOpciones = { "Cargar Visita", "Consultar Visitas", "Finalizar Seguimiento",
+			"Atrás" };
 	private List<ICliOption> opciones;
 	private VisitasController controlador;
 
@@ -96,6 +114,7 @@ public class VisitasView implements ICliView {
 		opciones = new ArrayList<>();
 		opciones.add(new OptionCargarVisita());
 		opciones.add(new OptionConsultarVisitas());
+		opciones.add(new OptionFinalizarVisitas());
 		opciones.add(new ICliOption.OptionBack());
 	}
 

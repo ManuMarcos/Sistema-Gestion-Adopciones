@@ -16,8 +16,16 @@ public class Adopcion {
 	private LocalDateTime fin;
 	private boolean continuarConVisitas;
 
-	public void finalizarSeguimiento() {
+	public boolean finalizarSeguimiento() {
+		if(!continuarConVisitas) {
+			return false;
+		}
 		continuarConVisitas = false;
+		return true;
+	}
+	
+	public boolean getContinuarConVisitas() {
+		return continuarConVisitas;
 	}
 
 	
