@@ -20,9 +20,8 @@ public class AlarmaController {
 	
 	
 	public void crearAlarma(AnimalDto animalDto, TipoDeAlarma tipo, int periodicidad, List<String> acciones) {
-		Animal animal = new Animal();
 		AlarmaFacade alarmaFacade = new AlarmaFacade();
-		alarmaFacade.crearAlarma(animal.buscarAnimal(animalDto.getId()), tipo, periodicidad, acciones);
+		alarmaFacade.crearAlarma(animalDto.toEntity(), tipo, periodicidad, acciones);
 	}
 	
 	public List<AlarmaDto> listarAlarmas(AnimalDto animalDto){

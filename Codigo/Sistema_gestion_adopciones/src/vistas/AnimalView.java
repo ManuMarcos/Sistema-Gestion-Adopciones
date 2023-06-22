@@ -242,7 +242,7 @@ public class AnimalView {
 				System.out.println("MOSTRAR HISTORIA CLINICA (EVOLUCION MEDICA, CHEQUEOS Y VISITAS)");
 				break;
 			case 3:
-				AlarmaView alarmaView = new AlarmaView();
+				AlarmaView alarmaView = new AlarmaView(this.controlador);
 				AlarmaController alarmaController = new AlarmaController(alarmaView);
 				alarmaView.setController(alarmaController);
 				

@@ -1,11 +1,18 @@
 package app.main;
 
+import java.time.LocalDate;
+
 import controladores.AdopcionController;
+import controladores.AlarmaController;
 import controladores.AnimalController;
 import controladores.ClienteController;
 import controladores.LoginController;
 import controladores.VisitasController;
+import modelo.dto.AnimalDto;
+import modelo.enumeraciones.EstadoAnimal;
+import modelo.enumeraciones.TipoAnimal;
 import vistas.AdopcionView;
+import vistas.AlarmaView;
 import vistas.AnimalView;
 import vistas.ClienteView;
 import vistas.LoginView;
@@ -34,6 +41,9 @@ public class MainCli extends CliViewRunner {
 	
 	private VisitasView vistaVisitas;
 	private VisitasController controladorVisitas;
+	
+	private AlarmaView vistaAlarmas;
+	private AlarmaController controladorAlarmas;
 
 	MainCli() {
 		vistaMenuPrincipal = new MenuPrincipalView();
@@ -62,7 +72,12 @@ public class MainCli extends CliViewRunner {
 		vistaVisitas = new VisitasView();
 		controladorVisitas = new VisitasController(vistaVisitas);
 		vistaVisitas.setControlador(controladorVisitas);
-
+		//Alarmas
+		vistaAlarmas = new AlarmaView(controladorAnimales);
+		controladorAlarmas= new AlarmaController(vistaAlarmas);
+		vistaAlarmas.setController(controladorAlarmas);
+		
+		controladorAnimales.cargarAnimal(new AnimalDto(199,5000,LocalDate.of(2010, 6, 30), "Perro",EstadoAnimal.EN_TRATAMIENTO, TipoAnimal.DOMESTICO));
 		
 		setFirstView(vistaLogin);
 	}
@@ -99,6 +114,7 @@ public class MainCli extends CliViewRunner {
 		case MENU_ANIMALES:
 			
 		case MENU_ALARMAS:
+			return vistaAlarmas;
 		case MENU_VISITAS:
 			System.err.printf("View no conectada: %s%n", next.name());
 			FormatoCli.esperaTruchanga();
