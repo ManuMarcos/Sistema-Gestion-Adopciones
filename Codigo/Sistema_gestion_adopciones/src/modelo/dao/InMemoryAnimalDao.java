@@ -1,15 +1,27 @@
 package modelo.dao;
 
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import modelo.Animal;
+import modelo.enumeraciones.EstadoAnimal;
+import modelo.enumeraciones.TipoAnimal;
 
-
-public class InMemoryAnimalDao implements AnimalDao{
+public class InMemoryAnimalDao implements AnimalDao {
 
 	private static List<Animal> animales = new ArrayList<Animal>();
 	private static int generador = 1;
-	
+
+	static {
+		precargarAnimal();
+	}
+
+	private static void precargarAnimal() {
+		++generador;
+		Animal animalPrecargado = new Animal(1, 60, 60, LocalDate.now(), "Gato", EstadoAnimal.SALUDABLE,
+				TipoAnimal.DOMESTICO);
+		animales.add(animalPrecargado);
+	}
 
 	@Override
 	public List<Animal> getAll() {
@@ -25,7 +37,7 @@ public class InMemoryAnimalDao implements AnimalDao{
 				return animal;
 			}
 		}
-		//System.out.println("Animal no encontrado");
+		// System.out.println("Animal no encontrado");
 		return null;
 	}
 
@@ -37,8 +49,7 @@ public class InMemoryAnimalDao implements AnimalDao{
 			animal.setId(generador);
 			generador++;
 			animales.add(animal);
-		}
-		else {
+		} else {
 			update(animal);
 		}
 	}
@@ -70,6 +81,4 @@ public class InMemoryAnimalDao implements AnimalDao{
 		return false;
 	}
 
-	
-	
 }

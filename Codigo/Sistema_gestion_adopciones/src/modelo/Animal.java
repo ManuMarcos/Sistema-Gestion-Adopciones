@@ -178,19 +178,5 @@ public class Animal {
 	public List<Visita> getVisitasDeFicha(){
 		return this.fichaMedica.getVisitas();
 	}
-	
-	// TODO: agrego esto porque necesito poder conseguir un animal por id (o alguna
-		// PK) para avanzar. despues implementarlo bien...
-		static Animal a = new Animal(60, 60, LocalDate.now(), "Gato", EstadoAnimal.SALUDABLE, TipoAnimal.DOMESTICO);
-
 		
-		public static Animal getAnimalHardCodeado(int id) {
-			if (id == 1)
-				return a;
-			else
-				return null;
-		}
-
-	
-	
 }

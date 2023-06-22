@@ -31,7 +31,7 @@ public class AdopcionController {
 		Visitador visitador = Visitador.getVisitador(data.usuarioDelVisitador);
 		if (visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
 			return CodigosRetorno.ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO;
-		Animal animal = Animal.getAnimalHardCodeado(data.idAnimal);
+		Animal animal = new Animal().buscarAnimal(data.idAnimal);
 		Adopcion adopcion = new Adopcion(cliente, visitador, animal);
 		return adopcion.guardar();
 	}
@@ -56,8 +56,7 @@ public class AdopcionController {
 	}
 
 	public AdopcionDto buscarAdopcionesPorAnimal(String idAnimal) {
-		// TODO: tremendo hardcodeo para poder probar esto
-		Animal animal = Animal.getAnimalHardCodeado(Integer.parseInt(idAnimal));
+		Animal animal = new Animal().buscarAnimal(Integer.parseInt(idAnimal));
 		if (animal == null)
 			return null;
 		Adopcion adopcion = animal.getAdopcion();
