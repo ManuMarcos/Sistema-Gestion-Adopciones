@@ -8,6 +8,7 @@ import controladores.AlarmaController;
 import controladores.AnimalController;
 import modelo.Alarma;
 import modelo.Animal;
+import modelo.Tratamiento;
 import modelo.dto.AlarmaDto;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.TipoDeAlarma;
@@ -135,7 +136,7 @@ public class AlarmaView implements ICliView{
         private void verAlarmas(){
             for(AnimalDto currentAnimal: animales) {
                 List<AlarmaDto> alarmas = controlador.listarAlarmas(currentAnimal);
-                int nro=0;
+                int nro=1;
                 System.out.println("Buscando Alarmas...");
                 if(alarmas.isEmpty()){
                     System.out.println("No se encontro ninguna alarma");
@@ -145,9 +146,14 @@ public class AlarmaView implements ICliView{
 
                         System.out.println("Animal ID: "+currentAnimal.getId());
                         System.out.println("Alarma nro: "+nro);
-                        System.out.println("Tipo: "+alarma.getTipo());
+                        if(alarma.getTipo() instanceof Tratamiento){
+                            System.out.println("Tipo: Tratamiento");
+                        }
+                        else{
+                            System.out.println("Tipo: Control");
+                        }
                         System.out.println("Acciones: "+alarma.getAcciones());
-                        System.out.println("Periodicidad"+alarma.getPeriodicidad());
+                        System.out.println("Periodicidad: "+alarma.getPeriodicidad());
                     }
                 }
             }

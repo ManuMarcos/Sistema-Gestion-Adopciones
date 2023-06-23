@@ -17,7 +17,7 @@ public class AlarmaDto {
 	}
 
 	public TipoAlarma getTipo() {
-		return tipo;
+		return this.tipo;
 	}
 
 	public List<AccionDto> getAcciones() {
@@ -29,6 +29,7 @@ public class AlarmaDto {
 		for (Accion accion : acciones) {
 			this.acciones.add(accion.toDto());
 		}
+		this.tipo=tipo;
 		this.periodicidad = periodicidad;
 	}
 }
