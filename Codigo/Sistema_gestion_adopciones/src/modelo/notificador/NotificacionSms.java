@@ -10,7 +10,7 @@ public class NotificacionSms implements IEstrategiaNotificacion{
 
 	@Override
 	public void enviar(Notificacion notificacion) {
-		// TODO Auto-generated method stub
+		this.adapter.enviarSms(notificacion);
 		
 	}
 

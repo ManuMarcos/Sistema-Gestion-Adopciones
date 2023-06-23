@@ -4,7 +4,8 @@ public class AdapterCloudApi implements IAdapterNotificacionWhatsApp {
 
 	@Override
 	public void enviarWhatsApp(Notificacion notificacion) {
-		// TODO Auto-generated method stub
+		System.out.println(notificacion.getMensaje());
+		System.out.println("Enviado via Whatsapp");
 		
 	}
 

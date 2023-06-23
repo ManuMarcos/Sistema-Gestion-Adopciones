@@ -4,7 +4,8 @@ public class AdapterJavaMail implements IAdapterNotificacionEmail {
 
 	@Override
 	public void enviarMail(Notificacion notificacion) {
-		// TODO Auto-generated method stub
+		System.out.println(notificacion.getMensaje());
+		System.out.println("Enviado via JavaMail");
 		
 	}
 

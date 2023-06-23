@@ -4,7 +4,8 @@ public class AdapterSmsTwilio implements IAdapterNotificacionSms {
 
 	@Override
 	public void enviarSms(Notificacion notificacion) {
-		// TODO Auto-generated method stub
+		System.out.println(notificacion.getMensaje());
+		System.out.println("Enviado via SMS");
 		
 	}
 
