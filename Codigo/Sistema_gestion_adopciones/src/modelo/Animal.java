@@ -157,6 +157,10 @@ public class Animal {
 		this.adopcion = adopcion;
 	}
 
+	public FichaMedica getFichaMedica() {
+		return fichaMedica;
+	}
+	
 
 	public void setId(int id) {
 		this.id = id;

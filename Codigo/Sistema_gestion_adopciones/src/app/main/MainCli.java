@@ -18,7 +18,7 @@ import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;
 import vistas.VentanaPrincipalAnimal;
-import vistas.VentanaRegistroAnimal;
+import vistas.VentanaDatosAnimal;
 import vistas.VisitasView;
 import vistas.enumeraciones.CliViewNames;
 import vistas.utils.CliViewRunner;
@@ -38,7 +38,7 @@ public class MainCli extends CliViewRunner {
 	private AdopcionController controladorAdopciones;
 	
 	private VentanaPrincipalAnimal ventanaPrincipalAnimal;
-	private VentanaRegistroAnimal ventanaRegistroAnimal;
+	private VentanaDatosAnimal ventanaDatosAnimal;
 	private AnimalController controladorAnimal;
 	
 	private VisitasView vistaVisitas;
@@ -68,13 +68,13 @@ public class MainCli extends CliViewRunner {
 		//Animales
 		controladorAnimal =  new AnimalController();
 		ventanaPrincipalAnimal = new VentanaPrincipalAnimal();
-		ventanaRegistroAnimal = new VentanaRegistroAnimal();
+		ventanaDatosAnimal = new VentanaDatosAnimal();
 		
 		ventanaPrincipalAnimal.setController(controladorAnimal);
-		ventanaRegistroAnimal.setController(controladorAnimal);
+		ventanaDatosAnimal.setController(controladorAnimal);
 		
 		controladorAnimal.setVentanaPrincipal(ventanaPrincipalAnimal);
-		controladorAnimal.setVentanaRegistro(ventanaRegistroAnimal);
+		controladorAnimal.setVentanaRegistro(ventanaDatosAnimal);
 	
 		
 		//Visitas

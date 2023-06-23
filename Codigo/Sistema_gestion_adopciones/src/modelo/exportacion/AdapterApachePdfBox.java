@@ -39,9 +39,10 @@ public class AdapterApachePdfBox implements IAdapterExportacionPdf {
             doc.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error al exportar");
         }
 
-		System.out.println("Documento Exportado correctamente");
+		//System.out.println("Documento Exportado correctamente");
 		return rutaCompletaArchivo();
 
 	}

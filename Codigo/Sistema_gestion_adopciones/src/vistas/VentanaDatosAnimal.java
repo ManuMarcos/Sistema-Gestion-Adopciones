@@ -10,6 +10,7 @@ import controladores.AnimalController;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
+import modelo.exportacion.FormatoExportacion;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -20,45 +21,40 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class VentanaRegistroAnimal extends JFrame implements ActionListener{
+public class VentanaDatosAnimal extends JFrame implements ActionListener{
 
 	
 	private AnimalController controlador;
 	
 	private JPanel contentPane;
-	private JTextField textFieldEspecie;
-	private JTextField textFieldAltura;
-	private JTextField textFieldPeso;
-	private JTextField textFieldEdad;
-	private JTextField textFieldId;
-	private JButton botonCancelar ;
-	private JButton botonGuardar;
+	private JTextField textFieldEspecie, textFieldAltura,textFieldPeso, textFieldEdad, textFieldId;
+	private JButton botonCancelar, botonGuardar;
 	private JComboBox<TipoAnimal> comboBoxTipo;
 	private JComboBox<EstadoAnimal> comboBoxEstado;
-	private JPanel panel;
-	private JPanel panel_2;
-	private JPanel panel_3;
-	private JPanel panel_4 ;
-	private JPanel panel_5;
-	private JPanel panel_6;
-	private JPanel panel_7;
-	private JPanel panel_8;
+	private JPanel panel,  panel_2, panel_3, panel_4, panel_5, panel_6, panel_7, panel_8;
+	private JMenuBar menuBar;
+	private JMenu menuExportar;
+	private JMenuItem itemPdf, itemExcel;
 
 	
-	public VentanaRegistroAnimal() {
+	public VentanaDatosAnimal() {
 		setBounds(100, 100, 551, 379);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 
-		
 		panel = new JPanel();
+		
+		this.agregarMenu();
 		
 		setContentPane(panel);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -147,6 +143,7 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 	}
 
 	public void mostrarDatos(AnimalDto animal) {
+		this.menuBar.setVisible(true);
 		comboBoxTipo.setSelectedItem(animal.getTipo());
 		textFieldEspecie.setText(animal.getEspecie());
 		textFieldAltura.setText(Integer.toString(animal.getAltura()));
@@ -154,6 +151,15 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		textFieldEdad.setText(Integer.toString(fechaNacimientoToEdad(animal.getFecha_nac())));
 		comboBoxEstado.setSelectedItem(animal.getEstado());
 		textFieldId.setText(Integer.toString(animal.getId()));
+	}
+	
+	public void mostrarMensajeInfo(String mensaje) {
+		JOptionPane.showMessageDialog(this, mensaje);
+	}
+	
+	public void registrarAnimal() {
+		this.limpiar();
+		this.menuBar.setVisible(false);
 	}
 	
 	
@@ -182,6 +188,21 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		textFieldId.setText("-1");
 	}
 	
+	private void agregarMenu(){
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		menuExportar = new JMenu("Exportar");
+		menuBar.add(menuExportar);
+	
+		itemPdf = new JMenuItem("Pdf");
+		itemPdf.addActionListener(this);
+		menuExportar.add(itemPdf);
+		
+		itemExcel = new JMenuItem("Excel");
+		itemExcel.addActionListener(this);
+		menuExportar.add(itemExcel);
+	}
 	
 
 	private LocalDate calcularFechaNacimiento(int edadAproximada) {
@@ -216,6 +237,14 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 				ex.printStackTrace();
 			}
 			
+		}
+		else if(e.getSource() == itemPdf) {
+			String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo PDF");
+			controlador.exportarFichaMedica(Integer.parseInt(textFieldId.getText()), FormatoExportacion.PDF, nombreArchivo);
+		}
+		else if(e.getSource() == itemExcel) {
+			String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo Excel");
+			controlador.exportarFichaMedica(Integer.parseInt(textFieldId.getText()), FormatoExportacion.EXCEL, nombreArchivo);
 		}
 	}
 

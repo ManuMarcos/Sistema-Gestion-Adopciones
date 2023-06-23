@@ -6,14 +6,16 @@ import modelo.Animal;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
+import modelo.exportacion.FacadeExportador;
+import modelo.exportacion.FormatoExportacion;
 import vistas.AnimalView;
 import vistas.VentanaPrincipalAnimal;
-import vistas.VentanaRegistroAnimal;
+import vistas.VentanaDatosAnimal;
 
 public class AnimalController {
 
 	private VentanaPrincipalAnimal ventanaPrincipal;
-	private VentanaRegistroAnimal ventanaRegistro;
+	private VentanaDatosAnimal ventanaDatos;
 	
 	
 
@@ -27,8 +29,8 @@ public class AnimalController {
 		this.ventanaPrincipal = ventanaPrincipal;
 	}
 	
-	public void setVentanaRegistro(VentanaRegistroAnimal ventanaRegistro) {
-		this.ventanaRegistro = ventanaRegistro;
+	public void setVentanaRegistro(VentanaDatosAnimal ventanaDatos) {
+		this.ventanaDatos = ventanaDatos;
 		
 	}
 	
@@ -36,19 +38,26 @@ public class AnimalController {
 		this.ventanaPrincipal.setVisible(true);
 	}
 	
-	public void mostrarVentanaRegistro() {
-		this.ventanaRegistro.limpiar();
-		this.ventanaRegistro.setVisible(true);
+	public void mostrarVentanaDatos() {
+		this.ventanaDatos.registrarAnimal();
+		this.ventanaDatos.setVisible(true);
 	}
 	
-	public void mostrarVentanaRegistro(int id) {
+	public void mostrarVentanaDatos(int id) {
 		Animal animal = new Animal();
-		this.ventanaRegistro.mostrarDatos(animal.buscarAnimal(id).toDto());
-		this.ventanaRegistro.setVisible(true);
+		this.ventanaDatos.mostrarDatos(animal.buscarAnimal(id).toDto());
+		this.ventanaDatos.setVisible(true);
 	}
 	
+
+	public void exportarFichaMedica(int id, FormatoExportacion formatoExportacion, String nombreArchivo) {
+		Animal animal = new Animal();
+		FacadeExportador exportador = new FacadeExportador();
+		String rutaCompletaArchivo = exportador.exportar(animal.buscarAnimal(id).getFichaMedica(), formatoExportacion, nombreArchivo);
+		this.ventanaDatos.mostrarMensajeInfo("Archivo exportado con exito, ruta: "  + rutaCompletaArchivo);
+	}
 	
-	
+
 	public void cargarAnimal(AnimalDto animalDto) {
 		Animal animal = new Animal();
 		animal.registrarAnimal(animalDto.toEntity());

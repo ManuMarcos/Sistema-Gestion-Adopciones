@@ -39,8 +39,6 @@ public class FichaMedica implements IExportable{
 	public Map<String,List<String>> datos() {
 		// TODO Auto-generated method stub
 		Map<String, List<String>> datos = new HashMap<String, List<String>>();
-		String patronFecha = "dd/MM/yyyy";
-		SimpleDateFormat formatoFecha = new SimpleDateFormat(patronFecha);
 		List<String> columnas = Arrays.asList("Tipo", "Especie", "Altura", "Peso", 
 				"Fecha Nacimiento", "Condicion Medica");
 		List<String> celdas = Arrays.asList(
@@ -48,7 +46,7 @@ public class FichaMedica implements IExportable{
 				/*Especie*/ this.animal.getEspecie(),
 				/*Altura*/ Integer.toString(this.animal.getAltura()) + " cm",
 				/*Peso*/ Integer.toString(this.animal.getPeso()) + " g",
-				/*Fecha Nacimiento*/ formatoFecha.format(this.animal.getFecha_nac()),
+				/*Fecha Nacimiento*/ this.animal.getFecha_nac().toString(),
 				/*Estado*/ this.animal.getEstado().toString().replace("_", " ").toLowerCase());
 		
 		datos.put("0", columnas);

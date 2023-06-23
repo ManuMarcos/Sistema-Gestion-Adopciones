@@ -3,6 +3,7 @@ package vistas;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
@@ -39,6 +40,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class VentanaPrincipalAnimal extends JFrame implements ActionListener, TableModelListener, MouseListener, ICliView{
 
@@ -49,8 +52,8 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	private JTable table;
 	private AnimalController controlador;
 	private JPanel panelBotones;
-	private JButton botonNuevo;
-	private JButton botonActualizar;
+	private JButton botonNuevo, botonActualizar;
+	
 
 	/**
 	 * Create the frame.
@@ -58,6 +61,8 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	public VentanaPrincipalAnimal() {		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 930, 476);
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -98,19 +103,6 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 		table.setRowHeight(25);
 		
-//		//Para que la columna Tipo tenga un ComboBox asociado
-//		TableColumn comboColumnaTipo = table.getColumnModel().getColumn(1);
-//		JComboBox<TipoAnimal> comboBoxTipo = new JComboBox<TipoAnimal>();
-//		comboBoxTipo.setModel(new DefaultComboBoxModel<>(TipoAnimal.values()));
-//		comboColumnaTipo.setCellEditor(new DefaultCellEditor(comboBoxTipo));
-//		
-//		//Para que la columna Tipo tenga un ComboBox asociado
-//		TableColumn comboColumnaEstado = table.getColumnModel().getColumn(3);
-//		JComboBox<EstadoAnimal> comboBoxEstado = new JComboBox<EstadoAnimal>();
-//		comboBoxEstado.setModel(new DefaultComboBoxModel<>(EstadoAnimal.values()));
-//		comboColumnaEstado.setCellEditor(new DefaultCellEditor(comboBoxEstado));
-//	
-//		table.getModel().addTableModelListener(this);
 		table.addMouseListener(this);
 	}
 	
@@ -137,12 +129,14 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 		botonActualizar.addActionListener(this);
 		panelBotones.add(botonActualizar);
 	}
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == botonNuevo) {
-			controlador.mostrarVentanaRegistro();
+			controlador.mostrarVentanaDatos();
 		}
 		else if (e.getSource() == botonActualizar){
 			this.setTabla();
@@ -162,7 +156,7 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 		int filaSeleccionada = this.table.getSelectedRow();
 		if(filaSeleccionada != -1) {
 			//Se retorna la columna 0 (id) de la fila seleccionada
-			controlador.mostrarVentanaRegistro((int)this.table.getValueAt(filaSeleccionada, 0));
+			controlador.mostrarVentanaDatos((int)this.table.getValueAt(filaSeleccionada, 0));
 		}
 	}
 

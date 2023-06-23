@@ -11,7 +11,7 @@ import modelo.enumeraciones.TipoAnimal;
 import vistas.AnimalView;
 import vistas.ClienteView;
 import vistas.VentanaPrincipalAnimal;
-import vistas.VentanaRegistroAnimal;
+import vistas.VentanaDatosAnimal;
 
 public class AnimalControllerTest {
 	public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class AnimalControllerTest {
 		
 		
 		VentanaPrincipalAnimal ventanaPrincipal = new VentanaPrincipalAnimal();
-		VentanaRegistroAnimal ventanaRegistro = new VentanaRegistroAnimal();
+		VentanaDatosAnimal ventanaRegistro = new VentanaDatosAnimal();
 		
 		ventanaPrincipal.setController(controlador);
 		ventanaRegistro.setController(controlador);
