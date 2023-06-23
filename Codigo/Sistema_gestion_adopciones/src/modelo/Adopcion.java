@@ -41,7 +41,6 @@ public class Adopcion {
 		this.visitador = visitador;
 		this.animal = animal;
 		this.medioNotificacion = MedioNotificacion.SMS;
-		animal.setAdopcion(this);
 		inicio = LocalDateTime.now();
 		continuarConVisitas = true;
 	}
