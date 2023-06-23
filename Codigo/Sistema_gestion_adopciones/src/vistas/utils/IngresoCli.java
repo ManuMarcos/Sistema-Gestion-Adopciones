@@ -32,6 +32,7 @@ public class IngresoCli {
 
 	public static String solicitarStringNoNulo(String mensaje) {
 		System.out.print(mensaje);
+		sc.nextLine();
 		String input = sc.next();
 		while (input.isEmpty()) {
 			System.out.print("Ingreso inválido. " + mensaje);

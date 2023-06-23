@@ -34,6 +34,6 @@ public class Alarma {
 	}
 	
 	public AlarmaDto toDto() {
-		return new AlarmaDto(tipo.getAcciones(), periodicidad);
+		return new AlarmaDto(tipo,tipo.getAcciones(), periodicidad);
 	}
 }
