@@ -14,6 +14,8 @@ import controladores.AnimalController;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
+import vistas.enumeraciones.CliViewNames;
+import vistas.utils.ICliView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -26,6 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +40,7 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 
-public class VentanaPrincipalAnimal extends JFrame implements ActionListener, TableModelListener, MouseListener{
+public class VentanaPrincipalAnimal extends JFrame implements ActionListener, TableModelListener, MouseListener, ICliView{
 
 	/**
 	 * 
@@ -52,7 +56,7 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	 * Create the frame.
 	 */
 	public VentanaPrincipalAnimal() {		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 930, 476);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,7 +72,15 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 		
 		this.agregarBotones();
 		this.agregarTabla();
+		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				procesar();
+			}
+		});
+		
 	}
+	
 	
 	public void setTabla() {
 		DefaultTableModel modeloTablaAnimales = new DefaultTableModel();
@@ -176,6 +188,13 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public CliViewNames procesar() {
+		// TODO Auto-generated method stub
+		
+		return CliViewNames.BACK;
 	}
 
 

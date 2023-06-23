@@ -179,7 +179,7 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 		textFieldAltura.setText("");
 		textFieldPeso.setText("");
 		textFieldEdad.setText("");
-		textFieldId.setText("");
+		textFieldId.setText("-1");
 	}
 	
 	
@@ -205,12 +205,15 @@ public class VentanaRegistroAnimal extends JFrame implements ActionListener{
 				int edadAproximada = Integer.parseInt(textFieldEdad.getText());
 				animal.setFecha_nac(calcularFechaNacimiento(edadAproximada));
 				animal.setEstado((EstadoAnimal) comboBoxEstado.getSelectedItem());
-				animal.setId(Integer.parseInt(textFieldId.getText()));
+				if(textFieldId.getText() != "-1") {
+					animal.setId(Integer.parseInt(textFieldId.getText()));
+				}
 				controlador.cargarAnimal(animal);
 				this.setVisible(false);
 			}
 			catch(Exception ex){
 				JOptionPane.showMessageDialog(null, "Error en el ingreso de datos", "Error", JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
 			}
 			
 		}

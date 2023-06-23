@@ -18,6 +18,7 @@ import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;
 import vistas.VentanaPrincipalAnimal;
+import vistas.VentanaRegistroAnimal;
 import vistas.VisitasView;
 import vistas.enumeraciones.CliViewNames;
 import vistas.utils.CliViewRunner;
@@ -36,8 +37,9 @@ public class MainCli extends CliViewRunner {
 	private AdopcionView vistaAdopciones;
 	private AdopcionController controladorAdopciones;
 	
-	private VentanaPrincipalAnimal vistaAnimales;
-	private AnimalController controladorAnimales;
+	private VentanaPrincipalAnimal ventanaPrincipalAnimal;
+	private VentanaRegistroAnimal ventanaRegistroAnimal;
+	private AnimalController controladorAnimal;
 	
 	private VisitasView vistaVisitas;
 	private VisitasController controladorVisitas;
@@ -64,9 +66,16 @@ public class MainCli extends CliViewRunner {
 		vistaAdopciones.setControlador(controladorAdopciones);
 
 		//Animales
-		vistaAnimales = new VentanaPrincipalAnimal();
-		controladorAnimales = new AnimalController(vistaAnimales);
-		vistaAnimales.setController(controladorAnimales);
+		controladorAnimal =  new AnimalController();
+		ventanaPrincipalAnimal = new VentanaPrincipalAnimal();
+		ventanaRegistroAnimal = new VentanaRegistroAnimal();
+		
+		ventanaPrincipalAnimal.setController(controladorAnimal);
+		ventanaRegistroAnimal.setController(controladorAnimal);
+		
+		controladorAnimal.setVentanaPrincipal(ventanaPrincipalAnimal);
+		controladorAnimal.setVentanaRegistro(ventanaRegistroAnimal);
+	
 		
 		//Visitas
 		vistaVisitas = new VisitasView();
@@ -74,11 +83,11 @@ public class MainCli extends CliViewRunner {
 		vistaVisitas.setControlador(controladorVisitas);
 		
 		//Alarmas
-		vistaAlarmas = new AlarmaView(controladorAnimales);
+		vistaAlarmas = new AlarmaView(controladorAnimal);
 		controladorAlarmas= new AlarmaController(vistaAlarmas);
 		vistaAlarmas.setController(controladorAlarmas);
 		
-		controladorAnimales.cargarAnimal(new AnimalDto(199,5000,LocalDate.of(2010, 6, 30), "Perro",EstadoAnimal.EN_TRATAMIENTO, TipoAnimal.DOMESTICO));
+		controladorAnimal.cargarAnimal(new AnimalDto(199,5000,LocalDate.of(2010, 6, 30), "Perro",EstadoAnimal.EN_TRATAMIENTO, TipoAnimal.DOMESTICO));
 		
 		setFirstView(vistaLogin);
 	}
@@ -113,9 +122,8 @@ public class MainCli extends CliViewRunner {
 		case MENU_ADOPCIONES:
 			return vistaAdopciones;
 		case MENU_ANIMALES:
-			System.err.printf("View no conectada: %s%n", next.name());
-			FormatoCli.esperaTruchanga();
-			return null;			
+			controladorAnimal.mostrarVentanaPrincipal();
+			return ventanaPrincipalAnimal;
 		case MENU_ALARMAS:
 			return vistaAlarmas;
 		case MENU_VISITAS:
