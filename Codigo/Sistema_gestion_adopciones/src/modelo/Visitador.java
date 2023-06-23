@@ -1,7 +1,6 @@
 package modelo;
 
 import modelo.dto.UsuarioDto;
-import modelo.enumeraciones.TipoUsuario;
 import repositorios.UsuarioRepository;
 
 public class Visitador extends Usuario {
@@ -9,11 +8,13 @@ public class Visitador extends Usuario {
 		super(usuarioData);
 	}
 
-	private String al_pedo_existe;
-	// TODO: ver si eliminar Visitador y Veterinario...
-	// y cambiarlo por un bool esVeterinario en Usuario ?
-
 	public static Visitador getVisitador(String usuario) {
-		return (Visitador) UsuarioRepository.obtenerUsuario(usuario);
+		Visitador v = null;
+		try {
+			v = (Visitador) UsuarioRepository.obtenerUsuario(usuario);
+		} catch (ClassCastException e){
+			v = null;
+		}
+		return v;
 	}
 }
