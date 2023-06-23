@@ -29,7 +29,7 @@ public class AdopcionController {
 		Cliente cliente = Cliente.buscarClientePorDocumento(data.documentoCliente);
 		if (cliente == null)
 			return CodigosRetorno.ERROR_ALTA_CLIENTE_NO_ENCONTRADO;
-		Visitador visitador = Visitador.getVisitador(data.usuarioDelVisitador);
+		Usuario visitador = Visitador.getVisitador(data.usuarioDelVisitador);
 		if (visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
 			return CodigosRetorno.ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO;
 		Animal animal = new Animal().buscarAnimal(data.idAnimal);
@@ -69,7 +69,7 @@ public class AdopcionController {
 	public void enviarNotificaciones(Usuario usu) {
 		List<Animal> animales = new Animal().getAll();
 		for (Animal ani : animales) {
-			if (ani.getAdopcion().getVisitador().getNombreUsuario() == usu.getNombreUsuario()) {
+			if (ani.getAdopcion() != null && ani.getAdopcion().getVisitador().getNombreUsuario() == usu.getNombreUsuario()) {
 				ani.getAdopcion().enviarNotificacion();
 			}
 		}

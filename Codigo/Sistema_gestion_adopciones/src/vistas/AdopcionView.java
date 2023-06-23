@@ -5,6 +5,7 @@ import java.util.List;
 
 import controladores.AdopcionController;
 import controladores.AdopcionController.CodigosRetorno;
+import modelo.Usuario;
 import modelo.dto.AdopcionDto;
 import modelo.dto.AltaAdopcionDto;
 import vistas.enumeraciones.CliViewNames;
@@ -131,6 +132,7 @@ public class AdopcionView implements ICliView {
 
 	@Override
 	public CliViewNames procesar() {
+		this.controlador.enviarNotificaciones(Usuario.usuActivo);
 		FormatoCli.printCabecera("Menú Adopciones");
 		FormatoCli.printOpciones(nombresOpciones);
 		int opcion = IngresoCli.solicitarOpcion(nombresOpciones.length);

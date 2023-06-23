@@ -3,7 +3,13 @@ package repositorios;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.AdopcionController.CodigosRetorno;
 import modelo.Adopcion;
+import modelo.Animal;
+import modelo.Cliente;
+import modelo.Usuario;
+import modelo.Visitador;
+import modelo.enumeraciones.TipoUsuario;
 
 public class AdopcionRepository {
 	// In-Memory
@@ -17,6 +23,7 @@ public class AdopcionRepository {
 		adopciones.add(a);
 		return true;
 	}
+
 
 	public static Adopcion obtener(int id) {
 		for (Adopcion a : adopciones) {

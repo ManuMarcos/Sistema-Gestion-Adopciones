@@ -4,11 +4,13 @@ import controladores.LoginController;
 import modelo.dto.UsuarioDto;
 import modelo.enumeraciones.TipoUsuario;
 import repositorios.UsuarioRepository;
+import controladores.AdopcionController;
 
 public class Usuario {
 	public String nombreUsuario;
 	public String contrasena;
-	public TipoUsuario tipoUsuario; // dejar? sacar?
+	public TipoUsuario tipoUsuario; 
+	public static Usuario usuActivo;
 
 	private IAutenticador auth;
 
@@ -34,6 +36,9 @@ public class Usuario {
 	public LoginController.CodigosRetorno ingresar() {
 		auth.iniciarSesion(nombreUsuario, contrasena);
 		Usuario u = UsuarioRepository.obtenerUsuario(nombreUsuario);
+		if (u != null) {
+			this.usuActivo = u;
+		}
 		return (u == null) ? LoginController.CodigosRetorno.LOGIN_ERROR : LoginController.CodigosRetorno.LOGIN_OK;
 	}
 

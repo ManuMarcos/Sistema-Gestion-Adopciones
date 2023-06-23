@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import controladores.AdopcionController;
 import modelo.dto.AdopcionDto;
+import modelo.enumeraciones.MedioNotificacion;
+import modelo.notificador.FacadeNotificador;
 import modelo.notificador.IEstrategiaNotificacion;
 import modelo.notificador.Notificacion;
 import repositorios.AdopcionRepository;
@@ -17,7 +19,7 @@ public class Adopcion {
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
 	private boolean continuarConVisitas;
-	private IEstrategiaNotificacion notificador;
+	private MedioNotificacion medioNotificacion;
 
 	public boolean finalizarSeguimiento() {
 		if(!continuarConVisitas) {
@@ -33,11 +35,13 @@ public class Adopcion {
 
 	
 
-	public Adopcion(Cliente cliente, Visitador visitador, Animal animal) {
+	public Adopcion(Cliente cliente, Usuario visitador, Animal animal) {
 		this.id = ++generador_id;
 		this.cliente = cliente;
 		this.visitador = visitador;
 		this.animal = animal;
+		this.medioNotificacion = MedioNotificacion.SMS;
+		animal.setAdopcion(this);
 		inicio = LocalDateTime.now();
 		continuarConVisitas = true;
 	}
@@ -78,7 +82,8 @@ public class Adopcion {
 
 	public void enviarNotificacion() {
 		Notificacion noti = new Notificacion(this.id, 20230626);
-		this.notificador.enviar(noti);
+		FacadeNotificador facade = new FacadeNotificador();
+		facade.notificar(noti, this.medioNotificacion);
 		
 	}
 }
