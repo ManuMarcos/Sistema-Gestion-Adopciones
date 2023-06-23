@@ -6,6 +6,7 @@ import java.util.List;
 import modelo.Adopcion;
 import modelo.Animal;
 import modelo.Cliente;
+import modelo.Usuario;
 import modelo.Visitador;
 import modelo.dto.AdopcionDto;
 import modelo.dto.AltaAdopcionDto;
@@ -63,6 +64,16 @@ public class AdopcionController {
 		if (adopcion == null)
 			return null;
 		return adopcion.toDto();
+	}
+
+	public void enviarNotificaciones(Usuario usu) {
+		List<Animal> animales = new Animal().getAll();
+		for (Animal ani : animales) {
+			if (ani.getAdopcion().getVisitador().getNombreUsuario() == usu.getNombreUsuario()) {
+				ani.getAdopcion().enviarNotificacion();
+			}
+		}
+		
 	}
 
 }

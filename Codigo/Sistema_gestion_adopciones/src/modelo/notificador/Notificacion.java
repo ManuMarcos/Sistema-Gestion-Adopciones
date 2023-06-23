@@ -5,8 +5,8 @@ import modelo.dto.AnimalDto;
 public class Notificacion {
 	private String mensaje;
 	
-	public Notificacion(AnimalDto animal, String fecha) {
-		this.mensaje = "!!!EL dia " + fecha + ", tiene agendada la visita de ID: " + animal.getId() + "!!!";
+	public Notificacion(int id, int fecha) {
+		this.mensaje = "!!!EL dia " + fecha + ", tiene agendada la visita de la adopcion: " +id + "!!!";
 		
 	}
 	

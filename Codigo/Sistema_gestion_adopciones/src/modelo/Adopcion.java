@@ -4,17 +4,20 @@ import java.time.LocalDateTime;
 
 import controladores.AdopcionController;
 import modelo.dto.AdopcionDto;
+import modelo.notificador.IEstrategiaNotificacion;
+import modelo.notificador.Notificacion;
 import repositorios.AdopcionRepository;
 
 public class Adopcion {
 	private static int generador_id = 0;
 	private int id;
 	private Cliente cliente;
-	private Visitador visitador;
+	private Usuario visitador;
 	private Animal animal;
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
 	private boolean continuarConVisitas;
+	private IEstrategiaNotificacion notificador;
 
 	public boolean finalizarSeguimiento() {
 		if(!continuarConVisitas) {
@@ -67,5 +70,15 @@ public class Adopcion {
 		data.documentoCliente = this.cliente.getDocumento();
 		data.idAnimal = this.animal.getId();
 		return data;
+	}
+
+	public Usuario getVisitador() {
+		return visitador;
+	}
+
+	public void enviarNotificacion() {
+		Notificacion noti = new Notificacion(this.id, 20230626);
+		this.notificador.enviar(noti);
+		
 	}
 }
