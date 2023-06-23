@@ -11,4 +11,8 @@ public class AccionDto {
 		this.comentario = comentario;
 		this.estaCompletada = estaCompletada;
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
 }

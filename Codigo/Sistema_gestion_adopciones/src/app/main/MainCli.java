@@ -102,12 +102,6 @@ public class MainCli extends CliViewRunner {
 		app.mostrarCabeceraApp();
 		app.run();
 		System.out.println("Ha salido del sistema.");
-
-
-		
-		
-		
-		
 	}
 
 	@Override

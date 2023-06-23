@@ -9,6 +9,7 @@ import controladores.AnimalController;
 import modelo.Alarma;
 import modelo.Animal;
 import modelo.Tratamiento;
+import modelo.dto.AccionDto;
 import modelo.dto.AlarmaDto;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.TipoDeAlarma;
@@ -92,6 +93,7 @@ public class AlarmaView implements ICliView{
                     acciones.add(inputAcciones);
                 }
             }
+            System.out.println("Acciones: "+acciones.toString());
             return acciones;
         }
         private void crearAlarma(){
@@ -152,8 +154,12 @@ public class AlarmaView implements ICliView{
                         else{
                             System.out.println("Tipo: Control");
                         }
-                        System.out.println("Acciones: "+alarma.getAcciones());
+                        for(AccionDto accion : alarma.getAcciones()){
+                            System.out.println("Acciones: ");
+                            System.out.println("- "+accion.getNombre());
+                        }
                         System.out.println("Periodicidad: "+alarma.getPeriodicidad());
+                        nro++;
                     }
                 }
             }

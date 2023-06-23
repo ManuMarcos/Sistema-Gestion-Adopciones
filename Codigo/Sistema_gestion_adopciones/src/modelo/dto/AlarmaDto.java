@@ -1,5 +1,6 @@
 package modelo.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Accion;
@@ -26,6 +27,7 @@ public class AlarmaDto {
 
 	//Methods
 	public AlarmaDto(TipoAlarma tipo, List<Accion> acciones, int periodicidad) {
+		this.acciones = new ArrayList<AccionDto>();
 		for (Accion accion : acciones) {
 			this.acciones.add(accion.toDto());
 		}
