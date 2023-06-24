@@ -8,13 +8,13 @@ public interface AnimalDao {
 
 	List<Animal> getAll();
 	
-	Animal getById(int id);
+	Animal getByNroIngreso(int nroIngreso);
 	
 	void add(Animal animal);
 	
 	boolean update(Animal animal);
 	
-	boolean delete(int id);
+	boolean delete(int nroIngreso);
 	
 	
 }

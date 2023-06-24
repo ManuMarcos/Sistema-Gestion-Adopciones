@@ -10,14 +10,12 @@ import modelo.enumeraciones.TipoAnimal;
 public class InMemoryAnimalDao implements AnimalDao {
 
 	private static List<Animal> animales = new ArrayList<Animal>();
-	private static int generador = 1;
 
 	static {
 		precargarAnimal();
 	}
 
 	private static void precargarAnimal() {
-		++generador;
 		Animal animalPrecargado = new Animal(1, 60, 60, LocalDate.now(), "Gato", EstadoAnimal.SALUDABLE,
 				TipoAnimal.DOMESTICO);
 		animales.add(animalPrecargado);
@@ -30,10 +28,10 @@ public class InMemoryAnimalDao implements AnimalDao {
 	}
 
 	@Override
-	public Animal getById(int id) {
+	public Animal getByNroIngreso(int nroIngreso) {
 		// TODO Auto-generated method stub
 		for (Animal animal : animales) {
-			if (animal.getId() == id) {
+			if (animal.getNroIngreso() == nroIngreso) {
 				return animal;
 			}
 		}
@@ -41,23 +39,29 @@ public class InMemoryAnimalDao implements AnimalDao {
 		return null;
 	}
 
+	
+	//El nro ingresado por el usuario debe ser mayor a 0
 	@Override
 	public void add(Animal animal) {
 		// TODO Auto-generated method stub
-		Animal animalBuscado = getById(animal.getId());
-		if (animalBuscado == null) {
-			animal.setId(generador);
-			generador++;
-			animales.add(animal);
-		} else {
-			update(animal);
+		if(animal.getNroIngreso() > 0) {
+			Animal animalBuscado = getByNroIngreso(animal.getNroIngreso());
+			if(animalBuscado == null) {
+				animales.add(animal);
+			}
+			else {
+				update(animal);
+			}
+		}
+		else {
+			System.out.println("El nro de Ingreso debe ser mayor a 0");
 		}
 	}
 
 	@Override
 	public boolean update(Animal animal) {
 		// TODO Auto-generated method stub
-		Animal animalToUpdate = getById(animal.getId());
+		Animal animalToUpdate = getByNroIngreso(animal.getNroIngreso());
 		if (animalToUpdate != null) {
 			animalToUpdate.setTipo(animal.getTipo());
 			animalToUpdate.setEspecie(animal.getEspecie());
@@ -71,9 +75,9 @@ public class InMemoryAnimalDao implements AnimalDao {
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean delete(int nroIngreso) {
 		// TODO Auto-generated method stub
-		Animal animalToDelete = getById(id);
+		Animal animalToDelete = getByNroIngreso(nroIngreso);
 		if (animalToDelete != null) {
 			animales.remove(animalToDelete);
 			return true;

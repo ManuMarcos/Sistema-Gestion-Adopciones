@@ -71,7 +71,7 @@ public class Adopcion {
 		AdopcionDto data = new AdopcionDto();
 		data.id = this.id;
 		data.documentoCliente = this.cliente.getDocumento();
-		data.idAnimal = this.animal.getId();
+		data.idAnimal = this.animal.getNroIngreso();
 		return data;
 	}
 

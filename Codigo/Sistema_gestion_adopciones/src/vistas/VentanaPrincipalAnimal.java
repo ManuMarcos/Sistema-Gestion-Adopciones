@@ -87,16 +87,16 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	}
 	
 	
-	public void setTabla() {
+	public void setearTabla() {
 		DefaultTableModel modeloTablaAnimales = new DefaultTableModel();
 		
-		String[] columnas = {"Id", "Tipo", "Especie", "Estado", "Fecha Nacimiento", "Altura", "Peso"};
+		String[] columnas = {"Nro Ingreso", "Tipo", "Especie", "Estado", "Fecha Nacimiento", "Altura", "Peso"};
 		modeloTablaAnimales.setColumnIdentifiers(columnas);
 		
 		
 		List<AnimalDto> animales = controlador.listarAnimales();
 		for (AnimalDto animal : animales) {
-			modeloTablaAnimales.addRow(new Object[] {animal.getId(),animal.getTipo(),animal.getEspecie(), animal.getEstado(), animal.getFecha_nac(), animal.getAltura(), animal.getPeso()});
+			modeloTablaAnimales.addRow(new Object[] {animal.getNroIngreso(),animal.getTipo(),animal.getEspecie(), animal.getEstado(), animal.getFecha_nac(), animal.getAltura(), animal.getPeso()});
 		}
 		
 		table.setModel(modeloTablaAnimales);
@@ -107,9 +107,12 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	}
 	
 	
+	
+	
+	
 	public void setController(AnimalController controlador) {
 		this.controlador = controlador;
-		this.setTabla();
+		this.setearTabla();
 	}
 	
 	private void agregarTabla() {
@@ -136,10 +139,10 @@ public class VentanaPrincipalAnimal extends JFrame implements ActionListener, Ta
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == botonNuevo) {
-			controlador.mostrarVentanaDatos();
+			controlador.mostrarVentanaRegistro();
 		}
 		else if (e.getSource() == botonActualizar){
-			this.setTabla();
+			this.setearTabla();
 		}
 	}
 

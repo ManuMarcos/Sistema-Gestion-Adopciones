@@ -13,7 +13,6 @@ import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
 import vistas.AdopcionView;
 import vistas.AlarmaView;
-import vistas.AnimalView;
 import vistas.ClienteView;
 import vistas.LoginView;
 import vistas.MenuPrincipalView;

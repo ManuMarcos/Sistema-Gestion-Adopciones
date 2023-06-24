@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Animal {
 
-	private int id;
+	private int nroIngreso;
 	private int altura;
 	private int peso;
 	private LocalDate fecha_nac;
@@ -26,8 +26,8 @@ public class Animal {
 	
 	public Animal() {}
 	
-	public Animal(int id, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
-		this.id = id;
+	public Animal(int nroIngreso, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado, TipoAnimal tipo) {
+		this.nroIngreso = nroIngreso;
 		this.altura = altura;
 		this.peso = peso;
 		this.fecha_nac = fecha_nac;
@@ -63,14 +63,14 @@ public class Animal {
 		return this.fichaMedica.getAlarmas();
 	}
 	
-	public Animal buscarAnimal(int id) {
+	public Animal buscarAnimal(int nroIngreso) {
 		AnimalDao animalDao = new InMemoryAnimalDao();
-		return animalDao.getById(id);
+		return animalDao.getByNroIngreso(nroIngreso);
 	}
 	
-	public void updateAnimal(Animal animal) {
+	public boolean updateAnimal(Animal animal) {
 		AnimalDao animalDao = new InMemoryAnimalDao();
-		animalDao.update(animal);
+		return animalDao.update(animal);
 	}
 	
 	public void deleteAnimal(int id) {
@@ -83,8 +83,8 @@ public class Animal {
 		return animalDao.getAll();
 	}
 	
-	public int getId() {
-		return this.id;
+	public int getNroIngreso() {
+		return this.nroIngreso;
 	}
 
 
@@ -162,8 +162,8 @@ public class Animal {
 	}
 	
 
-	public void setId(int id) {
-		this.id = id;
+	public void setNroIngreso(int nroIngreso) {
+		this.nroIngreso = nroIngreso;
 	}
 	
 	public boolean esAdoptable() {
@@ -171,7 +171,7 @@ public class Animal {
 	}
 	
 	public AnimalDto toDto() {
-		return new AnimalDto(this.id, this.altura, this.peso, this.fecha_nac, this.especie, this.estado, this.tipo);
+		return new AnimalDto(this.nroIngreso, this.altura, this.peso, this.fecha_nac, this.especie, this.estado, this.tipo);
 				
 	}
 	

@@ -8,7 +8,6 @@ import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
 import modelo.exportacion.FacadeExportador;
 import modelo.exportacion.FormatoExportacion;
-import vistas.AnimalView;
 import vistas.VentanaPrincipalAnimal;
 import vistas.VentanaDatosAnimal;
 
@@ -38,29 +37,45 @@ public class AnimalController {
 		this.ventanaPrincipal.setVisible(true);
 	}
 	
-	public void mostrarVentanaDatos() {
+	public void mostrarVentanaRegistro() {
 		this.ventanaDatos.registrarAnimal();
 		this.ventanaDatos.setVisible(true);
 	}
 	
-	public void mostrarVentanaDatos(int id) {
+	public void mostrarVentanaDatos(int nroIngreso) {
 		Animal animal = new Animal();
-		this.ventanaDatos.mostrarDatos(animal.buscarAnimal(id).toDto());
+		this.ventanaDatos.mostrarDatos(animal.buscarAnimal(nroIngreso).toDto());
 		this.ventanaDatos.setVisible(true);
 	}
 	
 
-	public void exportarFichaMedica(int id, FormatoExportacion formatoExportacion, String nombreArchivo) {
+	public void exportarFichaMedica(int nroIngreso, FormatoExportacion formatoExportacion, String nombreArchivo) {
 		Animal animal = new Animal();
 		FacadeExportador exportador = new FacadeExportador();
-		String rutaCompletaArchivo = exportador.exportar(animal.buscarAnimal(id).getFichaMedica(), formatoExportacion, nombreArchivo);
+		String rutaCompletaArchivo = exportador.exportar(animal.buscarAnimal(nroIngreso).getFichaMedica(), formatoExportacion, nombreArchivo);
 		this.ventanaDatos.mostrarMensajeInfo("Archivo exportado con exito, ruta: "  + rutaCompletaArchivo);
 	}
 	
-
+	public boolean existeAnimal(AnimalDto animalDto) {
+		Animal animal = new Animal();
+		if(animal.buscarAnimal(animalDto.getNroIngreso()) != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void cargarAnimal(AnimalDto animalDto) {
 		Animal animal = new Animal();
 		animal.registrarAnimal(animalDto.toEntity());
+	}
+	
+	public boolean actualizarAnimal(AnimalDto animalDto) {
+		Animal animal = new Animal();
+		return animal.updateAnimal(animalDto.toEntity());
+	}
+	
+	public void actualizarTabla() {
+		this.ventanaPrincipal.setearTabla();
 	}
 	
 	public List<AnimalDto> listarAnimales(){

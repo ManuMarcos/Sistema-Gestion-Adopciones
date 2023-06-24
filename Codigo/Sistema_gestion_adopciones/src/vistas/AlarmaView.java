@@ -39,13 +39,13 @@ public class AlarmaView implements ICliView{
         else{
             boolean animalFound=false;
             while(!animalFound){
-                System.out.println("Ingrese el ID del animal: ");
+                System.out.println("Ingrese el nro de Ingreso del animal: ");
                 String input = sc.next();
                 sc.nextLine();
                 try {
                     int id= Integer.parseInt(input);
                     for(AnimalDto currentAnimal: animales) {
-                        if(id==currentAnimal.getId()) {
+                        if(id==currentAnimal.getNroIngreso()) {
                             System.out.println("Animal encontrado");
                             animal=currentAnimal;
                             animalFound=true;
@@ -146,7 +146,7 @@ public class AlarmaView implements ICliView{
                 else{
                     for(AlarmaDto alarma:alarmas){
 
-                        System.out.println("Animal ID: "+currentAnimal.getId());
+                        System.out.println("Animal nro Ingreso: "+currentAnimal.getNroIngreso());
                         System.out.println("Alarma nro: "+nro);
                         if(alarma.getTipo() instanceof Tratamiento){
                             System.out.println("Tipo: Tratamiento");

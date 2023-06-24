@@ -22,14 +22,14 @@ public class AlarmaController {
 	public void crearAlarma(AnimalDto animalDto, TipoDeAlarma tipo, int periodicidad, List<String> acciones) {
 		AlarmaFacade alarmaFacade = new AlarmaFacade();
 		Animal animal = new Animal();
-		alarmaFacade.crearAlarma(animal.buscarAnimal(animalDto.getId()), tipo, periodicidad, acciones);
+		alarmaFacade.crearAlarma(animal.buscarAnimal(animalDto.getNroIngreso()), tipo, periodicidad, acciones);
 	}
 	
 	public List<AlarmaDto> listarAlarmas(AnimalDto animalDto){
 		Animal animal = new Animal();
 		AlarmaFacade alarmaFacade = new AlarmaFacade();
 		List<AlarmaDto> alarmas = new ArrayList<AlarmaDto>();
-		for(Alarma alarma : alarmaFacade.listarAlarmas(animal.buscarAnimal(animalDto.getId()))){
+		for(Alarma alarma : alarmaFacade.listarAlarmas(animal.buscarAnimal(animalDto.getNroIngreso()))){
 			alarmas.add(alarma.toDto());
 		}
 		return alarmas;

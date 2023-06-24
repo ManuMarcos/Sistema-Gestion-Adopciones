@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controladores.AnimalController;
+import excepciones.CodigoError;
+import excepciones.HandledException;
 import modelo.dto.AnimalDto;
 import modelo.enumeraciones.EstadoAnimal;
 import modelo.enumeraciones.TipoAnimal;
@@ -35,12 +37,13 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 	
 	private AnimalController controlador;
 	
-	private JPanel contentPane;
-	private JTextField textFieldEspecie, textFieldAltura,textFieldPeso, textFieldEdad, textFieldId;
+	private JTextField textFieldEspecie, textFieldAltura,textFieldPeso, textFieldEdad, textFieldNroIngreso;
 	private JButton botonCancelar, botonGuardar;
 	private JComboBox<TipoAnimal> comboBoxTipo;
 	private JComboBox<EstadoAnimal> comboBoxEstado;
-	private JPanel panel,  panel_2, panel_3, panel_4, panel_5, panel_6, panel_7, panel_8;
+	private JPanel panelPrincipal,  panelDatos, panelBotones , panelTipo, panelEspecie, panelAltura, panelPeso, panelEdad, 
+	panelEstado, panelNroIngreso;
+	private JLabel labelNroIngreso, labelTipo, labelEspecie, labelAltura, labelPeso, labelEdad, labelCondicion;
 	private JMenuBar menuBar;
 	private JMenu menuExportar;
 	private JMenuItem itemPdf, itemExcel;
@@ -48,92 +51,14 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 	
 	public VentanaDatosAnimal() {
 		setBounds(100, 100, 551, 379);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
-
-		panel = new JPanel();
-		
-		this.agregarMenu();
-		
-		setContentPane(panel);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		panel_2 = new JPanel();
-		panel.add(panel_2);
-		panel_2.setLayout(new GridLayout(6, 2, 0, 0));
-		
-		panel_3 = new JPanel();
-		panel_2.add(panel_3);
-		
-		JLabel labelTipo = new JLabel("Tipo");
-		panel_3.add(labelTipo);
-		
-		
-		
-		panel_4 = new JPanel();
-		panel_2.add(panel_4);
-		
-		JLabel labelEspecie = new JLabel("Especie");
-		panel_4.add(labelEspecie);
-		
-		textFieldEspecie = new JTextField();
-		panel_4.add(textFieldEspecie);
-		textFieldEspecie.setColumns(10);
-		
-		panel_5 = new JPanel();
-		panel_2.add(panel_5);
-		
-		JLabel labelAltura = new JLabel("Altura");
-		panel_5.add(labelAltura);
-		
-		textFieldAltura = new JTextField();
-		panel_5.add(textFieldAltura);
-		textFieldAltura.setColumns(10);
-		
-		panel_6 = new JPanel();
-		panel_2.add(panel_6);
-		
-		JLabel labelPeso = new JLabel("Peso");
-		panel_6.add(labelPeso);
-		
-		textFieldPeso = new JTextField();
-		panel_6.add(textFieldPeso);
-		textFieldPeso.setColumns(10);
-		
-		panel_7 = new JPanel();
-		panel_2.add(panel_7);
-		
-		JLabel labelEdad = new JLabel("Edad aproximada");
-		panel_7.add(labelEdad);
-		
-		textFieldEdad = new JTextField();
-		panel_7.add(textFieldEdad);
-		textFieldEdad.setColumns(10);
-		
-		panel_8 = new JPanel();
-		panel_2.add(panel_8);
-		
-		JLabel labelCondicion = new JLabel("Condición Médica");
-		panel_8.add(labelCondicion);
-		
-		textFieldId = new JTextField();
-		
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.SOUTH);
-		
-		botonGuardar = new JButton("Guardar");
-		panel_1.add(botonGuardar);
-		botonGuardar.addActionListener(this);
-		
-		botonCancelar = new JButton("Cancelar");
-		panel_1.add(botonCancelar);
-		botonCancelar.addActionListener(this);
-		
 		setTitle("Nuevo Animal");
+		
+		this.agregarPaneles();
+		this.agregarMenu();
+		this.agregarLabels();
+		this.agregarTextFields();
+		this.agregarBotones();
 	
 	}
 	
@@ -144,13 +69,15 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 
 	public void mostrarDatos(AnimalDto animal) {
 		this.menuBar.setVisible(true);
+		this.botonGuardar.setActionCommand("ACTUALIZAR_ANIMAL");
+		this.textFieldNroIngreso.setEditable(false);
 		comboBoxTipo.setSelectedItem(animal.getTipo());
 		textFieldEspecie.setText(animal.getEspecie());
 		textFieldAltura.setText(Integer.toString(animal.getAltura()));
 		textFieldPeso.setText(Integer.toString(animal.getPeso()));
 		textFieldEdad.setText(Integer.toString(fechaNacimientoToEdad(animal.getFecha_nac())));
 		comboBoxEstado.setSelectedItem(animal.getEstado());
-		textFieldId.setText(Integer.toString(animal.getId()));
+		textFieldNroIngreso.setText(Integer.toString(animal.getNroIngreso()));
 	}
 	
 	public void mostrarMensajeInfo(String mensaje) {
@@ -159,18 +86,119 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 	
 	public void registrarAnimal() {
 		this.limpiar();
+		this.textFieldNroIngreso.setEditable(true);
+		this.botonGuardar.setActionCommand("REGISTRAR_ANIMAL");
 		this.menuBar.setVisible(false);
 	}
 	
+	private void agregarPaneles() {
+		//Panel Principal
+		panelPrincipal = new JPanel();
+		setContentPane(panelPrincipal);
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		
+		//Panel Datos
+		panelDatos = new JPanel();
+		panelPrincipal.add(panelDatos);
+		panelDatos.setLayout(new GridLayout(7, 2, 0, 0));
+		
+		//Panel Nro Ingreso
+		panelNroIngreso = new JPanel();
+		panelDatos.add(panelNroIngreso);
+		
+		//Panel Tipo
+		panelTipo = new JPanel();
+		panelDatos.add(panelTipo);
+		
+		//Panel Especie
+		panelEspecie = new JPanel();
+		panelDatos.add(panelEspecie);
+		
+		//Panel Altura
+		panelAltura = new JPanel();
+		panelDatos.add(panelAltura);
+		
+		//Panel Peso
+		panelPeso = new JPanel();
+		panelDatos.add(panelPeso);
+		
+		//Panel Edad
+		panelEdad = new JPanel();
+		panelDatos.add(panelEdad);
+		
+		//Panel Estado
+		panelEstado = new JPanel();
+		panelDatos.add(panelEstado);
+		
+		//Panel Botones (SUR : BORDERLAYOUT)
+		panelBotones = new JPanel();
+		panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
+	}
 	
+	
+	private void agregarLabels() {
+		labelNroIngreso = new JLabel("N° de Ingreso");
+		panelNroIngreso.add(labelNroIngreso);
+		
+		labelTipo = new JLabel("Tipo");
+		panelTipo.add(labelTipo);
+		
+		labelEspecie = new JLabel("Especie");
+		panelEspecie.add(labelEspecie);
+		
+		labelAltura = new JLabel("Altura");
+		panelAltura.add(labelAltura);
+		
+		labelPeso = new JLabel("Peso");
+		panelPeso.add(labelPeso);
+		
+		labelEdad = new JLabel("Edad aproximada");
+		panelEdad.add(labelEdad);
+		
+		labelCondicion = new JLabel("Condición Médica");
+		panelEstado.add(labelCondicion);
+	}
+	
+	private void agregarTextFields() {
+		textFieldNroIngreso = new JTextField();
+		panelNroIngreso.add(textFieldNroIngreso);
+		textFieldNroIngreso.setColumns(10);
+		
+		textFieldEspecie = new JTextField();
+		panelEspecie.add(textFieldEspecie);
+		textFieldEspecie.setColumns(10);
+		
+		textFieldAltura = new JTextField();
+		panelAltura.add(textFieldAltura);
+		textFieldAltura.setColumns(10);
+
+		textFieldPeso = new JTextField();
+		panelPeso.add(textFieldPeso);
+		textFieldPeso.setColumns(10);
+
+		textFieldEdad = new JTextField();
+		panelEdad.add(textFieldEdad);
+		textFieldEdad.setColumns(10);
+
+	}
+	
+	private void agregarBotones() {
+		botonGuardar = new JButton("Guardar");
+		panelBotones.add(botonGuardar);
+		botonGuardar.addActionListener(this);
+		
+		botonCancelar = new JButton("Cancelar");
+		panelBotones.add(botonCancelar);
+		botonCancelar.addActionListener(this);
+	}
 	
 	private void setComboBoxes() {
 		comboBoxTipo = new JComboBox<TipoAnimal>();
 		comboBoxTipo.setModel(new DefaultComboBoxModel<>(TipoAnimal.values()));
-		panel_3.add(comboBoxTipo);
+		panelTipo.add(comboBoxTipo);
 		comboBoxEstado = new JComboBox<EstadoAnimal>();
 		comboBoxEstado.setModel(new DefaultComboBoxModel<>(EstadoAnimal.values()));
-		panel_8.add(comboBoxEstado);
+		panelEstado.add(comboBoxEstado);
 	}
 	
 	private int fechaNacimientoToEdad(LocalDate fechaNacimiento) {
@@ -185,7 +213,7 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 		textFieldAltura.setText("");
 		textFieldPeso.setText("");
 		textFieldEdad.setText("");
-		textFieldId.setText("-1");
+		textFieldNroIngreso.setText("");
 	}
 	
 	private void agregarMenu(){
@@ -204,7 +232,25 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 		menuExportar.add(itemExcel);
 	}
 	
-
+	private AnimalDto obtenerDatosCargados() throws HandledException{
+		AnimalDto animal = null;
+		try {
+			animal = new AnimalDto();
+			animal.setTipo((TipoAnimal) comboBoxTipo.getSelectedItem());
+			animal.setEspecie(textFieldEspecie.getText());
+			animal.setAltura(Integer.parseInt(textFieldAltura.getText()));
+			animal.setPeso(Integer.parseInt(textFieldPeso.getText()));
+			int edadAproximada = Integer.parseInt(textFieldEdad.getText());
+			animal.setFecha_nac(calcularFechaNacimiento(edadAproximada));
+			animal.setEstado((EstadoAnimal) comboBoxEstado.getSelectedItem());
+			animal.setNroIngreso(Integer.parseInt(textFieldNroIngreso.getText()));
+		}
+		catch(Exception ex){
+			throw new HandledException(CodigoError.INPUT_DATA_ERROR, "Error en el ingreso de datos");
+		}
+		return animal;
+	}
+	
 	private LocalDate calcularFechaNacimiento(int edadAproximada) {
 		LocalDate fechaActual = LocalDate.now();
 		return fechaActual.minusYears(edadAproximada);
@@ -216,35 +262,52 @@ public class VentanaDatosAnimal extends JFrame implements ActionListener{
 		if (e.getSource() == botonCancelar) {
 			this.dispose();
 		}
-		else if(e.getSource() == botonGuardar) {
+		else if(e.getActionCommand().equals("REGISTRAR_ANIMAL")) {
+			AnimalDto animal;
 			try {
-				AnimalDto animal = new AnimalDto();
-				animal.setTipo((TipoAnimal) comboBoxTipo.getSelectedItem());
-				animal.setEspecie(textFieldEspecie.getText());
-				animal.setAltura(Integer.parseInt(textFieldAltura.getText()));
-				animal.setPeso(Integer.parseInt(textFieldPeso.getText()));
-				int edadAproximada = Integer.parseInt(textFieldEdad.getText());
-				animal.setFecha_nac(calcularFechaNacimiento(edadAproximada));
-				animal.setEstado((EstadoAnimal) comboBoxEstado.getSelectedItem());
-				if(textFieldId.getText() != "-1") {
-					animal.setId(Integer.parseInt(textFieldId.getText()));
+				animal = this.obtenerDatosCargados();
+				
+				if(controlador.existeAnimal(animal)) {
+					JOptionPane.showMessageDialog(this, "El nro de ingreso ya existe", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				controlador.cargarAnimal(animal);
+				else {
+					controlador.cargarAnimal(animal);
+					this.setVisible(false);
+					controlador.actualizarTabla();
+				}
+			} catch (HandledException error) {
+				JOptionPane.showMessageDialog(this, error.getMessage() + "\nCodigo: " + error.getCodigo(), "Error", 
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else if(e.getActionCommand().equals("ACTUALIZAR_ANIMAL")) {
+			AnimalDto animal;
+			try {
+				animal = this.obtenerDatosCargados();
+				
+				if(controlador.actualizarAnimal(animal)) {
+					JOptionPane.showMessageDialog(this, "Animal actualizado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 				this.setVisible(false);
+				controlador.actualizarTabla();
+				}
+				
+			 	catch (HandledException error) {
+				// TODO Auto-generated catch block
+			 		JOptionPane.showMessageDialog(this, error.getMessage() + "\nCodigo: " + error.getCodigo(), "Error", 
+							JOptionPane.ERROR_MESSAGE);
 			}
-			catch(Exception ex){
-				JOptionPane.showMessageDialog(null, "Error en el ingreso de datos", "Error", JOptionPane.ERROR_MESSAGE);
-				ex.printStackTrace();
-			}
-			
 		}
 		else if(e.getSource() == itemPdf) {
 			String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo PDF");
-			controlador.exportarFichaMedica(Integer.parseInt(textFieldId.getText()), FormatoExportacion.PDF, nombreArchivo);
+			controlador.exportarFichaMedica(Integer.parseInt(textFieldNroIngreso.getText()), FormatoExportacion.PDF, nombreArchivo);
 		}
 		else if(e.getSource() == itemExcel) {
 			String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo Excel");
-			controlador.exportarFichaMedica(Integer.parseInt(textFieldId.getText()), FormatoExportacion.EXCEL, nombreArchivo);
+			controlador.exportarFichaMedica(Integer.parseInt(textFieldNroIngreso.getText()), FormatoExportacion.EXCEL, nombreArchivo);
 		}
 	}
 

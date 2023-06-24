@@ -9,7 +9,7 @@ import modelo.enumeraciones.TipoAnimal;
 
 public class AnimalDto {
 
-	private int id;
+	private int nroIngreso;
 	private int altura;
 	private int peso;
 	private LocalDate fecha_nac;
@@ -32,9 +32,9 @@ public class AnimalDto {
 	}
 	
 	//Constructor con Id
-	public AnimalDto(int id, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado,
+	public AnimalDto(int nroIngreso, int altura, int peso, LocalDate fecha_nac, String especie, EstadoAnimal estado,
 			TipoAnimal tipo) {
-		this.id = id;
+		this.nroIngreso = nroIngreso;
 		this.altura = altura;
 		this.peso = peso;
 		this.fecha_nac = fecha_nac;
@@ -44,16 +44,16 @@ public class AnimalDto {
 	}
 	
 	public Animal toEntity() {
-		return new Animal(id, altura, peso, fecha_nac, especie, estado, tipo);
+		return new Animal(nroIngreso, altura, peso, fecha_nac, especie, estado, tipo);
 	}
 	
 
-	public int getId() {
-		return id;
+	public int getNroIngreso() {
+		return nroIngreso;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setNroIngreso(int id) {
+		this.nroIngreso = id;
 	}
 	public int getAltura() {
 		return altura;
