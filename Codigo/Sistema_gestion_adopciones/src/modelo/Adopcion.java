@@ -59,10 +59,6 @@ public class Adopcion {
 		return AdopcionController.CodigosRetorno.ALTA_OK;
 	}
 
-	public static Adopcion buscar(int id) {
-		return AdopcionRepository.obtener(id);
-	}
-
 	public int getID() {
 		return this.id;
 	}
@@ -71,7 +67,7 @@ public class Adopcion {
 		AdopcionDto data = new AdopcionDto();
 		data.id = this.id;
 		data.documentoCliente = this.cliente.getDocumento();
-		data.idAnimal = this.animal.getNroIngreso();
+		data.nroIngresoAnimal = this.animal.getNroIngreso();
 		return data;
 	}
 

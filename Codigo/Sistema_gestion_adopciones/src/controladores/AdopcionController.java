@@ -32,16 +32,9 @@ public class AdopcionController {
 		Usuario visitador = Visitador.getVisitador(data.usuarioDelVisitador);
 		if (visitador == null || visitador.tipoUsuario != TipoUsuario.VISITADOR)
 			return CodigosRetorno.ERROR_ALTA_USUARIO_VISITADOR_NO_ENCONTRADO;
-		Animal animal = new Animal().buscarAnimal(data.idAnimal);
+		Animal animal = new Animal().buscarAnimal(data.nroIngresoAnimal);
 		Adopcion adopcion = new Adopcion(cliente, visitador, animal);
 		return adopcion.guardar();
-	}
-
-	public AdopcionDto buscarAdopcionPorID(String id) {
-		var adopcion = Adopcion.buscar(Integer.parseInt(id));
-		if(adopcion == null)
-			return null;
-		return adopcion.toDto();
 	}
 
 	public List<AdopcionDto> buscarAdopcionesPorCliente(String documento) {
@@ -56,8 +49,8 @@ public class AdopcionController {
 		return dtos;
 	}
 
-	public AdopcionDto buscarAdopcionesPorAnimal(String idAnimal) {
-		Animal animal = new Animal().buscarAnimal(Integer.parseInt(idAnimal));
+	public AdopcionDto buscarAdopcionesPorAnimal(String nroIngresoAnimal) {
+		Animal animal = new Animal().buscarAnimal(Integer.parseInt(nroIngresoAnimal));
 		if (animal == null)
 			return null;
 		Adopcion adopcion = animal.getAdopcion();
@@ -69,11 +62,12 @@ public class AdopcionController {
 	public void enviarNotificaciones(Usuario usu) {
 		List<Animal> animales = new Animal().getAll();
 		for (Animal ani : animales) {
-			if (ani.getAdopcion() != null && ani.getAdopcion().getVisitador().getNombreUsuario() == usu.getNombreUsuario()) {
+			if (ani.getAdopcion() != null
+					&& ani.getAdopcion().getVisitador().getNombreUsuario() == usu.getNombreUsuario()) {
 				ani.getAdopcion().enviarNotificacion();
 			}
 		}
-		
+
 	}
 
 }

@@ -48,7 +48,6 @@ public class Animal {
 	}
 	
 	
-	//Cuando se registra el animal se hace sin el id seteado, este se lo setea el repository
 	public void registrarAnimal(Animal animal) {
 		AnimalDao animalDao = new InMemoryAnimalDao();
 		animalDao.add(animal);
@@ -73,9 +72,9 @@ public class Animal {
 		return animalDao.update(animal);
 	}
 	
-	public void deleteAnimal(int id) {
+	public void deleteAnimal(int nroIngreso) {
 		AnimalDao animalDao = new InMemoryAnimalDao();
-		animalDao.delete(id);
+		animalDao.delete(nroIngreso);
 	}
 	
 	public List<Animal> getAll(){

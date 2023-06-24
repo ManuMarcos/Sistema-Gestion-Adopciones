@@ -23,8 +23,8 @@ public class VisitasController {
 		this.vistaVisitas = vistaVisitas;
 	}
 
-	public CodigosRetorno validarExisteAdopcion(String idAnimal) {
-		Animal animal = new Animal().buscarAnimal(Integer.parseInt(idAnimal));
+	public CodigosRetorno validarExisteAdopcion(String nroIngresoAnimal) {
+		Animal animal = new Animal().buscarAnimal(Integer.parseInt(nroIngresoAnimal));
 		if (animal == null) {
 			return CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE;
 		}
@@ -50,9 +50,9 @@ public class VisitasController {
 		return CodigosRetorno.ADOPCION_CARGADA;
 	}
 
-	public List<VisitaDto> getVisitas(String idAnimal) {
+	public List<VisitaDto> getVisitas(String nroIngresoAnimal) {
 		List<VisitaDto> visitasDto = new ArrayList<>();
-		Animal animal = new Animal().buscarAnimal(Integer.parseInt(idAnimal));
+		Animal animal = new Animal().buscarAnimal(Integer.parseInt(nroIngresoAnimal));
 		if (animal == null) {
 			return visitasDto;
 		}
@@ -63,8 +63,8 @@ public class VisitasController {
 		return visitasDto;
 	}
 
-	public VisitasController.CodigosRetorno terminarSeguimiento(String idAnimal) {
-		Animal animal = new Animal().buscarAnimal(Integer.parseInt(idAnimal));
+	public VisitasController.CodigosRetorno terminarSeguimiento(String nroIngresoAnimal) {
+		Animal animal = new Animal().buscarAnimal(Integer.parseInt(nroIngresoAnimal));
 		if (animal == null) {
 			return CodigosRetorno.ERROR_ANIMAL_NO_EXISTENTE;
 		}

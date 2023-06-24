@@ -19,7 +19,7 @@ public class AdopcionView implements ICliView {
 	private void mostrarInfoAdopcion(AdopcionDto data) {
 		// TODO: se podria hacer una busqueda por cada id para traer mas datos...
 		System.out.println("  Documento Cliente: " + data.documentoCliente);
-		System.out.println("  Id Animal: " + data.idAnimal);
+		System.out.println("  Nro Ingreso Animal: " + data.nroIngresoAnimal);
 	}
 
 	class OptionNuevaAdopcion implements ICliOption {
@@ -29,7 +29,7 @@ public class AdopcionView implements ICliView {
 			AltaAdopcionDto data = new AltaAdopcionDto();
 			data.usuarioDelVisitador = IngresoCli.solicitarStringNoNulo("Ingrese el usuario del visitador: ");
 			data.documentoCliente = IngresoCli.solicitarStringNumericoNulo("Documento del cliente: ");
-			data.idAnimal = Integer.parseInt(IngresoCli.solicitarStringNoNulo("Ingrese identificador del Animal: "));
+			data.nroIngresoAnimal = Integer.parseInt(IngresoCli.solicitarStringNoNulo("Ingrese numero de ingreso del Animal: "));
 			var ret = controlador.crearAdopcion(data);
 			mostrarMensajeSegunRta(ret);
 			return CliViewNames.STAY;
@@ -61,21 +61,6 @@ public class AdopcionView implements ICliView {
 		}
 	}
 
-	class OptionConsultarAdopcionPorID implements ICliOption {
-		@Override
-		public CliViewNames doAction() {
-			String id = IngresoCli.solicitarStringNoNulo("Ingrese id de la adopcion: ");
-			AdopcionDto adopcion = controlador.buscarAdopcionPorID(id);
-			if (adopcion == null)
-				System.out.println("Adopcion no encontrada");
-			else {
-				System.out.println("Adopcion encontrada");
-				mostrarInfoAdopcion(adopcion);
-			}
-			return CliViewNames.STAY;
-		}
-	}
-
 	class OptionConsultarAdopcionesPorCliente implements ICliOption {
 		@Override
 		public CliViewNames doAction() {
@@ -98,8 +83,8 @@ public class AdopcionView implements ICliView {
 	class OptionConsultarAdopcionPorAnimal implements ICliOption {
 		@Override
 		public CliViewNames doAction() {
-			String idAnimal = IngresoCli.solicitarStringNoNulo("Ingrese id animal: ");
-			var adopcion = controlador.buscarAdopcionesPorAnimal(idAnimal);
+			String nroIngresoAnimal = IngresoCli.solicitarStringNoNulo("Ingrese Nro ingreso del animal: ");
+			var adopcion = controlador.buscarAdopcionesPorAnimal(nroIngresoAnimal);
 			if (adopcion == null)
 				System.out.println("Adopcion no encontrada");
 			else {
@@ -112,8 +97,8 @@ public class AdopcionView implements ICliView {
 
 	//
 
-	private static final String[] nombresOpciones = { "Nueva", "Consultar por ID", "Consultar por Cliente",
-			"Consultar por Animal", "Atrás" };
+	private static final String[] nombresOpciones = { "Nueva", "Consultar por Cliente", "Consultar por Animal",
+			"Atrás" };
 	private List<ICliOption> opciones;
 	private AdopcionController controlador;
 
@@ -124,7 +109,6 @@ public class AdopcionView implements ICliView {
 	public AdopcionView() {
 		opciones = new ArrayList<>();
 		opciones.add(new OptionNuevaAdopcion());
-		opciones.add(new OptionConsultarAdopcionPorID());
 		opciones.add(new OptionConsultarAdopcionesPorCliente());
 		opciones.add(new OptionConsultarAdopcionPorAnimal());
 		opciones.add(new ICliOption.OptionBack());
