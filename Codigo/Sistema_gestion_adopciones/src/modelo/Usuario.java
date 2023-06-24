@@ -10,7 +10,11 @@ public class Usuario {
 	public String nombreUsuario;
 	public String contrasena;
 	public TipoUsuario tipoUsuario; 
-	public static Usuario usuActivo;
+	
+	private static Usuario usuActivo;
+	public static Usuario getUsuarioActivo() {
+		return Usuario.usuActivo;
+	}
 
 	private IAutenticador auth;
 
@@ -37,7 +41,7 @@ public class Usuario {
 		auth.iniciarSesion(nombreUsuario, contrasena);
 		Usuario u = UsuarioRepository.obtenerUsuario(nombreUsuario);
 		if (u != null) {
-			this.usuActivo = u;
+			Usuario.usuActivo = u;
 		}
 		return (u == null) ? LoginController.CodigosRetorno.LOGIN_ERROR : LoginController.CodigosRetorno.LOGIN_OK;
 	}

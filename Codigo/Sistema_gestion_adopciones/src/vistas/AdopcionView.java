@@ -116,7 +116,7 @@ public class AdopcionView implements ICliView {
 
 	@Override
 	public CliViewNames procesar() {
-		this.controlador.enviarNotificaciones(Usuario.usuActivo);
+		this.controlador.enviarNotificaciones(Usuario.getUsuarioActivo());
 		FormatoCli.printCabecera("Menú Adopciones");
 		FormatoCli.printOpciones(nombresOpciones);
 		int opcion = IngresoCli.solicitarOpcion(nombresOpciones.length);
